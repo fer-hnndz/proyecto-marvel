@@ -8,13 +8,18 @@ package proyectomarvelstratego;
  *
  * @author Jorge Hernandez
  */
+
+import javax.swing.*;
+import proyectomarvelstratego.GUI;
 public class ProyectoMarvelStratego {
 
     /**
      * @param args the command line arguments
      */
+    
     public static void main(String[] args) {
-        // TODO code application logic here
+        // Correr la interfaz del usuario.
+        new GUI();
     }
     
 }
