@@ -14,6 +14,9 @@ import javax.swing.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.File;
 public class GUI {
     JFrame ventana;
     SistemaUsuarios sistemaUsuarios;
@@ -25,8 +28,9 @@ public class GUI {
     public GUI() {
         ventana = new JFrame();
         // Hacer que la ventana no sea mas pequena que una resolucion de 800 x 500 pixeles;
-        ventana.setMinimumSize(new Dimension(800, 500));
-        ventana.setSize(800, 500);
+        ventana.setMinimumSize(new Dimension(1280, 720));
+        ventana.pack();
+        ventana.setSize(1280, 720);
         ventana.setTitle("Marvel Stratego");
         
         /*
@@ -53,6 +57,20 @@ public class GUI {
 
         // Eliminar todos los contenidos anteriores en la ventana.
         ventana.getContentPane().removeAll();
+        
+        // Mostrar logo de Stratego
+        BufferedImage strategoLogoImagen = null;
+        try {
+            strategoLogoImagen = ImageIO.read(GUI.class.getResource("/resources/strategoLogo.png"));
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        JLabel strategoLogo = new JLabel(new ImageIcon(strategoLogoImagen));
+        strategoLogo.setPreferredSize(new Dimension(20, 8));
+        strategoLogo.setFont(new Font("Sans-Serif", Font.PLAIN, 15));
+        panel.add(strategoLogo);
+        
         
         JLabel titulo = new JLabel("Menú Principal");
         titulo.setFont(new Font("Sans-Serif", Font.BOLD, 60));
