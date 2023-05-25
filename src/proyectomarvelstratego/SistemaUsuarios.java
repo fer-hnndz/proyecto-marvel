@@ -9,9 +9,6 @@ package proyectomarvelstratego;
  * @author Jorge Hernandez
  */
 
-import java.awt.GridLayout;
-import javax.swing.*;
-
 /*
     Esta clase administra el inicio de sesion y la informacion de los usuarios
 */
@@ -33,10 +30,8 @@ public class SistemaUsuarios {
             return true;
         }
         
-        System.out.println("Usuarios Activos: " + usuariosActivos.length);
         for (int i=0; i<usuariosActivos.length;i++) {
-            System.out.println("Usuario Actual: " + usuariosActivos[i].usuario);
-
+            // En el caso de que usuario ya exista se retorna false para evitar que se registre el usuario.
            if (usuariosActivos[i].usuario.equals(usuario)) return false;
         }
         
@@ -45,7 +40,6 @@ public class SistemaUsuarios {
     
     public void registrarUsuario(String usuario, String contrasena) {
         Usuario nuevoUsuario = new Usuario(usuario, contrasena);
-        System.out.println("Se ha registrado un nuevo usuario.\nUsuario:" + usuario + "\nContrasena: " + contrasena);
         
         // Es el primer usuario en registrarse 
         if (usuariosHistoricos == 0) {
@@ -62,11 +56,11 @@ public class SistemaUsuarios {
             }
             
             // Agregar el ultimo usuario registrado
-            
             nuevosUsuarios[nuevaLongitud - 1] = nuevoUsuario;            
             usuariosActivos = nuevosUsuarios;
         }
         
+        // Agregar el usuario a los usuarios historicos.
         usuariosHistoricos++;
         
     }
