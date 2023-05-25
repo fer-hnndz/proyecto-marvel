@@ -11,5 +11,12 @@ package proyectomarvelstratego;
 public class Usuario {
     String usuario;
     String contrasena;
-    String partidas;
+    int partidas = 0;
+    
+    public Usuario(String usuario, String contrasena) {
+        this.usuario = usuario;
+        this.contrasena = contrasena;
+    }
+    
+    
 }

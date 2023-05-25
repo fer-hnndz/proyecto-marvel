@@ -16,7 +16,7 @@ import java.awt.Font;
 import java.awt.event.*;
 public class GUI {
     JFrame ventana;
-    
+    SistemaUsuarios sistemaUsuarios;
     // Puede que tengamos que quitar que sea una constante.
     
     /**
@@ -34,7 +34,7 @@ public class GUI {
         informacion de lo usuarios.
         */
         
-        SistemaUsuarios sistemaUsuarios = new SistemaUsuarios(ventana);
+        sistemaUsuarios = new SistemaUsuarios();
         
         // Por defecto se inicia en la pantalla con el menu principal.
         ventana.setVisible(true);
@@ -130,6 +130,8 @@ public class GUI {
         
         // Texto que se mostrara en caso de que ocurra un error o se haya registrado correctamente.
         JLabel textoMensaje = new JLabel("");
+        textoMensaje.setVisible(false);
+        panel.add(textoMensaje);
         
         
         panel.add(Box.createRigidArea(new Dimension(0, 32)));
@@ -152,6 +154,36 @@ public class GUI {
         panel.add(Box.createRigidArea(new Dimension(0, 62)));
         
         JButton botonRegistrar = new JButton("Crear Usuario");
+        botonRegistrar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Obtener datos ingresados
+                
+                String usuarioIngresado = campoNombreUsuario.getText().toLowerCase();
+                String contrasenaIngresada = campoContrasena.getText();
+               
+                if (usuarioIngresado.length() <= 5 && sistemaUsuarios.esUsuarioUnico(usuarioIngresado)) {
+                    sistemaUsuarios.registrarUsuario(usuarioIngresado, contrasenaIngresada);
+                    
+                    // Mostrar exitosamente que el usuario se ha registrado
+                    textoMensaje.setText("Usuario registrado exitosamente!");
+                    textoMensaje.setForeground(Color.GREEN);
+                    textoMensaje.setVisible(true);
+                } else {
+                    // Mostrar error
+                    
+                    if (usuarioIngresado.length() > 5) {
+                        textoMensaje.setText("ERROR. Asegurese que su usuario es de 5 caracteres de longitud");
+                    } else if (!sistemaUsuarios.esUsuarioUnico(usuarioIngresado)) {
+                        textoMensaje.setText("ERROR. Ese usuario ya esta en uso.");
+                    }
+                    textoMensaje.setForeground(Color.RED);
+                    textoMensaje.setVisible(true);
+                }
+                
+                // Volver a renderizar la ventana
+                ventana.setVisible(true);
+            }
+        });
         panel.add(botonRegistrar);
         
         ventana.add(panel);
