@@ -9,8 +9,6 @@ package proyectomarvelstratego;
  * @author Jorge Hernandez
  */
 
-import javax.swing.*;
-import proyectomarvelstratego.GUI;
 public class ProyectoMarvelStratego {
 
     /**

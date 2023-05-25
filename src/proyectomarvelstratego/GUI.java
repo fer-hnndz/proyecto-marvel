@@ -13,6 +13,7 @@ import java.awt.Dimension;
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.*;
 public class GUI {
     JFrame ventana;
     
@@ -38,16 +39,7 @@ public class GUI {
         // Por defecto se inicia en la pantalla con el menu principal.
         ventana.setVisible(true);
         cambiarMenuPrincipal();
-    }
-    
-    /**
-     * 
-     * Devuelve la coordenada X donde el componente debe estar para aparecer centrado en el eje X.
-     * @param anchoComponente La anchura del componente en pixeles.
-     * @return La coordenada X donde el componente va a aparecer centrado.
-     */
-    public int centrarComponenteX(int anchoComponente) {
-        return (ventana.getWidth() / 2) - (anchoComponente/2);
+        
     }
     
     /**
@@ -80,6 +72,8 @@ public class GUI {
         botonLogin.setBackground(MARVEL_RED);
         botonLogin.setForeground(Color.WHITE);
         botonLogin.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        
+        
         botonLogin.setFont(new Font("Sans-Serif", Font.ITALIC, 35));
 
         panel.add(botonLogin);
@@ -93,10 +87,75 @@ public class GUI {
         botonRegistro.setBackground(MARVEL_RED);
         botonRegistro.setForeground(Color.WHITE);
         botonRegistro.setFont(new Font("Sans-Serif", Font.ITALIC, 35));
+        
+        botonRegistro.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                cambiarCrearUsuario();
+            }
+        });
+        
         panel.add(botonRegistro);
+        
+        
         panel.setAlignmentX(SwingConstants.CENTER);
         
         ventana.add(panel);
+        ventana.setVisible(true);
+    }
+    
+    public void cambiarCrearUsuario() {
+        
+        // Eliminar los contenidos de la ventana
+        ventana.getContentPane().removeAll();
+        //ventana.setVisible(false);
+        
+        JPanel panel = new JPanel(); // TODO: BUSCAR MEJOR LAYOUT PARA ORGANIZAR LOS COMPONENTES
+        ventana.setBackground(Color.WHITE);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        
+        JLabel titulo = new JLabel("Crear Usuario");
+        titulo.setFont(new Font("Sans-Serif", Font.BOLD, 62));
+        titulo.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        panel.add(titulo);
+        
+        JButton botonAtras = new JButton("Volver al Menú Principal");
+        botonAtras.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                cambiarMenuPrincipal();
+            }
+        });
+        
+        panel.add(botonAtras);
+        // Agregar espaciado
+        
+        // Texto que se mostrara en caso de que ocurra un error o se haya registrado correctamente.
+        JLabel textoMensaje = new JLabel("");
+        
+        
+        panel.add(Box.createRigidArea(new Dimension(0, 32)));
+        
+        JLabel textoNombreUsuario = new JLabel("Nombre de Usuario");
+        textoNombreUsuario.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        JTextField campoNombreUsuario = new JTextField();
+        campoNombreUsuario.setSize(250, 40);
+        
+        panel.add(textoNombreUsuario);
+        panel.add(campoNombreUsuario);
+        
+        JLabel textoContrasena = new JLabel("Contraseña");
+        JTextField campoContrasena = new JTextField();
+        
+        panel.add(textoContrasena);
+        panel.add(campoContrasena);
+        
+        // Espaciado
+        panel.add(Box.createRigidArea(new Dimension(0, 62)));
+        
+        JButton botonRegistrar = new JButton("Crear Usuario");
+        panel.add(botonRegistrar);
+        
+        ventana.add(panel);
+        ventana.setVisible(true);
     }
     
     
