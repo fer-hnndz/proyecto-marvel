@@ -28,7 +28,7 @@ public class Tablero extends JFrame{
         setSize(500, 500);
         setLayout(new GridLayout(10, 10));
 
-        // Crear las etiquetas para representar la cuadrícula
+        // Crear las etiquetas para representar la cuadrícula del tablero
         gridLabels = new JLabel[10][10];
         for (int row = 0; row < 10; row++) {
             for (int column = 0; column < 10; column++) {
@@ -39,7 +39,6 @@ public class Tablero extends JFrame{
             }
         }
 
-        // Cargar la imagen desde un archivo local
         try {
             image = ImageIO.read(new File("src/img/capitan-america.png"));
         } catch (IOException e) {
@@ -115,7 +114,7 @@ public class Tablero extends JFrame{
         boolean isRestricted = (row >= 4 && row <= 5 && column >= 2 && column <= 3) ||
                 (row >= 4 && row <= 5 && column >= 6 && column <= 7);
 
-        // El movimiento es válido solo si es ortogonal y no está en un espacio restringido
+        // El movimiento es válido solo si es ortogonal y no está en un espacio restringido (zonas prohibidas)
         return isOrthogonal && !isRestricted;
     }
 
