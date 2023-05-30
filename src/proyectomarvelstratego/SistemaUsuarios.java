@@ -32,7 +32,8 @@ public class SistemaUsuarios {
         
         for (int i=0; i<usuariosActivos.length;i++) {
             // En el caso de que usuario ya exista se retorna false para evitar que se registre el usuario.
-           if (usuariosActivos[i].usuario.equals(usuario)) return false;
+            usuario = usuariosActivos[i].getUsuario();
+           if (usuario.equals(usuario)) return false;
         }
         
         return true;
