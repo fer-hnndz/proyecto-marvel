@@ -11,7 +11,10 @@ package proyectomarvelstratego;
 public class Usuario {
     private String usuario;
     private String contrasena;
-    private int partidas = 0;
+    private int punto = 0;
+    private int partidasBuenos = 0;
+    private int partidasMalos = 0;
+    
     
     public Usuario(String usuario, String contrasena) {
         this.usuario = usuario.trim();

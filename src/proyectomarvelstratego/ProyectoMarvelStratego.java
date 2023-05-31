@@ -17,7 +17,7 @@ public class ProyectoMarvelStratego {
     
     public static void main(String[] args) {
         // Correr la interfaz del usuario.
-        new GUI();
+        new MenuPrincipal().setVisible(true);
     }
     
 }

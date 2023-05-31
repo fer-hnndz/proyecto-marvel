@@ -23,8 +23,14 @@ public class SistemaUsuarios {
     public SistemaUsuarios() {
     }
     
+    /**
+     * 
+     * Comprueba que el nombre de usuario sea unico.
+     * @param usuario
+     * @return 
+     */
     public boolean esUsuarioUnico(String usuario) {
-        
+       
         // Es el primer usuario en registrarse
         if (usuariosHistoricos == 0) {
             return true;
@@ -37,6 +43,28 @@ public class SistemaUsuarios {
         }
         
         return true;
+    }
+    
+    public boolean verificarLongitudUsuario(String usuario) {
+        // Verificar que sea de la longitud exacta
+        boolean validUsername = true;
+        return (usuario.length()<=5) ?true:false;   
+    }
+    
+    public boolean verificarEspaciosUsuario(String usuario) {
+        boolean validUsername = true;
+        
+         // Asegurarse de que no haya espacios en el usuario.
+        for (int i =0;i<usuario.length();i++) {
+            char charActual = usuario.charAt(i);
+            
+            if (charActual == ' ') {
+                validUsername = false;
+                break;
+            }
+        }
+        
+        return validUsername;
     }
     
     public void registrarUsuario(String usuario, String contrasena) {
