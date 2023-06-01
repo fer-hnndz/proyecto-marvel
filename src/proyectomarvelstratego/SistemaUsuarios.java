@@ -12,6 +12,7 @@ package proyectomarvelstratego;
 /*
     Esta clase administra el inicio de sesion y la informacion de los usuarios
 */
+
 public class SistemaUsuarios {
 
     int usuariosHistoricos = 0;
@@ -33,22 +34,25 @@ public class SistemaUsuarios {
        
         // Es el primer usuario en registrarse
         if (usuariosHistoricos == 0) {
+            System.out.println("NO HAY USUARIOS REGISTRADOS, POR ENDE ES USUARIO UNICO.");
             return true;
         }
         
+        System.out.println("BUSCANDO SI " + usuario + " ES USUARIO UNICO.");
         for (int i=0; i<usuariosActivos.length;i++) {
             // En el caso de que usuario ya exista se retorna false para evitar que se registre el usuario.
-            usuario = usuariosActivos[i].getUsuario();
-           if (usuario.equals(usuario)) return false;
+            String usuarioActual = usuariosActivos[i].getUsuario();
+            
+            System.out.println("Iteracion #" + i);
+            System.out.println("Usuario actual:" + usuario);
+            if (usuario.equals(usuarioActual)) {
+               System.out.println("false");
+               return false;
+           };
         }
         
+        System.out.println("true");
         return true;
-    }
-    
-    public boolean verificarLongitudUsuario(String usuario) {
-        // Verificar que sea de la longitud exacta
-        boolean validUsername = true;
-        return (usuario.length()<=5) ?true:false;   
     }
     
     public boolean verificarEspaciosUsuario(String usuario) {
@@ -92,6 +96,26 @@ public class SistemaUsuarios {
         // Agregar el usuario a los usuarios historicos.
         usuariosHistoricos++;
         
+    }
+    
+    /**
+     * Retorna el usuario con el que las credenciales son correctas. Devuelve `null` si no fue encontrado
+     * @param usuario
+     * @param contrasena
+     * @return 
+     */
+    public Usuario iniciarSesion(String usuario, String contrasena) {
+        Usuario usuarioIniciado = null;
+        
+        for (int i =0;i<usuariosActivos.length;i++) {
+           Usuario usuarioActual = usuariosActivos[i];
+            if (usuarioActual.validarCredenciales(usuario, contrasena)) {
+                usuarioIniciado = usuarioActual;
+                break;
+            }
+        }
+        
+        return usuarioIniciado;
     }
 }
 

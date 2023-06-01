@@ -157,17 +157,24 @@ public class MenuRegistrarse extends javax.swing.JFrame {
             return;
         }
         
-        validUsername = sistemaUsuarios.verificarLongitudUsuario(username);
         
-        if (!validUsername) {
-            JOptionPane.showMessageDialog(null, "Ingrese un nombre de usuario de 5 caracteres máximo.");
+        if (username.length() > 5) {
+            JOptionPane.showMessageDialog(null, "Asegurese que su usuarios sea de máximo 5 caracteres.");
             return;
-        } 
+        }
         
+        // VERIFICAR QUE NO SE PUEDAN PONER ESPACIOS ENTRE MEDIO DEL USUARIO.
         validUsername = sistemaUsuarios.verificarEspaciosUsuario(username);
         
         if (!validUsername) {
             JOptionPane.showMessageDialog(null, "El nombre de usuario no puede llevar espacios");
+            return;
+        }
+        
+        // VERIFICAR LONGITUD DE LA CONTRASENA
+        
+        if (password.length() > 5) {
+            JOptionPane.showMessageDialog(null, "Ingrese una contraseña de máximo 5 caracteres.");
             return;
         }
         
