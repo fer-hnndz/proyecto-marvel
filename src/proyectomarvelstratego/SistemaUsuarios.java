@@ -34,7 +34,6 @@ public class SistemaUsuarios {
        
         // Es el primer usuario en registrarse
         if (usuariosHistoricos == 0) {
-            System.out.println("NO HAY USUARIOS REGISTRADOS, POR ENDE ES USUARIO UNICO.");
             return true;
         }
         
@@ -43,15 +42,11 @@ public class SistemaUsuarios {
             // En el caso de que usuario ya exista se retorna false para evitar que se registre el usuario.
             String usuarioActual = usuariosActivos[i].getUsuario();
             
-            System.out.println("Iteracion #" + i);
-            System.out.println("Usuario actual:" + usuario);
             if (usuario.equals(usuarioActual)) {
-               System.out.println("false");
                return false;
            };
         }
         
-        System.out.println("true");
         return true;
     }
     
