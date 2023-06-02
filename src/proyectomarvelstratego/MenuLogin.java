@@ -10,6 +10,8 @@ import javax.swing.JOptionPane;
  *
  * @author Jorge Hernandez
  */
+
+import java.awt.Dimension;
 public class MenuLogin extends javax.swing.JFrame {
 
     /**
@@ -20,6 +22,7 @@ public class MenuLogin extends javax.swing.JFrame {
     public MenuLogin(SistemaUsuarios sistema) {
         initComponents();
         
+        this.setMinimumSize(new Dimension(800, 500));
         sistemaUsuarios = sistema;
     }
 
@@ -86,8 +89,10 @@ public class MenuLogin extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(usernameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(usernameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(jLabel1)))))
                 .addGap(97, 97, 97))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(80, 80, 80)
