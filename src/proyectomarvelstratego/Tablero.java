@@ -59,7 +59,8 @@ public class Tablero extends JFrame{
                                 // VERIFICAR QUE SEA UNA FICHA DEL JUGADOR Y TENGA UN PERSONAJE
                                 casillaSeleccionada = casillas[i][j];
                                 
-                                if (casillaSeleccionada.personajeActual != null && casillaSeleccionada.personajeActual.esHeroe == turnoHeroes) {
+                                if (casillaSeleccionada.personajeActual != null && 
+                                        casillaSeleccionada.personajeActual.esHeroe == turnoHeroes) {
                                     casillas[i][j].setSelected(true);
                                     hayCasillaSeleccionada = true;
                                     System.out.println("Seleccionado correctamente");
@@ -118,9 +119,10 @@ public class Tablero extends JFrame{
         // Establecer la posición inicial de la imagen
         casillas[2][2].setPersonaje(new Personaje("Captain America", 9, true));
         casillas[1][0].setPersonaje(new Personaje("Iron Man", 7, true));
+        casillas[8][7].setPersonaje(new Personaje("VILLANO", 7, false));
         
         highlightForbiddenZones();
-        
+        hideCharacters();
         setVisible(true);
     }
 
@@ -163,6 +165,16 @@ public class Tablero extends JFrame{
         highlightForbiddenZones();
      }
     
+    private void hideCharacters() {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j<10;j++) {
+                if (casillas[i][j].personajeActual != null) {
+                    casillas[i][j].esconderCasilla(turnoHeroes != casillas[i][j].personajeActual.esHeroe);
+                } 
+            }
+        }
+    }
+    
     public void highlightForbiddenZones() {
         // Resaltar las zonas restringidas en color negro
         for (int row = 4; row <= 5; row++) {
@@ -190,7 +202,17 @@ public class Tablero extends JFrame{
         // Mover la imagen a la nueva posición
         casillas[newRow][newColumn].setPersonaje(personaje);
         casillaSeleccionada = null;
-        hayCasillaSeleccionada = false;        
+        hayCasillaSeleccionada = false;
+        
+        turnoHeroes = !turnoHeroes;
+        setVisible(false);
+        hideCharacters();
+        
+        String mensaje;
+        if (!turnoHeroes) mensaje = "FIN DEL TURNO DE LOS HEROES. DEJE A LOS VILLANOS JUGAR SU TURNO.";
+        else mensaje = "FIN DEL TURNO DE LOS VILLANOS. DEJE A LOS HEROES JUGAR SU TURNO.";
+        JOptionPane.showMessageDialog(null, mensaje);
+        setVisible(true);
     }
     
     public void unhighlightAllValidMoves() {

@@ -71,6 +71,16 @@ public class CasillaTablero {
         }
     }
     
+    public void esconderCasilla(boolean esconder) {
+        if (esconder) {
+            label.setText("???");
+            label.repaint();
+        } else {
+            label.setText((personajeActual!=null)?personajeActual.nombre:"");
+            label.repaint();
+        }
+    } 
+    
    
     
     
