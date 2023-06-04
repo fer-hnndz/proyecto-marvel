@@ -16,7 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class Tablero extends JFrame{
+public class Tablero extends JPanel{
     private boolean hayCasillaSeleccionada = false;
     private CasillaTablero casillaSeleccionada;
     private CasillaTablero[][] casillas;
@@ -24,9 +24,6 @@ public class Tablero extends JFrame{
     private boolean turnoHeroes = true;
 
     public Tablero() {
-        setTitle("Image Grid");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 500);
         setLayout(new GridLayout(10, 10));
 
         // Crear las etiquetas para representar la cuadrícula del tablero
