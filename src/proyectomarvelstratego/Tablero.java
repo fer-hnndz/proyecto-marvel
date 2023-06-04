@@ -77,7 +77,24 @@ public class Tablero extends JPanel{
                     System.out.println("HAY CASILLA SELECCIONADA");
                     for (int i=0;i < 10; i++)  {
                         for (int j = 0;j<10;j++) {
+                            
                             if (casillas[i][j].label == label) {
+                                // SI LA CASILLA CLICKEADA ES UNA FICHA DEL MISMO BANDO, CAMBIAR A ESA FICHA 
+                                if (casillas[i][j].personajeActual != null) {
+                                    if (casillas[i][j].personajeActual.esHeroe == turnoHeroes) {
+                                        // Actualizar casillas  
+                                        unhighlightAllValidMoves();
+                                        casillaSeleccionada.setSelected(false);
+                                        
+                                        casillaSeleccionada = casillas[i][j];
+                                        casillaSeleccionada.setSelected(turnoHeroes);
+                                        highlightIfValidMove();
+                                        highlightForbiddenZones();
+                                        
+                                        break;
+                                    }
+                                }
+                                
                                 if (isValidMove(i, j)) {
                                     moveCharacter(i, j);
                                 }
