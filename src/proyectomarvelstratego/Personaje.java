@@ -34,7 +34,13 @@ public class Personaje {
         personajes[1] = new Personaje("Captain America", 9, true);
         personajes[2] = new Personaje("Professor X", 8, true);
         personajes[3] = new Personaje("Nick Fury", 8, true);
-        
+        personajes[4] = new Personaje("Spider-Man", 7, true);
+        personajes[5] = new Personaje("Wolverine", 7, true);
+        personajes[6] = new Personaje("Namor", 7, true);
+        personajes[7] = new Personaje("Daredevil", 6, true);
+        personajes[8] = new Personaje("Silver Surfer", 6, true);
+        personajes[9] = new Personaje("Hulk", 6, true);
+        personajes[10] = new Personaje("Iron Man", 6, true);
         return personajes;
         
     }
