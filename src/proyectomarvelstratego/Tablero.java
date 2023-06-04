@@ -11,18 +11,18 @@ package proyectomarvelstratego;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.util.ArrayList;
 
 public class Tablero extends JPanel{
     private boolean hayCasillaSeleccionada = false;
     private CasillaTablero casillaSeleccionada;
     private CasillaTablero[][] casillas;
-    private BufferedImage image;
     private boolean turnoHeroes = true;
+    
+    private ArrayList<Personaje> heroesEliminados = new ArrayList<Personaje>();
+    private ArrayList<Personaje> villanosEliminados = new ArrayList<Personaje>();
     private JTextArea infoArea;
+    
     
     public Tablero(JTextArea infoArea) {
         this.infoArea = infoArea;
@@ -65,8 +65,8 @@ public class Tablero extends JPanel{
                                     System.out.println("Seleccionado correctamente");
                                     System.out.println("seleccionado: " + casillaSeleccionada.personajeActual.nombre);
                                    
-                                    showCharacterInfo();
-                                    highlightIfValidMove();
+                                    mostrarInformacionPersonaje();
+                                    resaltarSiEsMovimientoValido();
                                     break;
                                 } else {
                                     casillaSeleccionada = null;
@@ -86,22 +86,22 @@ public class Tablero extends JPanel{
                                 if (casillas[i][j].personajeActual != null) {
                                     if (casillas[i][j].personajeActual.esHeroe == turnoHeroes) {
                                         // Actualizar casillas  
-                                        unhighlightAllValidMoves();
+                                        borrarResaltadoMovimientos();
                                         casillaSeleccionada.setSelected(false);
                                         
                                         casillaSeleccionada = casillas[i][j];
                                         casillaSeleccionada.setSelected(turnoHeroes);
-                                        highlightIfValidMove();
-                                        highlightForbiddenZones();
+                                        resaltarSiEsMovimientoValido();
+                                        resaltarZonasProhibidas();
                                         
-                                        showCharacterInfo();
+                                        mostrarInformacionPersonaje();
                                         
                                         break;
                                     }
                                 }
                                 
-                                if (isValidMove(i, j)) {
-                                    moveCharacter(i, j);
+                                if (esMovimientoValido(i, j)) {
+                                    moverPersonaje(i, j);
                                 } else{
                                     JOptionPane.showMessageDialog(null, "MOVIMIENTO INVALIDO.\nTus movimientos validos estan coloreados de amarillo.");
                                 }
@@ -122,16 +122,16 @@ public class Tablero extends JPanel{
 
         // Establecer la posición inicial de la imagen
         casillas[2][2].setPersonaje(new Personaje("Captain America", 9, true));
-        casillas[1][0].setPersonaje(new Personaje("Iron Man", 7, true));
+        casillas[8][6].setPersonaje(new Personaje("Iron Man", 7, true));
         casillas[8][8].setPersonaje(new Personaje("VILLANO", 7, false));
         casillas[1][8].setPersonaje(new Personaje("ROOK", 2, false));
         
-        highlightForbiddenZones();
-        hideCharacters();
+        resaltarZonasProhibidas();
+        esconderPersonajes();
         setVisible(true);
     }
 
-    private boolean isValidMove(int row, int column) {
+    private boolean esMovimientoValido(int row, int column) {
         int currentRow = casillaSeleccionada.row;
         int currentColumn = casillaSeleccionada.column;
         
@@ -233,22 +233,22 @@ public class Tablero extends JPanel{
         return false;
     }
     
-    private void highlightIfValidMove() {
+    private void resaltarSiEsMovimientoValido() {
         // VER DESPUES LAS FICHAS #2
         
         // Iterar por todas las casillas y verificar que sean un movimiento valido para resaltarlas
         
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j<10;j++) {
-                casillas[i][j].highlightMove(isValidMove(i, j));
+                casillas[i][j].highlightMove(esMovimientoValido(i, j));
                 casillas[i][j].label.repaint();
 
             }
         }
-        highlightForbiddenZones();
+        resaltarZonasProhibidas();
      }
     
-    private void hideCharacters() {
+    private void esconderPersonajes() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j<10;j++) {
                 if (casillas[i][j].personajeActual != null) {
@@ -258,7 +258,7 @@ public class Tablero extends JPanel{
         }
     }
     
-    public void highlightForbiddenZones() {
+    public void resaltarZonasProhibidas() {
         // Resaltar las zonas restringidas en color negro
         for (int row = 4; row <= 5; row++) {
             for (int column = 2; column <= 3; column++) {
@@ -275,31 +275,106 @@ public class Tablero extends JPanel{
         }
     }
 
-    private void moveCharacter(int newRow, int newColumn) {
-        // Eliminar la imagen de la posición actual
-        Personaje personaje = casillaSeleccionada.personajeActual;
+    private void moverPersonaje(int newRow, int newColumn) {
         
+        // VERIFICAR QUE HAYA UN PERSONAJE EN LA NUEVA CASILLA PARA TOMAR EL COMBATE
+        if (casillas[newRow][newColumn].personajeActual != null) {
+            // Entrar en combate ya que esta restringido que piezas del mismo rango entren en combate.
+            Personaje ganador = calcularCombate(casillaSeleccionada.personajeActual, casillas[newRow][newColumn].personajeActual);
+            
+            // Ambas piezas fueron eliminadas porque eran del mismo rango
+            if (ganador == null) {
+                casillaSeleccionada.setPersonaje(null);
+                casillas[newRow][newColumn].setPersonaje(null);
+            } else if (casillaSeleccionada.personajeActual == ganador) {
+                // Mover el ganador a la casilla de la pieza derrotada
+                casillaSeleccionada.setPersonaje(null);
+                casillas[newRow][newColumn].setPersonaje(ganador);
+            } else {
+                // La pieza atacante perdio
+                casillaSeleccionada.setPersonaje(null);
+            }
+            
+            actualizarTurno();
+            return;
+        }
+        
+        
+        // No habia un personaje en esa casilla asi que solo se actualiza la posicion
+        Personaje personaje = casillaSeleccionada.personajeActual;
         casillaSeleccionada.setPersonaje(null);
-        unhighlightAllValidMoves();
+        borrarResaltadoMovimientos();
         
         // Mover la imagen a la nueva posición
         casillas[newRow][newColumn].setPersonaje(personaje);
+        
+        actualizarTurno();
+    }
+    
+    public Personaje calcularCombate(Personaje atacante, Personaje defensor) {
+        
+        // Los personajes rango 3 pueden vencer a las bombas (rango 0).
+        if (atacante.rango == 3 && (defensor.rango == 0)) {
+            if (defensor.esHeroe) heroesEliminados.add(defensor);
+            else villanosEliminados.add(defensor);
+            
+            return atacante;
+            
+        // Las piezas rango 1 pueden vencer a las piezas de rango 10 y a las tierras (rango -1).
+        } else if (atacante.rango == 1 && (defensor.rango == 10 || defensor.rango == -1)) {
+            if (defensor.esHeroe) heroesEliminados.add(defensor);
+            else villanosEliminados.add(defensor);
+            
+            return atacante;
+        } if (defensor.rango == 3 && atacante.rango != 3) {
+            if (atacante.esHeroe) heroesEliminados.add(atacante);
+            else villanosEliminados.add(atacante);
+            
+            return defensor;
+        } else if (atacante.rango > defensor.rango) {
+            if (defensor.esHeroe) heroesEliminados.add(defensor);
+            else villanosEliminados.add(defensor);
+            
+            return atacante;
+        } else if (atacante.rango < defensor.rango) {
+            if (atacante.esHeroe) heroesEliminados.add(atacante);
+            else villanosEliminados.add(atacante);
+            
+            return defensor;
+        } else {
+            if (atacante.esHeroe) {
+                heroesEliminados.add(atacante);
+                villanosEliminados.add(defensor);
+            } else {
+                villanosEliminados.add(atacante);
+                heroesEliminados.add(defensor);
+            }
+            
+            return null;
+        }
+        
+    
+    }
+    
+    public void actualizarTurno() {
         casillaSeleccionada = null;
         hayCasillaSeleccionada = false;
         
         turnoHeroes = !turnoHeroes;
         setVisible(false);
-        hideCharacters();
+        esconderPersonajes();
         infoArea.setText("");
         
         String mensaje;
         if (!turnoHeroes) mensaje = "FIN DEL TURNO DE LOS HEROES. DEJE A LOS VILLANOS JUGAR SU TURNO.";
         else mensaje = "FIN DEL TURNO DE LOS VILLANOS. DEJE A LOS HEROES JUGAR SU TURNO.";
         JOptionPane.showMessageDialog(null, mensaje);
+        borrarResaltadoMovimientos();
+        resaltarZonasProhibidas();
         setVisible(true);
+        
     }
-    
-    public void unhighlightAllValidMoves() {
+    public void borrarResaltadoMovimientos() {
         for (int i = 0; i<10;i++) {
             for (int j = 0; j<10;j++){
                 casillas[i][j].setSelected(false);
@@ -307,10 +382,10 @@ public class Tablero extends JPanel{
 
             }
         }
-        highlightForbiddenZones();
+        resaltarZonasProhibidas();
     }
     
-    public void showCharacterInfo() {
+    public void mostrarInformacionPersonaje() {
         // Mostrar informacion en textarea
         String mensaje = "Personaje: " + casillaSeleccionada.personajeActual.nombre + "\n";
         mensaje += (casillaSeleccionada.personajeActual.esHeroe) ?"Bando: Heroes\n":"Bando: Villanos\n";
