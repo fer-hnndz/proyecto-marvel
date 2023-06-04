@@ -21,7 +21,7 @@ public class Juego extends javax.swing.JFrame {
         
         gamePanel.setLayout(new GridLayout(1,1));
         gamePanel.setMinimumSize(new Dimension(600, 300));
-        gamePanel.add(new Tablero());
+        gamePanel.add(new Tablero(infoArea));
     }
 
     /**
@@ -42,6 +42,7 @@ public class Juego extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         eliminatedArea = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Marvel Stratego - En Partida");
@@ -56,7 +57,7 @@ public class Juego extends javax.swing.JFrame {
         gamePanel.setLayout(gamePanelLayout);
         gamePanelLayout.setHorizontalGroup(
             gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 291, Short.MAX_VALUE)
+            .addGap(0, 293, Short.MAX_VALUE)
         );
         gamePanelLayout.setVerticalGroup(
             gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -96,7 +97,11 @@ public class Juego extends javax.swing.JFrame {
         eliminatedArea.setFocusable(false);
         jScrollPane2.setViewportView(eliminatedArea);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Eliminados");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setText("Información del Personaje");
 
         javax.swing.GroupLayout infoPanelLayout = new javax.swing.GroupLayout(infoPanel);
         infoPanel.setLayout(infoPanelLayout);
@@ -113,15 +118,20 @@ public class Juego extends javax.swing.JFrame {
                         .addGap(108, 108, 108)
                         .addComponent(jLabel1))
                     .addGroup(infoPanelLayout.createSequentialGroup()
-                        .addGap(91, 91, 91)
+                        .addGap(96, 96, 96)
                         .addComponent(surrenderBtn)))
-                .addGap(35, 35, 35))
+                .addGap(37, 37, 37))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPanelLayout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addGap(74, 74, 74))
         );
         infoPanelLayout.setVerticalGroup(
             infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(infoPanelLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(15, 15, 15)
                 .addComponent(surrenderBtn)
+                .addGap(19, 19, 19)
+                .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                 .addGap(5, 5, 5)
@@ -188,6 +198,7 @@ public class Juego extends javax.swing.JFrame {
     private javax.swing.JTextArea infoArea;
     private javax.swing.JPanel infoPanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

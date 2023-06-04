@@ -22,8 +22,10 @@ public class Tablero extends JPanel{
     private CasillaTablero[][] casillas;
     private BufferedImage image;
     private boolean turnoHeroes = true;
-
-    public Tablero() {
+    private JTextArea infoArea;
+    
+    public Tablero(JTextArea infoArea) {
+        this.infoArea = infoArea;
         setLayout(new GridLayout(10, 10));
 
         // Crear las etiquetas para representar la cuadrícula del tablero
@@ -63,6 +65,7 @@ public class Tablero extends JPanel{
                                     System.out.println("Seleccionado correctamente");
                                     System.out.println("seleccionado: " + casillaSeleccionada.personajeActual.nombre);
                                    
+                                    showCharacterInfo();
                                     highlightIfValidMove();
                                     break;
                                 } else {
@@ -91,35 +94,22 @@ public class Tablero extends JPanel{
                                         highlightIfValidMove();
                                         highlightForbiddenZones();
                                         
+                                        showCharacterInfo();
+                                        
                                         break;
                                     }
                                 }
                                 
                                 if (isValidMove(i, j)) {
                                     moveCharacter(i, j);
+                                } else{
+                                    JOptionPane.showMessageDialog(null, "MOVIMIENTO INVALIDO.\nTus movimientos validos estan coloreados de amarillo.");
                                 }
                             }
                             
                         }
-                    }
-                    
+                    } 
                 }
-                
-                
-                /*
-                if (row != -1 && column != -1) {
-                    // Verificar si el movimiento es válido
-                    if (isValidMove(row, column)) {
-                        // Mover la imagen a la nueva posición
-                        moveImage(row, column);
-                    } else {
-                        // Mostrar mensaje de movimiento inválido solo si es diagonal
-                        if (row != currentRow && column != currentColumn) {
-                            JOptionPane.showMessageDialog(Tablero.this, "Movimiento inválido", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
-                }
-*/
             }
         };
 
@@ -133,7 +123,8 @@ public class Tablero extends JPanel{
         // Establecer la posición inicial de la imagen
         casillas[2][2].setPersonaje(new Personaje("Captain America", 9, true));
         casillas[1][0].setPersonaje(new Personaje("Iron Man", 7, true));
-        casillas[8][7].setPersonaje(new Personaje("VILLANO", 7, false));
+        casillas[8][8].setPersonaje(new Personaje("VILLANO", 7, false));
+        casillas[1][8].setPersonaje(new Personaje("ROOK", 2, false));
         
         highlightForbiddenZones();
         hideCharacters();
@@ -144,24 +135,102 @@ public class Tablero extends JPanel{
         int currentRow = casillaSeleccionada.row;
         int currentColumn = casillaSeleccionada.column;
         
-        // Verificar si el movimiento es ortogonal
-        boolean isOrthogonal = (row == currentRow && Math.abs(column - currentColumn) == 1) ||
-                (column == currentColumn && Math.abs(row - currentRow) == 1);
-
-        // Verificar si la nueva posición está dentro de los espacios restringidos
-        boolean isRestricted = (row >= 4 && row <= 5 && column >= 2 && column <= 3) ||
-                (row >= 4 && row <= 5 && column >= 6 && column <= 7);
-
-        // verificar si hay un personaje en la casilla
-        boolean hasCharacter = (casillas[row][column].personajeActual != null);
-
-        // VERIFICAR QUE SI HAY UN PERSONAJE, QUE ESTE SEA DEL MISMO BANDO
-        if (hasCharacter) { 
-            hasCharacter = (casillas[row][column].personajeActual.esHeroe == casillaSeleccionada.personajeActual.esHeroe);
+        
+        // Son fichas que no se pueden mover
+        if (casillaSeleccionada.personajeActual.rango == 0) {
+            return false;
         }
         
-        // El movimiento es válido solo si es ortogonal y no está en un espacio restringido (zonas prohibidas) y no tiene otra ficha del mismo bando
-        return isOrthogonal && !isRestricted && !hasCharacter;
+        if (casillaSeleccionada.personajeActual.rango == 2) {
+           
+            // VERIFICAR QUE EL MOVIMIENTO SEA ORTOGONAL
+            boolean isOrthogonal = (row == currentRow && Math.abs(column - currentColumn) > 0) ||
+                    (column == currentColumn && Math.abs(row - currentRow) > 0);
+            // Verificar si la nueva posición está dentro de los espacios restringidos
+            boolean isRestricted = (row >= 4 && row <= 5 && column >= 2 && column <= 3) ||
+                    (row >= 4 && row <= 5 && column >= 6 && column <= 7);
+            
+            if (isOrthogonal && !isRestricted) {
+                if (column < currentColumn) { // iterar desde col actual hasta el destino a la izquierda
+                    for (int i = currentColumn-1; i >= column ;i--){
+                        if (casillas[currentRow][i].personajeActual != null) {
+                            if (casillas[currentRow][i].personajeActual.esHeroe != turnoHeroes) { // EL PERSONAJE ES DEL BANDO OPUESTO
+                                
+                                if (i == column) return true; // SI ESA CASILLA ES MI DESTINO, PUEDO ATACAR AL PERSONAJE ENTONCES ES VALIDO
+                                else return false; // ESTA INTERFIRIENDO EN EL DESTINO POR ENDE MI DESTINO NO ES VALIDO
+
+                            } else return false;// PIEZA DEL MISMO BANDO INTERIFIENDO POR ENDE DESTINO INVALIDO
+                        } else if ((currentRow >= 4 && currentRow <= 5) && ((i>=3 && i<=4) || (i>=6 && i<=7))) return false;
+                    }
+                    // Se hizo el recorrido sin encontrar ningun personaje en el camino
+                    return true;
+                } else if (column > currentColumn) { // iterar desde la col actual hacia el destino a la derecha
+                for (int i = currentColumn+1; i <= column;i++) {
+                        if (casillas[currentRow][i].personajeActual != null) {
+                            if (casillas[currentRow][i].personajeActual.esHeroe != turnoHeroes) {
+                                if (i == column) return true;
+                                else return false;
+                            }
+                        } else if ((currentRow >= 4 && currentRow <= 5) && ((i>=3 && i<=4) || (i>=6 && i<=7))) return false;
+                    }
+                    
+                    return true;
+                } else if (row < currentRow) {
+                    for (int i = currentRow-1; i >= row;i--){
+                        if (casillas[i][currentColumn].personajeActual != null) {
+                            if (casillas[i][currentColumn].personajeActual.esHeroe != turnoHeroes) {
+                                
+                                if (i == row) return true;
+                                else return false;
+                            } else return false;
+                        } else if ((i >= 4 && i<=5) && ((currentColumn >= 2 && currentColumn <= 3) || (currentColumn >= 6 && currentColumn <= 7))) return false;
+                    }
+                    
+                    return true;
+                } else if (row > currentRow) {
+                    for (int i = currentRow+1; i <= row;i++){
+                        // Verificar si la nueva posición está dentro de los espacios restringidos
+                        
+                        if (casillas[i][currentColumn].personajeActual != null) {
+                            if (casillas[i][currentColumn].personajeActual.esHeroe != turnoHeroes) {
+                                
+                                if (i == row) return true;
+                                else return false;
+                            } else return false;
+                            
+                            // HAY UNA CASILLA PROHIBIDA EN EL MEDIO
+                        } else if ((i >= 4 && i<=5) && ((currentColumn >= 2 && currentColumn <= 3) || (currentColumn >= 6 && currentColumn <= 7))) return false;
+                    }
+                    
+                    return true;
+                }
+                   
+            } else return false;
+        }
+        
+        // Fichas normales
+        if (casillaSeleccionada.personajeActual.rango != 2) {
+            // Verificar si el movimiento es ortogonal
+            boolean isOrthogonal = (row == currentRow && Math.abs(column - currentColumn) == 1) ||
+                    (column == currentColumn && Math.abs(row - currentRow) == 1);
+
+            // Verificar si la nueva posición está dentro de los espacios restringidos
+            boolean isRestricted = (row >= 4 && row <= 5 && column >= 2 && column <= 3) ||
+                    (row >= 4 && row <= 5 && column >= 6 && column <= 7);
+
+            // verificar si hay un personaje en la casilla
+            boolean hasCharacter = (casillas[row][column].personajeActual != null);
+
+            // VERIFICAR QUE SI HAY UN PERSONAJE, QUE ESTE SEA DEL MISMO BANDO
+            if (hasCharacter) { 
+                hasCharacter = (casillas[row][column].personajeActual.esHeroe == casillaSeleccionada.personajeActual.esHeroe);
+            }
+            
+            // El movimiento es válido solo si es ortogonal y no está en un espacio restringido (zonas prohibidas) y no tiene otra ficha del mismo bando
+            return isOrthogonal && !isRestricted && !hasCharacter;
+        } 
+        
+        return false;
     }
     
     private void highlightIfValidMove() {
@@ -221,6 +290,7 @@ public class Tablero extends JPanel{
         turnoHeroes = !turnoHeroes;
         setVisible(false);
         hideCharacters();
+        infoArea.setText("");
         
         String mensaje;
         if (!turnoHeroes) mensaje = "FIN DEL TURNO DE LOS HEROES. DEJE A LOS VILLANOS JUGAR SU TURNO.";
@@ -239,11 +309,19 @@ public class Tablero extends JPanel{
         }
         highlightForbiddenZones();
     }
+    
+    public void showCharacterInfo() {
+        // Mostrar informacion en textarea
+        String mensaje = "Personaje: " + casillaSeleccionada.personajeActual.nombre + "\n";
+        mensaje += (casillaSeleccionada.personajeActual.esHeroe) ?"Bando: Heroes\n":"Bando: Villanos\n";
+        mensaje += "Rango: " + casillaSeleccionada.personajeActual.rango;
+        infoArea.setText(mensaje);
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new Tablero();
+                new Tablero(null);
                 
             }
         });
