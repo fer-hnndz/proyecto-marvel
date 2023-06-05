@@ -20,7 +20,8 @@ public class Tablero extends JPanel{
     private CasillaTablero[][] casillas;
     private boolean turnoHeroes = true;
     
-    ArrayList<Personaje> heroesIniciales = Personaje.getFichasHeroes();
+    ArrayList<Personaje> heroesIniciales = Personaje.getPersonajesHeroes();
+    ArrayList<Personaje> villanosIniciales = Personaje.getPersonajesVillanos();
 
     
     private ArrayList<Personaje> heroesEliminados = new ArrayList<Personaje>();
@@ -421,7 +422,7 @@ public class Tablero extends JPanel{
         // Iterar por toda la lista de heroes disponisbles
         
         Random random = new Random();
-        // tamano 37 porque 3 bombas se colocan de manera constante
+        // PERSONAJES RANGO 2 HEROES
         for (int i =0;i<heroesIniciales.toArray().length;i++) {
             Personaje personajeActual = heroesIniciales.get(i);
             int columnaAleatoria;
@@ -445,20 +446,40 @@ public class Tablero extends JPanel{
             }
         }
         
-        // Se terminaron de colocar los heroes en base a sus restricciones
-        // Llenar las casillas faltantes con los demas heroes
-        posicionarPersonajesRestantes();
+        for (int i =0;i<villanosIniciales.toArray().length;i++) {
+            Personaje personajeActual = villanosIniciales.get(i);
+            int columnaAleatoria;
+            int filaAleatoria;
+            
+            if (personajeActual.rango == 2) {
+                // Elegir entre fila 6 y 7
+                
+                int filas[] = new int[2];
+                filas[0] = 2;
+                filas[1] = 3;
+                filaAleatoria = filas[random.nextInt(0,2)];
+
+                // Elegir columna aleatoria hasta que este libre ese espacio
+                do {
+                    columnaAleatoria = random.nextInt(0, 10);
+                } while(casillas[filaAleatoria][columnaAleatoria].personajeActual != null);
+                
+                casillas[filaAleatoria][columnaAleatoria].setPersonaje(personajeActual);
+                personajeActual.posicionado = true;
+            }
+        }
+        
     }
     
     public void posicionarTierras() {
         Random random = new Random();
         
+        // TIERRA HEROES
         for (int i =0;i<heroesIniciales.toArray().length;i++){
             
             Personaje personajeActual= heroesIniciales.get(i);
-            if (personajeActual.posicionado) {
-                continue;
-            }
+            if (personajeActual.posicionado) continue;
+            
             int columnaAleatoria;
             
             // Posicionar en la ultima fila de manera aleatoria la ficha de tipo tierra.
@@ -485,7 +506,41 @@ public class Tablero extends JPanel{
                 
                 personajeActual.posicionado = true;
             }
+        }
         
+        // TIERRA VILLANOS
+        
+        for (int i =0; i<villanosIniciales.toArray().length;i++){
+            Personaje personajeActual = villanosIniciales.get(i);
+            
+            if (personajeActual.posicionado) continue;
+            
+            int columnaAleatoria;
+            
+            // Posicionar en la ultima fila de manera aleatoria la ficha de tipo tierra.
+            if (personajeActual.rango == -1) {
+                // Generar una columna aleatoria hasta que no este en los bordes del tablero
+                do {
+                    columnaAleatoria = random.nextInt(0, 10);
+                } while (columnaAleatoria == 0 || columnaAleatoria == 9);
+                
+                casillas[0][columnaAleatoria].setPersonaje(personajeActual);
+                
+                // Agregas las bombas alrededor de la tierra
+                Personaje bomba1 = new Personaje("Pumpkin Bomb", 0, false);
+                Personaje bomba2 = new Personaje("Pumpkin Bomb", 0, false);
+                Personaje bomba3 = new Personaje("Pumpkin Bomb", 0, false);
+                
+                bomba1.posicionado = true;
+                bomba2.posicionado = true;
+                bomba3.posicionado = true;
+
+                casillas[1][columnaAleatoria].setPersonaje(bomba1);
+                casillas[0][columnaAleatoria-1].setPersonaje(bomba2);
+                casillas[0][columnaAleatoria+1].setPersonaje(bomba3);
+                
+                personajeActual.posicionado = true;
+            }
         }
     }
     
@@ -493,13 +548,13 @@ public class Tablero extends JPanel{
         
         // Iterar por toda la lista de heroes disponisbles
         
+        // BOMBAS HEROES
         Random random = new Random();
         for (int i =0;i<heroesIniciales.toArray().length;i++) {
             Personaje personajeActual = heroesIniciales.get(i);
             
-            if (personajeActual.posicionado) {
-                continue;
-            }
+            if (personajeActual.posicionado) continue;
+            
             int columnaAleatoria;
             int filaAleatoria;
             
@@ -520,6 +575,32 @@ public class Tablero extends JPanel{
                 personajeActual.posicionado = true;
             }
         }
+        
+        // BOMBAS VILLANOS
+        for (int i =0;i<villanosIniciales.toArray().length;i++) {
+            Personaje personajeActual = villanosIniciales.get(i);
+            
+            if (personajeActual.posicionado) continue;
+            int columnaAleatoria;
+            int filaAleatoria;
+            
+            if (personajeActual.rango == 0) {
+                
+                // Elegir una fila entre la 8 y 9
+                int filas[] = new int[2];
+                filas[0] = 0;
+                filas[1] = 1;
+                filaAleatoria = filas[random.nextInt(0,2)];
+                
+                // Generar una columna nueva hasta que esa casilla no tenga un personaje adentro
+                do {
+                    columnaAleatoria = random.nextInt(0, 10);
+                } while(casillas[filaAleatoria][columnaAleatoria].personajeActual != null);
+                
+                casillas[filaAleatoria][columnaAleatoria].setPersonaje(personajeActual);
+                personajeActual.posicionado = true;
+            }
+        }
     }
     
     public void posicionarPersonajesRestantes() {
@@ -527,6 +608,7 @@ public class Tablero extends JPanel{
         repaint();
         boolean placed = false;
         
+        // Restantes HEROES
         for (int i = 0; i<heroesIniciales.toArray().length;i++) {
             
             Personaje personajeActual = heroesIniciales.get(i);
@@ -535,24 +617,35 @@ public class Tablero extends JPanel{
                 for (int columna = 0; columna < 10; columna++){
                     if (!personajeActual.posicionado) {
                         placed = false;
-                        System.out.println("---------\nNO POSICIONADO: "+ personajeActual.nombre);
-                        
                         if (casillas[fila][columna].personajeActual == null) {
-                            casillas[fila][columna].setPersonaje(personajeActual);
-                            
-                            if (personajeActual.rango == 0) {
-                                casillas[fila][columna].label.setForeground(Color.red);
-                                casillas[fila][columna].label.setOpaque(true);
-                                casillas[fila][columna].label.repaint();
-
-
-                            }
-                            System.out.println("Posicionado " + personajeActual.nombre + " en " + fila + "," + columna);
+                           casillas[fila][columna].setPersonaje(personajeActual);
+                        
                             personajeActual.posicionado = true;
                             placed = true;
                             break;
-                        } else {
-                            System.out.println("YA ESTABA: " + casillas[fila][columna].personajeActual.nombre);
+                        }
+                    }
+                }
+                
+                if (placed) break;
+            }
+        } 
+        
+        // Restantes VILLANOS
+        for (int i = 0; i<villanosIniciales.toArray().length;i++) {
+            
+            Personaje personajeActual = villanosIniciales.get(i);
+        
+            for (int fila = 0;fila<4;fila++){
+                for (int columna = 0; columna < 10; columna++){
+                    if (!personajeActual.posicionado) {
+                        placed = false;
+                        if (casillas[fila][columna].personajeActual == null) {
+                           casillas[fila][columna].setPersonaje(personajeActual);
+                        
+                            personajeActual.posicionado = true;
+                            placed = true;
+                            break;
                         }
                     }
                 }

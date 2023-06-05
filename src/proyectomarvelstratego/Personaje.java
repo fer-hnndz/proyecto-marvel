@@ -29,7 +29,7 @@ public class Personaje {
        this.esHeroe = esHeroe;
     }
     
-    public static ArrayList<Personaje> getFichasHeroes() {
+    public static ArrayList<Personaje> getPersonajesHeroes() {
         ArrayList<Personaje> personajes = new ArrayList<Personaje>();
         
         personajes.add(new Personaje("Mr. Fantastic", 10, true));
@@ -80,5 +80,56 @@ public class Personaje {
         personajes.add(new Personaje("Planet Earth", -1, true));
         return personajes;
         
+    }
+    
+    public static ArrayList<Personaje> getPersonajesVillanos() {
+        ArrayList<Personaje> personajes = new ArrayList<Personaje>();
+        
+        personajes.add(new Personaje("Dr. Doom", 10, false));
+        personajes.add(new Personaje("Galactus", 9, false));
+        personajes.add(new Personaje("Kingpin", 8, false));
+        personajes.add(new Personaje("Magneto", 8, false));
+        personajes.add(new Personaje("Apocalypse", 7, false));
+        personajes.add(new Personaje("Green Goblin", 7, false));
+        personajes.add(new Personaje("Venom", 7, false));
+        personajes.add(new Personaje("Bullseye", 6, false));
+        personajes.add(new Personaje("Omega Red", 6, false));
+        personajes.add(new Personaje("Onslaught", 6, false));
+        personajes.add(new Personaje("Red Skull", 6, false));
+        personajes.add(new Personaje("Mystique", 5, false));
+        personajes.add(new Personaje("Mysterio", 5, false));
+        personajes.add(new Personaje("Dr. Octopus", 5, false));
+        personajes.add(new Personaje("Deadpool", 5, false));
+        personajes.add(new Personaje("Abomination", 4, false));
+        personajes.add(new Personaje("Thanos", 4, false));
+        personajes.add(new Personaje("Black Cat", 4, false));
+        personajes.add(new Personaje("Sabretooth", 4, false));
+        personajes.add(new Personaje("Juggernaut", 3, false));
+        personajes.add(new Personaje("Rhino", 3, false));
+        personajes.add(new Personaje("Carnage", 3, false));
+        personajes.add(new Personaje("Mole Man", 3, false));
+        personajes.add(new Personaje("Lizard", 3, false));
+        personajes.add(new Personaje("Mr. Sinister", 2, false));
+        personajes.add(new Personaje("Sentinel 1", 2, false));
+        personajes.add(new Personaje("Ultron", 2, false));
+        personajes.add(new Personaje("Sandman", 2, false));
+        personajes.add(new Personaje("Leader", 2, false));
+        personajes.add(new Personaje("Viper", 2, false));
+        personajes.add(new Personaje("Sentinel 2", 2, false));
+        personajes.add(new Personaje("Electro", 2, false));
+        personajes.add(new Personaje("Black Widow", 1, false));
+        
+        // Bombas
+        // Solo se agregan 3 porque las otras tres son agregadas de manera manual
+        
+        personajes.add(new Personaje("Pumpkin Bomb", 0, false));
+        personajes.add(new Personaje("Pumpkin Bomb", 0, false));
+        personajes.add(new Personaje("Pumpkin Bomb", 0, false));
+        
+        personajes.add(new Personaje("Planet Earth", -1, false));
+
+
+        
+        return personajes;
     }
 }
