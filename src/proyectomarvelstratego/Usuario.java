@@ -40,17 +40,14 @@ public class Usuario {
             this.contrasena = contrasena.trim();        
         }
     }
-    
+    public void actualizarContrasena(String nuevaContrasena) {
+    this.contrasena = nuevaContrasena;
+}
     /**
      * Verifica que el nombre de usuario y la contraseña especificada sea igual a a guardada por el usuario.
      * @return 
      */
     public boolean validarCredenciales(String usuario, String contrasena) {
         return (this.usuario.equals(usuario) && this.contrasena.equals(contrasena));
-    }
-    
-    
-    
-    
-    
+    }    
 }
