@@ -112,5 +112,35 @@ public class SistemaUsuarios {
         
         return usuarioIniciado;
     }
+    
+    public void eliminarUsuario(Usuario usuario) {
+    if (usuariosActivos != null) {
+        // Crear un nuevo array sin el usuario a eliminar
+        Usuario[] nuevosUsuarios = new Usuario[usuariosActivos.length - 1];
+        int indice = 0;
+
+        for (int i = 0; i < usuariosActivos.length; i++) {
+            if (usuariosActivos[i] != null && !usuariosActivos[i].equals(usuario)) {
+                nuevosUsuarios[indice] = usuariosActivos[i];
+                indice++;
+            }
+        }
+
+        // Actualizar el array de usuarios activos
+        usuariosActivos = nuevosUsuarios;
+    }
+}
+    
+    public void actualizarUsuario(Usuario usuarioActualizado) {
+    for (int i = 0; i < usuariosActivos.length; i++) {
+        Usuario usuario = usuariosActivos[i];
+        if (usuario.getUsuario().equals(usuarioActualizado.getUsuario())) {
+            // Actualizar los datos del usuario
+            usuario.setContrasena(usuarioActualizado.getContrasena());
+            usuariosActivos[i] = usuario;  // Guardar el usuario actualizado en el array
+            break;
+        }
+    }
+    }
 }
 
