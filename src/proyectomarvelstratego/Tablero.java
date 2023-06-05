@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Tablero extends JPanel{
     private boolean hayCasillaSeleccionada = false;
@@ -19,13 +20,17 @@ public class Tablero extends JPanel{
     private CasillaTablero[][] casillas;
     private boolean turnoHeroes = true;
     
+    ArrayList<Personaje> heroesIniciales = Personaje.getFichasHeroes();
+
+    
     private ArrayList<Personaje> heroesEliminados = new ArrayList<Personaje>();
     private ArrayList<Personaje> villanosEliminados = new ArrayList<Personaje>();
     private JTextArea infoArea;
+    private JTextArea eliminadosArea;
     
-    
-    public Tablero(JTextArea infoArea) {
+    public Tablero(JTextArea infoArea, JTextArea eliminadosArea) {
         this.infoArea = infoArea;
+        this.eliminadosArea = eliminadosArea;
         setLayout(new GridLayout(10, 10));
 
         // Crear las etiquetas para representar la cuadrícula del tablero
@@ -120,11 +125,8 @@ public class Tablero extends JPanel{
             }
         }
 
-        // Establecer la posición inicial de la imagen
-        casillas[2][2].setPersonaje(new Personaje("Captain America", 9, true));
-        casillas[8][6].setPersonaje(new Personaje("Iron Man", 7, true));
-        casillas[8][8].setPersonaje(new Personaje("VILLANO", 7, false));
-        casillas[1][8].setPersonaje(new Personaje("ROOK", 2, false));
+        // Establecer posiciones iniciales
+        posicionarTodo();
         
         resaltarZonasProhibidas();
         esconderPersonajes();
@@ -170,7 +172,7 @@ public class Tablero extends JPanel{
                             if (casillas[currentRow][i].personajeActual.esHeroe != turnoHeroes) {
                                 if (i == column) return true;
                                 else return false;
-                            }
+                            } else return false;
                         } else if ((currentRow >= 4 && currentRow <= 5) && ((i>=3 && i<=4) || (i>=6 && i<=7))) return false;
                     }
                     
@@ -364,6 +366,7 @@ public class Tablero extends JPanel{
         setVisible(false);
         esconderPersonajes();
         infoArea.setText("");
+        eliminadosArea.setText("");
         
         String mensaje;
         if (!turnoHeroes) mensaje = "FIN DEL TURNO DE LOS HEROES. DEJE A LOS VILLANOS JUGAR SU TURNO.";
@@ -372,6 +375,7 @@ public class Tablero extends JPanel{
         borrarResaltadoMovimientos();
         resaltarZonasProhibidas();
         setVisible(true);
+        mostrarPersonajesEliminados();
         
     }
     public void borrarResaltadoMovimientos() {
@@ -392,11 +396,183 @@ public class Tablero extends JPanel{
         mensaje += "Rango: " + casillaSeleccionada.personajeActual.rango;
         infoArea.setText(mensaje);
     }
+    
+    public void mostrarPersonajesEliminados() {
+        String mensaje = "";
+        
+        if (turnoHeroes) {
+            
+            for (int i = 0; i<heroesEliminados.toArray().length;i++) {
+                Personaje personaje = heroesEliminados.get(i);
+                mensaje += personaje.nombre + " (Rango " + personaje.rango + ")\n";
+            }
+        } else {
+            for (int i = 0; i<villanosEliminados.toArray().length;i++) {
+                Personaje personaje = villanosEliminados.get(i);
+                mensaje += personaje.nombre + " (Rango " + personaje.rango + ")\n";
+            }
+        }
+        
+        eliminadosArea.setText(mensaje);
+    }
 
+    public void posicionarPersonajesRango2() {
+        
+        // Iterar por toda la lista de heroes disponisbles
+        
+        Random random = new Random();
+        // tamano 37 porque 3 bombas se colocan de manera constante
+        for (int i =0;i<heroesIniciales.toArray().length;i++) {
+            Personaje personajeActual = heroesIniciales.get(i);
+            int columnaAleatoria;
+            int filaAleatoria;
+            
+            if (personajeActual.rango == 2) {
+                // Elegir entre fila 6 y 7
+                
+                int filas[] = new int[2];
+                filas[0] = 6;
+                filas[1] = 7;
+                filaAleatoria = filas[random.nextInt(0,2)];
+
+                // Elegir columna aleatoria hasta que este libre ese espacio
+                do {
+                    columnaAleatoria = random.nextInt(0, 10);
+                } while(casillas[filaAleatoria][columnaAleatoria].personajeActual != null);
+                
+                casillas[filaAleatoria][columnaAleatoria].setPersonaje(personajeActual);
+                personajeActual.posicionado = true;
+            }
+        }
+        
+        // Se terminaron de colocar los heroes en base a sus restricciones
+        // Llenar las casillas faltantes con los demas heroes
+        posicionarPersonajesRestantes();
+    }
+    
+    public void posicionarTierras() {
+        Random random = new Random();
+        
+        for (int i =0;i<heroesIniciales.toArray().length;i++){
+            
+            Personaje personajeActual= heroesIniciales.get(i);
+            if (personajeActual.posicionado) {
+                continue;
+            }
+            int columnaAleatoria;
+            
+            // Posicionar en la ultima fila de manera aleatoria la ficha de tipo tierra.
+            if (personajeActual.rango == -1) {
+                // Generar una columna aleatoria hasta que no este en los bordes del tablero
+                do {
+                    columnaAleatoria = random.nextInt(0, 10);
+                } while (columnaAleatoria == 0 || columnaAleatoria == 9);
+                
+                casillas[9][columnaAleatoria].setPersonaje(personajeActual);
+                
+                // Agregas las bombas alrededor de la tierra
+                Personaje bomba1 = new Personaje("Nova Blast", 0, true);
+                Personaje bomba2 = new Personaje("Nova Blast", 0, true);
+                Personaje bomba3 = new Personaje("Nova Blast", 0, true);
+                
+                bomba1.posicionado = true;
+                bomba2.posicionado = true;
+                bomba3.posicionado = true;
+
+                casillas[8][columnaAleatoria].setPersonaje(bomba1);
+                casillas[9][columnaAleatoria-1].setPersonaje(bomba2);
+                casillas[9][columnaAleatoria+1].setPersonaje(bomba3);
+                
+                personajeActual.posicionado = true;
+            }
+        
+        }
+    }
+    
+    public void posicionarBombas() {
+        
+        // Iterar por toda la lista de heroes disponisbles
+        
+        Random random = new Random();
+        for (int i =0;i<heroesIniciales.toArray().length;i++) {
+            Personaje personajeActual = heroesIniciales.get(i);
+            
+            if (personajeActual.posicionado) {
+                continue;
+            }
+            int columnaAleatoria;
+            int filaAleatoria;
+            
+            if (personajeActual.rango == 0) {
+                
+                // Elegir una fila entre la 8 y 9
+                int filas[] = new int[2];
+                filas[0] = 8;
+                filas[1] = 9;
+                filaAleatoria = filas[random.nextInt(0,2)];
+                
+                // Generar una columna nueva hasta que esa casilla no tenga un personaje adentro
+                do {
+                    columnaAleatoria = random.nextInt(0, 10);
+                } while(casillas[filaAleatoria][columnaAleatoria].personajeActual != null);
+                
+                casillas[filaAleatoria][columnaAleatoria].setPersonaje(personajeActual);
+                personajeActual.posicionado = true;
+            }
+        }
+    }
+    
+    public void posicionarPersonajesRestantes() {
+        // Generar una ficha aleatoria y una columna aleatoria
+        repaint();
+        boolean placed = false;
+        
+        for (int i = 0; i<heroesIniciales.toArray().length;i++) {
+            
+            Personaje personajeActual = heroesIniciales.get(i);
+        
+            for (int fila = 6;fila<10;fila++){
+                for (int columna = 0; columna < 10; columna++){
+                    if (!personajeActual.posicionado) {
+                        placed = false;
+                        System.out.println("---------\nNO POSICIONADO: "+ personajeActual.nombre);
+                        
+                        if (casillas[fila][columna].personajeActual == null) {
+                            casillas[fila][columna].setPersonaje(personajeActual);
+                            
+                            if (personajeActual.rango == 0) {
+                                casillas[fila][columna].label.setForeground(Color.red);
+                                casillas[fila][columna].label.setOpaque(true);
+                                casillas[fila][columna].label.repaint();
+
+
+                            }
+                            System.out.println("Posicionado " + personajeActual.nombre + " en " + fila + "," + columna);
+                            personajeActual.posicionado = true;
+                            placed = true;
+                            break;
+                        } else {
+                            System.out.println("YA ESTABA: " + casillas[fila][columna].personajeActual.nombre);
+                        }
+                    }
+                }
+                
+                if (placed) break;
+            }
+        } 
+    }
+
+    public void posicionarTodo() {
+        posicionarTierras();
+        posicionarBombas();
+        posicionarPersonajesRango2();
+        posicionarPersonajesRestantes();
+    }
+    
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new Tablero(null);
+                new Tablero(null, null);
                 
             }
         });

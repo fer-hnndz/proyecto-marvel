@@ -19,9 +19,10 @@ public class Juego extends javax.swing.JFrame {
     public Juego() {
         initComponents();
         
+        setVisible(true);
         gamePanel.setLayout(new GridLayout(1,1));
         gamePanel.setMinimumSize(new Dimension(600, 300));
-        gamePanel.add(new Tablero(infoArea));
+        gamePanel.add(new Tablero(infoArea, eliminatedArea));
     }
 
     /**
