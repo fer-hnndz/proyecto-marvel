@@ -27,27 +27,10 @@ public class CasillaTablero {
         
         label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
-    
-    public void setSelected(boolean selected) {
-        
-        this.selected = selected;
-        if (selected == true) {
-            // Colorear de distinta manera si es heroe o villano
-            
-            if (personajeActual.esHeroe) {
-                label.setBackground(Color.BLUE);
-            } else { // ES Villano
-                label.setBackground(Color.RED);
-            }
-            label.setOpaque(true);  
-        } else {
-            label.setOpaque(false);
-        }
-    }
-    
+       
     public void highlightMove(boolean activar) {
         if (activar) {
-            label.setBackground(Color.yellow);
+            label.setBackground(Color.green);
             label.setOpaque(true);
         } else label.setOpaque(false);
     }

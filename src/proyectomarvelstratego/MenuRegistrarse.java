@@ -171,12 +171,6 @@ public class MenuRegistrarse extends javax.swing.JFrame {
             return;
         }
         
-        
-        if (username.length() > 5) {
-            JOptionPane.showMessageDialog(null, "Asegurese que su usuarios sea de máximo 5 caracteres.");
-            return;
-        }
-        
         // VERIFICAR QUE NO SE PUEDAN PONER ESPACIOS ENTRE MEDIO DEL USUARIO.
         validUsername = sistemaUsuarios.verificarEspaciosUsuario(username);
         

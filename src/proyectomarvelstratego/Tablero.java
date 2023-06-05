@@ -66,13 +66,13 @@ public class Tablero extends JPanel{
                                 
                                 if (casillaSeleccionada.personajeActual != null && 
                                         casillaSeleccionada.personajeActual.esHeroe == turnoHeroes) {
-                                    casillas[i][j].setSelected(true);
                                     hayCasillaSeleccionada = true;
                                     System.out.println("Seleccionado correctamente");
                                     System.out.println("seleccionado: " + casillaSeleccionada.personajeActual.nombre);
                                    
                                     mostrarInformacionPersonaje();
                                     resaltarSiEsMovimientoValido();
+                                    resaltarZonasProhibidas();
                                     break;
                                 } else {
                                     casillaSeleccionada = null;
@@ -93,10 +93,8 @@ public class Tablero extends JPanel{
                                     if (casillas[i][j].personajeActual.esHeroe == turnoHeroes) {
                                         // Actualizar casillas  
                                         borrarResaltadoMovimientos();
-                                        casillaSeleccionada.setSelected(false);
                                         
                                         casillaSeleccionada = casillas[i][j];
-                                        casillaSeleccionada.setSelected(turnoHeroes);
                                         resaltarSiEsMovimientoValido();
                                         resaltarZonasProhibidas();
                                         
@@ -109,7 +107,7 @@ public class Tablero extends JPanel{
                                 if (esMovimientoValido(i, j)) {
                                     moverPersonaje(i, j);
                                 } else{
-                                    JOptionPane.showMessageDialog(null, "MOVIMIENTO INVALIDO.\nTus movimientos validos estan coloreados de amarillo.");
+                                    JOptionPane.showMessageDialog(null, "MOVIMIENTO INVALIDO.\nTus movimientos validos estan coloreados de verde.");
                                 }
                             }
                             
@@ -266,12 +264,12 @@ public class Tablero extends JPanel{
         for (int row = 4; row <= 5; row++) {
             for (int column = 2; column <= 3; column++) {
                 casillas[row][column].label.setOpaque(true);
-                casillas[row][column].label.setBackground(Color.BLACK);
+                casillas[row][column].label.setBackground(new Color(131, 52, 235, 255));
                 casillas[row][column].label.repaint();
             }
             for (int column = 6; column <= 7; column++) {
                 casillas[row][column].label.setOpaque(true);
-                casillas[row][column].label.setBackground(Color.BLACK);
+                casillas[row][column].label.setBackground(Color.YELLOW);
                 casillas[row][column].label.repaint();
 
             }
@@ -382,7 +380,6 @@ public class Tablero extends JPanel{
     public void borrarResaltadoMovimientos() {
         for (int i = 0; i<10;i++) {
             for (int j = 0; j<10;j++){
-                casillas[i][j].setSelected(false);
                 casillas[i][j].label.repaint();
 
             }
