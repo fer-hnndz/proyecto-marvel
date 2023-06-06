@@ -126,7 +126,6 @@ public class Tablero extends JPanel{
 
         // Establecer posiciones iniciales
         posicionarTodo();
-        
         resaltarZonasProhibidas();
         esconderPersonajes();
         setVisible(true);
@@ -327,7 +326,7 @@ public class Tablero extends JPanel{
             else villanosEliminados.add(defensor);
             
             return atacante;
-        } if (defensor.rango == 3 && atacante.rango != 3) {
+        } if (defensor.rango == 0 && atacante.rango != 3) { // Combate entre bomba y otro personaje que no sea rango 3
             if (atacante.esHeroe) heroesEliminados.add(atacante);
             else villanosEliminados.add(atacante);
             
@@ -380,6 +379,7 @@ public class Tablero extends JPanel{
     public void borrarResaltadoMovimientos() {
         for (int i = 0; i<10;i++) {
             for (int j = 0; j<10;j++){
+                casillas[i][j].label.setOpaque(false);
                 casillas[i][j].label.repaint();
 
             }

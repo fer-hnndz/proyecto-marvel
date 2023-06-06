@@ -17,7 +17,6 @@ public class CasillaTablero {
     Personaje personajeActual;
     int row;
     int column;
-    boolean selected = false;
    
     public CasillaTablero(int row, int column, Personaje personajeActual) {
         this.label = new JLabel();

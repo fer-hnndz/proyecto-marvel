@@ -16,8 +16,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 public class Personaje {
     private BufferedImage icono;
-    private int currentRow;
-    private int currentColumn;
     String nombre;
     int rango;
     boolean esHeroe;
