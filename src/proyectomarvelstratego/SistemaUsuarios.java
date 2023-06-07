@@ -15,13 +15,18 @@ package proyectomarvelstratego;
 
 public class SistemaUsuarios {
 
+   private static SistemaUsuarios instancia; // Instancia única de SistemaUsuarios
+
     int usuariosHistoricos = 0;
     Usuario usuariosActivos[] = new Usuario[1];
-    /**
-     * Actualiza la ventana para mostrar el menu principal
-     * @param ventana La ventana de la aplicacion
-     */
+
     public SistemaUsuarios() {
+    }
+        public static SistemaUsuarios getInstancia() {
+        if (instancia == null) {
+            instancia = new SistemaUsuarios();
+        }
+        return instancia;
     }
     
     /**
