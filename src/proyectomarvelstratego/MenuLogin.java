@@ -176,9 +176,8 @@ public class MenuLogin extends javax.swing.JFrame {
             return;
         }
         
-        String mensaje = "Informacion para " + usuarioActual.getUsuario();
-        mensaje += "\nContraseña: " + usuarioActual.getContrasena();
-        JOptionPane.showMessageDialog(null, mensaje);
+        new MenuInicio().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

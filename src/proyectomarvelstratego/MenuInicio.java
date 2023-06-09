@@ -72,6 +72,7 @@ public class MenuInicio extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MenuIronMan.png"))); // NOI18N
 
         jButton1.setFont(new java.awt.Font("Nirmala UI", 1, 36)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("STRATEGO - MARVEL HEROES!");
         jButton1.setBorderPainted(false);
         jButton1.setContentAreaFilled(false);
@@ -82,12 +83,14 @@ public class MenuInicio extends javax.swing.JFrame {
         });
 
         jButton2.setFont(new java.awt.Font("Nirmala UI", 1, 36)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("CONFIGURACION");
         jButton2.setBorderPainted(false);
         jButton2.setContentAreaFilled(false);
         jButton2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         jButton3.setFont(new java.awt.Font("Nirmala UI", 1, 36)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("MI PERFIL");
         jButton3.setBorderPainted(false);
         jButton3.setContentAreaFilled(false);
@@ -99,12 +102,14 @@ public class MenuInicio extends javax.swing.JFrame {
         });
 
         jButton4.setFont(new java.awt.Font("Nirmala UI", 1, 36)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("UNIVERSO MARVEL");
         jButton4.setBorderPainted(false);
         jButton4.setContentAreaFilled(false);
         jButton4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         jButton5.setFont(new java.awt.Font("Nirmala UI", 1, 36)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("CERRAR SESION");
         jButton5.setBorderPainted(false);
         jButton5.setContentAreaFilled(false);
