@@ -19,15 +19,16 @@ public class PartidaNueva extends javax.swing.JFrame {
     public PartidaNueva() {
         initComponents();
         cargarUsuarios();
+        
     }
 
     private void cargarUsuarios() {
     SistemaUsuarios sistemaUsuarios = SistemaUsuarios.getInstancia();
     Usuario[] usuarios = sistemaUsuarios.getUsuariosActivos();
 
-    for (Usuario usuario : usuarios) {
-        combobox.addItem(usuario.getUsuario());
-    }
+        for (Usuario usuario : usuarios) {
+            combobox.addItem(usuario.getUsuario());
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
