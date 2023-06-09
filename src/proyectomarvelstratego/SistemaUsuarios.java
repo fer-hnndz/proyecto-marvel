@@ -97,7 +97,9 @@ public class SistemaUsuarios {
         usuariosHistoricos++;
         
     }
-    
+        public Usuario[] getUsuariosActivos() {
+        return usuariosActivos;
+    }
     /**
      * Retorna el usuario con el que las credenciales son correctas. Devuelve `null` si no fue encontrado
      * @param usuario
