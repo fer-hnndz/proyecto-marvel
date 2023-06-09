@@ -61,6 +61,7 @@ public class MenuLogin extends javax.swing.JFrame {
 
         usernameInput.setBackground(new java.awt.Color(255, 255, 255));
         usernameInput.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        usernameInput.setForeground(new java.awt.Color(0, 0, 0));
         usernameInput.setToolTipText("Ingrese su nombre de usuario");
         usernameInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,6 +75,7 @@ public class MenuLogin extends javax.swing.JFrame {
 
         passwordInput.setBackground(new java.awt.Color(255, 255, 255));
         passwordInput.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        passwordInput.setForeground(new java.awt.Color(0, 0, 0));
         passwordInput.setToolTipText("");
 
         jButton1.setBackground(new java.awt.Color(0, 255, 255));
