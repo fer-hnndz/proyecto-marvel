@@ -17,9 +17,13 @@ public class MenuInicio extends javax.swing.JFrame {
      * Creates new form MenuInicio
      */
         private Usuario usuario;
-
-    public MenuInicio() {
+        SistemaUsuarios sistemaUsuarios;
+    public MenuInicio(SistemaUsuarios sistemaUsuarios) {
         initComponents();
+        
+        this.sistemaUsuarios = sistemaUsuarios;
+        usuario = sistemaUsuarios.getUsuarioActual();
+        
         this.setMinimumSize(new Dimension(800, 500));
         habilitarBotonPartidaNueva();        
     }
@@ -304,10 +308,13 @@ public class MenuInicio extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        
+        /*
         MiPerfil perfil = new MiPerfil();
         perfil.setUsuario(usuario);
         perfil.setVisible(true);
         dispose();
+        */
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -323,6 +330,8 @@ public class MenuInicio extends javax.swing.JFrame {
         int opcion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas cerrar sesión?", "Confirmación", JOptionPane.YES_NO_OPTION);
         if (opcion == JOptionPane.YES_OPTION) {
             MenuPrincipal menuPrincipal = new MenuPrincipal();
+            sistemaUsuarios.usuarioIniciado = null;
+            menuPrincipal.setSistemaUsuarios(sistemaUsuarios);
             menuPrincipal.setVisible(true);
             dispose();
         }
@@ -358,7 +367,7 @@ public class MenuInicio extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuInicio().setVisible(true);
+                new MenuInicio(null).setVisible(true);
             }
         });
     }

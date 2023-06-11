@@ -4,7 +4,7 @@
  */
 package proyectomarvelstratego;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 /**
  *
@@ -18,9 +18,13 @@ public class MenuRegistrarse extends javax.swing.JFrame {
      * Creates new form MenuRegistrarse
      */
     SistemaUsuarios sistemaUsuarios;
-    public MenuRegistrarse(SistemaUsuarios sistemaUsuarios) {
+    // Guardar la ventana del MenuPrincipal para poder cerrarla en caso de que se inicie sesion poder cerrarla.
+    MenuPrincipal menuPrincipal = null;
+    public MenuRegistrarse(SistemaUsuarios sistemaUsuarios, MenuPrincipal menuPrincipal) {
         initComponents();
 
+        this.menuPrincipal = menuPrincipal;
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setMinimumSize(new Dimension(800, 500));
         this.sistemaUsuarios = sistemaUsuarios;
     }
@@ -181,8 +185,8 @@ public class MenuRegistrarse extends javax.swing.JFrame {
         
         // VERIFICAR LONGITUD DE LA CONTRASENA
         
-        if (password.length() > 5) {
-            JOptionPane.showMessageDialog(null, "Ingrese una contraseña de máximo 5 caracteres.");
+        if (password.length() != 5) {
+            JOptionPane.showMessageDialog(null, "Ingrese una contraseña que sea de 5 caracteres.");
             return;
         }
         
@@ -196,17 +200,12 @@ public class MenuRegistrarse extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Se ha registrado correctamente.");
         
         // Devolver el usuario al menu principa;
-        MenuPrincipal menu = new MenuPrincipal();
-        menu.setSistemaUsuarios(sistemaUsuarios);
-        menu.setVisible(true);
+        menuPrincipal.setSistemaUsuarios(sistemaUsuarios);
         this.dispose();
         
     }//GEN-LAST:event_registerBtnActionPerformed
 
     private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
-        MenuPrincipal menu = new MenuPrincipal();
-        menu.setSistemaUsuarios(sistemaUsuarios);
-        menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_exitBtnActionPerformed
 
@@ -244,7 +243,7 @@ public class MenuRegistrarse extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuRegistrarse(null).setVisible(true);
+                new MenuRegistrarse(null, null).setVisible(true);
             }
         });
     }

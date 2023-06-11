@@ -215,13 +215,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
-        new MenuRegistrarse(sistemaUsuarios).setVisible(true);
-        this.dispose();
+        new MenuRegistrarse(sistemaUsuarios, this).setVisible(true);
     }//GEN-LAST:event_registerBtnActionPerformed
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        new MenuLogin(sistemaUsuarios).setVisible(true);
-        this.dispose();
+        new MenuLogin(sistemaUsuarios, this).setVisible(true);
     }//GEN-LAST:event_loginBtnActionPerformed
 
     /**

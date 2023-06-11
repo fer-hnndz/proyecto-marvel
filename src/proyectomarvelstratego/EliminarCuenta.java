@@ -15,12 +15,12 @@ public class EliminarCuenta extends javax.swing.JFrame {
     /**
      * Creates new form EliminarCuenta
      */
-     private Usuario usuario;
-        SistemaUsuarios sistemaUsuarios;
+    private Usuario usuario;
+    SistemaUsuarios sistemaUsuarios;
     
     public EliminarCuenta() {
         initComponents();
-            sistemaUsuarios = SistemaUsuarios.getInstancia();
+        sistemaUsuarios = SistemaUsuarios.getInstancia();
 
     }
     
@@ -114,9 +114,9 @@ public class EliminarCuenta extends javax.swing.JFrame {
             sistemaUsuarios.eliminarUsuario(usuario);
 
             JOptionPane.showMessageDialog(this, "La cuenta ha sido eliminada exitosamente.");
-    MenuPrincipal menuPrincipal = new MenuPrincipal();
-    menuPrincipal.setUsuario(usuario); 
-    menuPrincipal.setVisible(true); 
+            MenuPrincipal menuPrincipal = new MenuPrincipal();
+            menuPrincipal.setSistemaUsuarios(sistemaUsuarios); 
+            menuPrincipal.setVisible(true); 
             dispose();
         } else {
             JOptionPane.showMessageDialog(this, "La contraseña ingresada es incorrecta.");

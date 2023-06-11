@@ -19,7 +19,7 @@ public class SistemaUsuarios {
 
     int usuariosHistoricos = 0;
     Usuario usuariosActivos[] = new Usuario[1];
-    Usuario usuarioActual = null;
+    Usuario usuarioIniciado = null;
     
     // CONSTRUCTOR
     public SistemaUsuarios() {
@@ -109,21 +109,19 @@ public class SistemaUsuarios {
      * @param contrasena
      * @return 
      */
-    public Usuario iniciarSesion(String usuario, String contrasena) {
-        Usuario usuarioIniciado = null;
-        
+    public Usuario iniciarSesion(String usuario, String contrasena) {        
         for (int i =0;i<usuariosActivos.length;i++) {
            Usuario usuarioActual = usuariosActivos[i];
+           if (usuarioActual == null) continue;
+           
             if (usuarioActual.validarCredenciales(usuario, contrasena)) {
-                usuarioIniciado = usuarioActual;
-                
                 // Guardar el usuario que esta actualmente iniciado en el manager.
-                this.usuarioActual = usuarioActual;
-                break;
-            }
+                this.usuarioIniciado = usuarioActual;
+                return usuarioActual;
+            }            
         }
         
-        return usuarioIniciado;
+        return null;
     }
     
     public void eliminarUsuario(Usuario usuario) {
@@ -160,7 +158,7 @@ public class SistemaUsuarios {
      * @return 
      */
     public Usuario getUsuarioActual() {
-        return usuarioActual;
+        return usuarioIniciado;
     }
     
     

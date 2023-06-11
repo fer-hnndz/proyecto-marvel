@@ -4,7 +4,7 @@
  */
 package proyectomarvelstratego;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 /**
  *
@@ -17,9 +17,14 @@ public class MenuLogin extends javax.swing.JFrame {
      */
     
     SistemaUsuarios sistemaUsuarios;
-    public MenuLogin(SistemaUsuarios sistema) {
+    
+    // Guardar la ventana del MenuPrincipal para poder cerrarla en caso de que se inicie sesion poder cerrarla.
+    JFrame menuPrincipal = null;
+    public MenuLogin(SistemaUsuarios sistema, MenuPrincipal menuPrincipal) {
         initComponents();
+        this.menuPrincipal = menuPrincipal;
         
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         sistemaUsuarios = sistema;
     }
 
@@ -176,14 +181,14 @@ public class MenuLogin extends javax.swing.JFrame {
             return;
         }
         
-        new MenuInicio().setVisible(true);
+        MenuInicio menuInicio= new MenuInicio(sistemaUsuarios);
+        // Cerrar la ventana del menu principal ya que se abre la ventana del menu con el usuario iniciado
+        menuPrincipal.dispose();;
+        menuInicio.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        MenuPrincipal menu = new MenuPrincipal();
-        menu.setSistemaUsuarios(sistemaUsuarios);
-        menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -221,7 +226,7 @@ public class MenuLogin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuLogin(null).setVisible(true);
+                new MenuLogin(null, null).setVisible(true);
             }
         });
     }

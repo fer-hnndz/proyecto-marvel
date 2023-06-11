@@ -155,10 +155,12 @@ public class MenuOpciones extends javax.swing.JFrame {
 
     private void btnMiPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMiPerfilActionPerformed
         // TODO add your handling code here:
+        /*
         MiPerfil perfil = new MiPerfil();
         perfil.setUsuario(usuario);
         perfil.setVisible(true);
         dispose();
+        */
     }//GEN-LAST:event_btnMiPerfilActionPerformed
 
     private void btnUniversoMarvelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUniversoMarvelActionPerformed
