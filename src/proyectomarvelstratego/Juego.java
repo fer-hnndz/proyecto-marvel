@@ -6,6 +6,7 @@ package proyectomarvelstratego;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,13 +17,14 @@ public class Juego extends javax.swing.JFrame {
     /**
      * Creates new form Juego
      */
-    public Juego() {
+    public Juego(SistemaUsuarios sistemaUsuarios, Usuario playerHeroes, Usuario playerVillanos) {
         initComponents();
-        
-        setVisible(true);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         gamePanel.setLayout(new GridLayout(1,1));
         gamePanel.setMinimumSize(new Dimension(600, 300));
-        gamePanel.add(new Tablero(infoArea, eliminatedArea));
+        gamePanel.add(new Tablero(infoArea, eliminatedArea, sistemaUsuarios, playerHeroes, playerVillanos));
+        gamePanel.repaint();
+        setVisible(true);
     }
 
     /**
@@ -80,6 +82,7 @@ public class Juego extends javax.swing.JFrame {
         infoArea.setEditable(false);
         infoArea.setBackground(new java.awt.Color(221, 221, 221));
         infoArea.setColumns(20);
+        infoArea.setLineWrap(true);
         infoArea.setRows(5);
         infoArea.setAutoscrolls(false);
         infoArea.setBorder(null);
@@ -92,7 +95,9 @@ public class Juego extends javax.swing.JFrame {
         eliminatedArea.setEditable(false);
         eliminatedArea.setBackground(new java.awt.Color(221, 221, 221));
         eliminatedArea.setColumns(20);
+        eliminatedArea.setLineWrap(true);
         eliminatedArea.setRows(5);
+        eliminatedArea.setWrapStyleWord(true);
         eliminatedArea.setAutoscrolls(false);
         eliminatedArea.setBorder(null);
         eliminatedArea.setFocusable(false);
@@ -188,7 +193,7 @@ public class Juego extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Juego().setVisible(true);
+                new Juego(null, null, null).setVisible(true);
             }
         });
     }

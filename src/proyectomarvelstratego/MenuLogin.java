@@ -25,7 +25,7 @@ public class MenuLogin extends javax.swing.JFrame {
         this.menuPrincipal = menuPrincipal;
         
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        sistemaUsuarios = sistema;
+        this.sistemaUsuarios = sistema;
     }
 
     /**

@@ -15,22 +15,24 @@ public class CambiarPassword extends javax.swing.JFrame {
      * Creates new form CambiarPassword
      */    
     private Usuario usuario;
+    SistemaUsuarios sistemaUsuarios;
     
-    public CambiarPassword() {
+    public CambiarPassword(SistemaUsuarios sistemaUsuarios) {
         initComponents();
+        this.sistemaUsuarios = sistemaUsuarios;
     }
 
-        public void setUsuario(Usuario usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
         mostrarInformacionUsuario();
-        }
+    }
         
-        private void mostrarInformacionUsuario() {
+    private void mostrarInformacionUsuario() {
         if (usuario != null) {
             String contrasena = usuario.getContrasena();
             jLabel3.setText(contrasena);
         }
-        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -111,16 +113,15 @@ public class CambiarPassword extends javax.swing.JFrame {
 
     private void btnCambiarContraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarContraActionPerformed
         // TODO add your handling code here:
-    if (usuario != null) {
+        if (usuario != null) {
             String contrasenaActual = usuario.getContrasena();
             String contrasenaIngresada = txtContraseñaActual.getText();
 
             if (contrasenaIngresada.equals(contrasenaActual)) {
                 String nuevaContrasena = txtContraseñaNueva.getText();
-                usuario.actualizarContrasena(nuevaContrasena); // Actualiza contraseña en el objeto Usuario
-
+                usuario.setContrasena(nuevaContrasena); // Actualiza contraseña en el objeto Usuario
+                sistemaUsuarios.actualizarUsuario(usuario);
                 JOptionPane.showMessageDialog(this, "Contraseña cambiada exitosamente. " + nuevaContrasena);
-
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "La contraseña actual es incorrecta.");
@@ -129,13 +130,8 @@ public class CambiarPassword extends javax.swing.JFrame {
             }
         } else {
         JOptionPane.showMessageDialog(this, "No se pudo cambiar la contraseña.");
-    }
-    MiPerfil menuPrincipal = new MiPerfil();
-    menuPrincipal.setUsuario(usuario); 
-    menuPrincipal.setVisible(true); 
-    
-    dispose(); 
-
+        }
+        dispose(); 
     }//GEN-LAST:event_btnCambiarContraActionPerformed
 
     /**
