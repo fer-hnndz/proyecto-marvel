@@ -19,10 +19,13 @@ public class SistemaUsuarios {
 
     int usuariosHistoricos = 0;
     Usuario usuariosActivos[] = new Usuario[1];
-
+    Usuario usuarioActual = null;
+    
+    // CONSTRUCTOR
     public SistemaUsuarios() {
     }
-        public static SistemaUsuarios getInstancia() {
+    
+    public static SistemaUsuarios getInstancia() {
         if (instancia == null) {
             instancia = new SistemaUsuarios();
         }
@@ -94,10 +97,10 @@ public class SistemaUsuarios {
         }
         
         // Agregar el usuario a los usuarios historicos.
-        usuariosHistoricos++;
-        
+        usuariosHistoricos++;    
     }
-        public Usuario[] getUsuariosActivos() {
+    
+    public Usuario[] getUsuariosActivos() {
         return usuariosActivos;
     }
     /**
@@ -113,6 +116,9 @@ public class SistemaUsuarios {
            Usuario usuarioActual = usuariosActivos[i];
             if (usuarioActual.validarCredenciales(usuario, contrasena)) {
                 usuarioIniciado = usuarioActual;
+                
+                // Guardar el usuario que esta actualmente iniciado en el manager.
+                this.usuarioActual = usuarioActual;
                 break;
             }
         }
@@ -149,5 +155,14 @@ public class SistemaUsuarios {
         }
     }
     }
+    /**
+     * Retorna el usuario que tiene la sesion activa.
+     * @return 
+     */
+    public Usuario getUsuarioActual() {
+        return usuarioActual;
+    }
+    
+    
 }
 
