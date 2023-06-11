@@ -525,9 +525,9 @@ public class Tablero extends JPanel{
                 casillas[9][columnaAleatoria].setPersonaje(personajeActual);
                 
                 // Agregas las bombas alrededor de la tierra
-                Personaje bomba1 = new Personaje("Nova Blast", 0, true);
-                Personaje bomba2 = new Personaje("Nova Blast", 0, true);
-                Personaje bomba3 = new Personaje("Nova Blast", 0, true);
+                Personaje bomba1 = new Personaje("Nova Blast", 0, true, null);
+                Personaje bomba2 = new Personaje("Nova Blast", 0, true, null);
+                Personaje bomba3 = new Personaje("Nova Blast", 0, true, null);
                 
                 bomba1.posicionado = true;
                 bomba2.posicionado = true;
@@ -560,9 +560,9 @@ public class Tablero extends JPanel{
                 casillas[0][columnaAleatoria].setPersonaje(personajeActual);
                 
                 // Agregas las bombas alrededor de la tierra
-                Personaje bomba1 = new Personaje("Pumpkin Bomb", 0, false);
-                Personaje bomba2 = new Personaje("Pumpkin Bomb", 0, false);
-                Personaje bomba3 = new Personaje("Pumpkin Bomb", 0, false);
+                Personaje bomba1 = new Personaje("Pumpkin Bomb", 0, false, null);
+                Personaje bomba2 = new Personaje("Pumpkin Bomb", 0, false, null);
+                Personaje bomba3 = new Personaje("Pumpkin Bomb", 0, false, null);
                 
                 bomba1.posicionado = true;
                 bomba2.posicionado = true;
