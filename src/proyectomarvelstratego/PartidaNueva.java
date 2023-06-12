@@ -4,32 +4,70 @@
  */
 package proyectomarvelstratego;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Gabby
  */
+
+import javax.swing.*;
+import java.awt.Font;
 public class PartidaNueva extends javax.swing.JFrame {
 
     /**
      * Creates new form PartidaNueva
      */
 
-    public PartidaNueva() {
+    SistemaUsuarios sistemaUsuarios;
+    Usuario player, contrincante; 
+    JComboBox bandos;
+    String bandoSeleccionado;
+    boolean bandoHeroes;
+    
+    public PartidaNueva(SistemaUsuarios sistemaUsuarios) {
         initComponents();
-        cargarUsuarios();
-        
+        this.sistemaUsuarios = sistemaUsuarios;
+        this.player = sistemaUsuarios.getUsuarioActual();
     }
+    
+    public void cargarUsuarios() {
+        System.out.println("Cargando usuarios...");
+        Usuario[] usuarios = sistemaUsuarios.getUsuariosActivos();
+        System.out.println(usuarios.length);
 
-    private void cargarUsuarios() {
-    SistemaUsuarios sistemaUsuarios = SistemaUsuarios.getInstancia();
-    Usuario[] usuarios = sistemaUsuarios.getUsuariosActivos();
-
+        // Agregar los nombres a un combobox
         for (Usuario usuario : usuarios) {
+            // Si es el nombre del usuario actual skipear.
+            if (sistemaUsuarios.usuarioIniciado.getUsuario().equals(usuario.getUsuario())) continue;
             combobox.addItem(usuario.getUsuario());
         }
     }
+    
+    public void cargarBandos() {
+        combobox.removeAllItems();
+        
+        System.out.println("Cargando bandos...");
+
+        JLabel text = new JLabel("Escoge tu bando:");
+        text.setFont(new Font("Arial", Font.BOLD, 16));
+        
+        bandos = new JComboBox();
+        bandos.addItem("Heroes");
+        bandos.addItem("Villanos");
+        
+        JPanel panel = new JPanel();
+        
+        panel.add(text);
+        panel.add(bandos);
+        JOptionPane.showMessageDialog(null, panel);
+        
+        bandoSeleccionado = (String) bandos.getSelectedItem();
+        System.out.println(bandoSeleccionado);
+        crearJuego();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,9 +81,9 @@ public class PartidaNueva extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jButton1.setText("jugar");
+        jButton1.setText("Jugar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -88,9 +126,41 @@ public class PartidaNueva extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String nombreUsuario = (String) combobox.getSelectedItem();
-        JOptionPane.showMessageDialog(this, "Has escogido jugar con " + nombreUsuario);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        
+        if (contrincante == null) {            
+            String nombreUsuario = (String) combobox.getSelectedItem();
+            contrincante = sistemaUsuarios.getUsuario(nombreUsuario);
+            dispose();
+            cargarBandos();
+           
+        } else {
+            
+        }
+        
+        dispose();
+    }
+    
+    public void crearJuego() {
+        Usuario playerHeroes, playerVillanos;
+        if (bandoSeleccionado.equals("Heroes")) {
+            playerHeroes = player;
+            playerVillanos = contrincante;
+        }
+        else {
+            playerHeroes = contrincante;
+            playerVillanos = player;
+        }
+        
+        JOptionPane.showMessageDialog(null, playerHeroes.getUsuario() + " empieza con el primer turno.");
+        new Juego(sistemaUsuarios, playerHeroes, playerVillanos);
+
+        
+        
+            
+           
+    }
+        
+    //GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

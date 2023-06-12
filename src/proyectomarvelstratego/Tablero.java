@@ -29,7 +29,13 @@ public class Tablero extends JPanel{
     private JTextArea infoArea;
     private JTextArea eliminadosArea;
     
-    public Tablero(JTextArea infoArea, JTextArea eliminadosArea) {
+    SistemaUsuarios sistemaUsuarios;
+    Usuario playerHeroes, playerVillanos;
+    
+    public Tablero(JTextArea infoArea, JTextArea eliminadosArea, SistemaUsuarios sistemaUsuarios, Usuario playerHeroes, Usuario playerVillanos) {
+        this.sistemaUsuarios = sistemaUsuarios;
+        this.playerHeroes = playerHeroes;
+        this.playerVillanos = playerVillanos;
         this.infoArea = infoArea;
         this.eliminadosArea = eliminadosArea;
         setLayout(new GridLayout(10, 10));
@@ -53,28 +59,25 @@ public class Tablero extends JPanel{
                 // Tendran valores negativos en caso de que el click no fue en una label valida
                 int row = -1, column = -1;
 
-                // Se dio click en una casilla que tiene un personaje
+                // Todavia no se ha seleccionado una casilla
                 if (!hayCasillaSeleccionada) {
-                    System.out.println("No habia casilla seleccionada");
                     // Obtener la posición de la etiqueta en la cuadrícula
                     for (int i = 0; i < 10; i++) {
                         for (int j = 0; j < 10; j++) {
-                            if (casillas[i][j].label == label) { // La label clickeada es de la casilla actual
-                                
-                                // VERIFICAR QUE SEA UNA FICHA DEL JUGADOR Y TENGA UN PERSONAJE
+                            if (casillas[i][j].label == label) {
                                 casillaSeleccionada = casillas[i][j];
                                 
+                                // VERIFICAR QUE SEA UNA FICHA DEL JUGADOR DEL TURNO ACTUAL Y TENGA UN PERSONAJE
                                 if (casillaSeleccionada.personajeActual != null && 
                                         casillaSeleccionada.personajeActual.esHeroe == turnoHeroes) {
                                     hayCasillaSeleccionada = true;
-                                    System.out.println("Seleccionado correctamente");
-                                    System.out.println("seleccionado: " + casillaSeleccionada.personajeActual.nombre);
                                    
                                     mostrarInformacionPersonaje();
                                     resaltarSiEsMovimientoValido();
                                     resaltarZonasProhibidas();
                                     break;
                                 } else {
+                                    //  Reiniciar el valor de la casilla seleccionada ya que no cumple
                                     casillaSeleccionada = null;
                                     hayCasillaSeleccionada = false;
                                     break;
@@ -83,11 +86,11 @@ public class Tablero extends JPanel{
                         }
                     }
                 } else { // ya hay una casilla seleccionada y se intentara mover
-                    System.out.println("HAY CASILLA SELECCIONADA");
                     for (int i=0;i < 10; i++)  {
                         for (int j = 0;j<10;j++) {
                             
                             if (casillas[i][j].label == label) {
+                                
                                 // SI LA CASILLA CLICKEADA ES UNA FICHA DEL MISMO BANDO, CAMBIAR A ESA FICHA 
                                 if (casillas[i][j].personajeActual != null) {
                                     if (casillas[i][j].personajeActual.esHeroe == turnoHeroes) {
@@ -104,6 +107,7 @@ public class Tablero extends JPanel{
                                     }
                                 }
                                 
+                                // Se dio click en una casilla con un rival o una casilla vacia
                                 if (esMovimientoValido(i, j)) {
                                     moverPersonaje(i, j);
                                 } else{
@@ -129,6 +133,7 @@ public class Tablero extends JPanel{
         resaltarZonasProhibidas();
         esconderPersonajes();
         setVisible(true);
+        repaint();
     }
 
     private boolean esMovimientoValido(int row, int column) {
@@ -367,8 +372,8 @@ public class Tablero extends JPanel{
         eliminadosArea.setText("");
         
         String mensaje;
-        if (!turnoHeroes) mensaje = "FIN DEL TURNO DE LOS HEROES. DEJE A LOS VILLANOS JUGAR SU TURNO.";
-        else mensaje = "FIN DEL TURNO DE LOS VILLANOS. DEJE A LOS HEROES JUGAR SU TURNO.";
+        if (!turnoHeroes) mensaje = "FIN DEL TURNO DE " + playerHeroes.getUsuario() + " DEJA QUE  " + playerVillanos.getUsuario() + " JUEGUE SU TURNO.";
+        else mensaje = "FIN DEL TURNO DE " + playerVillanos.getUsuario() + " DEJA QUE  " + playerHeroes.getUsuario() + " JUEGUE SU TURNO.";
         JOptionPane.showMessageDialog(null, mensaje);
         borrarResaltadoMovimientos();
         resaltarZonasProhibidas();
@@ -389,9 +394,34 @@ public class Tablero extends JPanel{
     
     public void mostrarInformacionPersonaje() {
         // Mostrar informacion en textarea
-        String mensaje = "Personaje: " + casillaSeleccionada.personajeActual.nombre + "\n";
-        mensaje += (casillaSeleccionada.personajeActual.esHeroe) ?"Bando: Heroes\n":"Bando: Villanos\n";
-        mensaje += "Rango: " + casillaSeleccionada.personajeActual.rango;
+        Personaje ficha = casillaSeleccionada.personajeActual;
+        
+        String mensaje = "Ficha: " + ficha.nombre + "\n";
+        mensaje += "Bando: " + ((ficha.esHeroe) ?"Heroes\n":"Villanos\n");
+        
+        if (ficha.rango == 0) {
+            mensaje += """
+                       Las bombas no se pueden mover.
+                       Estas eliminan a cualquier ficha excepto a los de rango 3.
+                       """;
+        } else if (ficha.rango == -1) {
+            mensaje += """
+                       La Tierra no se puede mover.
+                       Cualquier ficha que ataque a la tierra hara que pierdas la partida.
+                       """;
+        } else if (ficha.rango == 1) {
+            mensaje += "Rango: " + ficha.rango + "\n";
+            mensaje += """
+                       Este personaje pierde contra todas las fichas excepto con las de rango 10.
+                       """;
+        } else {
+            mensaje += "Rango: " + ficha.rango + "\n";
+            mensaje += """
+                       Esta ficha gana si su adversario es alguien de rango
+                       menor.
+                       Si ambas son de rango igual, ambas pierden.
+                       """;
+        }
         infoArea.setText(mensaje);
     }
     
@@ -402,12 +432,18 @@ public class Tablero extends JPanel{
             
             for (int i = 0; i<heroesEliminados.toArray().length;i++) {
                 Personaje personaje = heroesEliminados.get(i);
-                mensaje += personaje.nombre + " (Rango " + personaje.rango + ")\n";
+                if (personaje.rango != 0 || personaje.rango != -1) 
+                    mensaje += personaje.nombre + " (Rango " + personaje.rango + ")\n";
+                else
+                    mensaje += personaje.nombre + "\n";
             }
         } else {
             for (int i = 0; i<villanosEliminados.toArray().length;i++) {
                 Personaje personaje = villanosEliminados.get(i);
-                mensaje += personaje.nombre + " (Rango " + personaje.rango + ")\n";
+                if (personaje.rango != 0 || personaje.rango != -1) 
+                    mensaje += personaje.nombre + " (Rango " + personaje.rango + ")\n";
+                else
+                    mensaje += personaje.nombre + "\n";
             }
         }
         
@@ -489,9 +525,9 @@ public class Tablero extends JPanel{
                 casillas[9][columnaAleatoria].setPersonaje(personajeActual);
                 
                 // Agregas las bombas alrededor de la tierra
-                Personaje bomba1 = new Personaje("Nova Blast", 0, true);
-                Personaje bomba2 = new Personaje("Nova Blast", 0, true);
-                Personaje bomba3 = new Personaje("Nova Blast", 0, true);
+                Personaje bomba1 = new Personaje("Nova Blast", 0, true, null);
+                Personaje bomba2 = new Personaje("Nova Blast", 0, true, null);
+                Personaje bomba3 = new Personaje("Nova Blast", 0, true, null);
                 
                 bomba1.posicionado = true;
                 bomba2.posicionado = true;
@@ -524,9 +560,9 @@ public class Tablero extends JPanel{
                 casillas[0][columnaAleatoria].setPersonaje(personajeActual);
                 
                 // Agregas las bombas alrededor de la tierra
-                Personaje bomba1 = new Personaje("Pumpkin Bomb", 0, false);
-                Personaje bomba2 = new Personaje("Pumpkin Bomb", 0, false);
-                Personaje bomba3 = new Personaje("Pumpkin Bomb", 0, false);
+                Personaje bomba1 = new Personaje("Pumpkin Bomb", 0, false, null);
+                Personaje bomba2 = new Personaje("Pumpkin Bomb", 0, false, null);
+                Personaje bomba3 = new Personaje("Pumpkin Bomb", 0, false, null);
                 
                 bomba1.posicionado = true;
                 bomba2.posicionado = true;
@@ -657,14 +693,5 @@ public class Tablero extends JPanel{
         posicionarBombas();
         posicionarPersonajesRango2();
         posicionarPersonajesRestantes();
-    }
-    
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new Tablero(null, null);
-                
-            }
-        });
     }
 }

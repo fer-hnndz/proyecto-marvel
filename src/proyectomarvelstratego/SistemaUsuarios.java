@@ -13,12 +13,13 @@ package proyectomarvelstratego;
     Esta clase administra el inicio de sesion y la informacion de los usuarios
 */
 
+import java.util.ArrayList;
 public class SistemaUsuarios {
 
    private static SistemaUsuarios instancia; // Instancia única de SistemaUsuarios
 
     int usuariosHistoricos = 0;
-    Usuario usuariosActivos[] = new Usuario[1];
+    ArrayList<Usuario> usuariosActivos = new ArrayList<Usuario>();
     Usuario usuarioIniciado = null;
     
     // CONSTRUCTOR
@@ -45,10 +46,9 @@ public class SistemaUsuarios {
             return true;
         }
         
-        System.out.println("BUSCANDO SI " + usuario + " ES USUARIO UNICO.");
-        for (int i=0; i<usuariosActivos.length;i++) {
+        for (int i=0; i<usuariosActivos.toArray().length;i++) {
             // En el caso de que usuario ya exista se retorna false para evitar que se registre el usuario.
-            String usuarioActual = usuariosActivos[i].getUsuario();
+            String usuarioActual = usuariosActivos.get(i).getUsuario();
             
             if (usuario.equals(usuarioActual)) {
                return false;
@@ -57,6 +57,17 @@ public class SistemaUsuarios {
         
         return true;
     }
+    
+    public Usuario getUsuario(String username) {
+        for (Usuario user:usuariosActivos) {
+            if (user.getUsuario().equals(username)) {
+                return user;
+            }
+        }
+        
+        return null;
+    }
+    
     
     public boolean verificarEspaciosUsuario(String usuario) {
         boolean validUsername = true;
@@ -77,32 +88,18 @@ public class SistemaUsuarios {
     public void registrarUsuario(String usuario, String contrasena) {
         Usuario nuevoUsuario = new Usuario(usuario, contrasena);
         
-        // Es el primer usuario en registrarse 
-        if (usuariosHistoricos == 0) {
-            usuariosActivos[0] = nuevoUsuario;
-        } else {
-            // Actualizar tamano del array
+        usuariosActivos.add(nuevoUsuario);
             
-            int nuevaLongitud = usuariosActivos.length + 1;
-            
-            Usuario nuevosUsuarios[] = new Usuario[nuevaLongitud];
-            
-            for (int i=0;i<usuariosActivos.length;i++) {
-                nuevosUsuarios[i] = usuariosActivos[i];
-            }
-            
-            // Agregar el ultimo usuario registrado
-            nuevosUsuarios[nuevaLongitud - 1] = nuevoUsuario;            
-            usuariosActivos = nuevosUsuarios;
-        }
         
         // Agregar el usuario a los usuarios historicos.
         usuariosHistoricos++;    
     }
     
     public Usuario[] getUsuariosActivos() {
-        return usuariosActivos;
+        Usuario usuarios[] = usuariosActivos.toArray(Usuario[]::new);
+        return usuarios;
     }
+    
     /**
      * Retorna el usuario con el que las credenciales son correctas. Devuelve `null` si no fue encontrado
      * @param usuario
@@ -110,8 +107,8 @@ public class SistemaUsuarios {
      * @return 
      */
     public Usuario iniciarSesion(String usuario, String contrasena) {        
-        for (int i =0;i<usuariosActivos.length;i++) {
-           Usuario usuarioActual = usuariosActivos[i];
+        for (int i =0;i<usuariosActivos.toArray().length;i++) {
+           Usuario usuarioActual = usuariosActivos.get(i);
            if (usuarioActual == null) continue;
            
             if (usuarioActual.validarCredenciales(usuario, contrasena)) {
@@ -127,31 +124,23 @@ public class SistemaUsuarios {
     public void eliminarUsuario(Usuario usuario) {
     if (usuariosActivos != null) {
         // Crear un nuevo array sin el usuario a eliminar
-        Usuario[] nuevosUsuarios = new Usuario[usuariosActivos.length - 1];
-        int indice = 0;
-
-        for (int i = 0; i < usuariosActivos.length; i++) {
-            if (usuariosActivos[i] != null && !usuariosActivos[i].equals(usuario)) {
-                nuevosUsuarios[indice] = usuariosActivos[i];
-                indice++;
-            }
-        }
-
-        // Actualizar el array de usuarios activos
-        usuariosActivos = nuevosUsuarios;
+        usuariosActivos.remove(usuario);
     }
 }
     
     public void actualizarUsuario(Usuario usuarioActualizado) {
-    for (int i = 0; i < usuariosActivos.length; i++) {
-        Usuario usuario = usuariosActivos[i];
-        if (usuario.getUsuario().equals(usuarioActualizado.getUsuario())) {
-            // Actualizar los datos del usuario
-            usuario.setContrasena(usuarioActualizado.getContrasena());
-            usuariosActivos[i] = usuario;  // Guardar el usuario actualizado en el array
-            break;
+        for (int i = 0; i < usuariosActivos.toArray().length; i++) {
+            Usuario usuario = usuariosActivos.get(i);
+
+            // Buscar al usuario en base al nombre de usuario
+            if (usuario.getUsuario().equals(usuarioActualizado.getUsuario())) {
+
+                // Actualizar los datos del usuario
+                usuario.setContrasena(usuarioActualizado.getContrasena());
+                usuariosActivos.set(i, usuario);  // Guardar el usuario actualizado en el array
+                break;
+            }
         }
-    }
     }
     /**
      * Retorna el usuario que tiene la sesion activa.

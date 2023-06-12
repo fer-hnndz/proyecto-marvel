@@ -9,6 +9,7 @@ package proyectomarvelstratego;
  * @author hp
  */
 import java.awt.Dimension;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class MenuInicio extends javax.swing.JFrame {
@@ -16,21 +17,21 @@ public class MenuInicio extends javax.swing.JFrame {
     /**
      * Creates new form MenuInicio
      */
-        private Usuario usuario;
-        SistemaUsuarios sistemaUsuarios;
+    private Usuario usuario;
+    SistemaUsuarios sistemaUsuarios;
+    
     public MenuInicio(SistemaUsuarios sistemaUsuarios) {
         initComponents();
-        
+       
         this.sistemaUsuarios = sistemaUsuarios;
         usuario = sistemaUsuarios.getUsuarioActual();
-        
-        this.setMinimumSize(new Dimension(800, 500));
+        setResizable(false);
         habilitarBotonPartidaNueva();        
     }
+    
     private void habilitarBotonPartidaNueva() {
-        SistemaUsuarios sistemaUsuarios = SistemaUsuarios.getInstancia();
         Usuario[] usuarios = sistemaUsuarios.getUsuariosActivos();
-        boolean habilitar = usuarios.length > 1;
+        boolean habilitar = usuarios.length > 1;;
         jButton1.setEnabled(habilitar);
     }
     
@@ -301,9 +302,10 @@ public class MenuInicio extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        PartidaNueva partida = new PartidaNueva();
+        System.out.println("CREANDO UNA NUEVA PARTIDA...");
+        PartidaNueva partida = new PartidaNueva(sistemaUsuarios);
+        partida.cargarUsuarios();
         partida.setVisible(true);              
-        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

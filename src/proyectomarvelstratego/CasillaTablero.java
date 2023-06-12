@@ -11,19 +11,21 @@ package proyectomarvelstratego;
 
 import java.awt.*;
 import javax.swing.*;
+import java.awt.Font;
+
 public class CasillaTablero {
     
     JLabel label;
     Personaje personajeActual;
     int row;
     int column;
-   
+    
     public CasillaTablero(int row, int column, Personaje personajeActual) {
         this.label = new JLabel();
         this.row = row;
         this.column = column;
         this.personajeActual = personajeActual;
-        
+                
         label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
        
@@ -47,19 +49,31 @@ public class CasillaTablero {
         
         if (personaje == null) {
             label.setText("");
-        } else {
-            label.setText(personaje.nombre);
-            label.setBackground(Color.red);
+            label.setIcon(null);
+        }
+        else {
+            
+            if (personajeActual.icono != null) {
+                label.setIcon(personajeActual.icono);
+                label.setFont(new Font("Arial", Font.PLAIN, 8));
+            }
+            else
+                label.setText(personajeActual.nombre);
         }
     }
     
     public void esconderCasilla(boolean esconder) {
         if (esconder) {
             label.setText("???");
+            label.setIcon(null);
             label.repaint();
         } else {
-            label.setText((personajeActual!=null)?personajeActual.nombre:"");
-            label.repaint();
+            if (personajeActual.icono != null) {
+                label.setIcon(personajeActual.icono);
+                label.setFont(new Font("Arial", Font.PLAIN, 8));
+            }
+            else
+                label.setText(personajeActual.nombre);
         }
     } 
     
