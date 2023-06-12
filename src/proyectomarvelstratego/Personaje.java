@@ -23,11 +23,19 @@ public class Personaje {
     int rango;
     boolean esHeroe;
     boolean posicionado = false;
+    ImageIcon iconoEscondido;
     
     public Personaje(String nombre, int rango, boolean esHeroe, String iconPath) {
        this.nombre = nombre;
        this.rango = rango;
        this.esHeroe = esHeroe;
+       
+        try {
+           Image resizedImg = resizeImage(ImageIO.read(new File("src/Icons/Hidden.png")), 52, 52);
+           iconoEscondido = new ImageIcon(resizedImg);
+        } catch (Exception e) {
+            iconoEscondido = null;
+        }
        
        try {
             Image newImg = resizeImage(ImageIO.read(new File(iconPath)), 52, 52);

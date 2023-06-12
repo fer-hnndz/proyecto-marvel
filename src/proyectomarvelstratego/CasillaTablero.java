@@ -63,9 +63,16 @@ public class CasillaTablero {
     
     public void esconderCasilla(boolean esconder) {
         if (esconder) {
-            label.setText("???");
-            label.setIcon(null);
-            label.repaint();
+            if (personajeActual.iconoEscondido != null) {
+                label.setIcon(personajeActual.iconoEscondido);
+                label.repaint();
+            } else {
+                label.setIcon(null);
+                label.setText("???");
+            }
+                
+                
+                
         } else {
             if (personajeActual.icono != null) {
                 label.setIcon(personajeActual.icono);
