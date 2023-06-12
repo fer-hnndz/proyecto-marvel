@@ -55,7 +55,6 @@ public class CasillaTablero {
             
             if (personajeActual.icono != null) {
                 label.setIcon(personajeActual.icono);
-                label.setFont(new Font("Arial", Font.PLAIN, 8));
             }
             else
                 label.setText(personajeActual.nombre);
@@ -70,7 +69,6 @@ public class CasillaTablero {
         } else {
             if (personajeActual.icono != null) {
                 label.setIcon(personajeActual.icono);
-                label.setFont(new Font("Arial", Font.PLAIN, 8));
             }
             else
                 label.setText(personajeActual.nombre);
