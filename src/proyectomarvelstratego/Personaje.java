@@ -35,6 +35,35 @@ public class Personaje {
         } catch (Exception e) {
             icono = null;
         }
+       
+        loadIcon();
+    }
+    
+    private void loadIcon() {
+        String filename;
+        if (nombre.equals("Planet Earth")) {
+            if (esHeroe)
+                filename = "src/Icons/TierraG.png";
+            else
+                filename = "src/Icons/TierraB.png";
+        } else if (nombre.equals("Black Widow")) {
+            if (esHeroe)
+                filename = "src/Icons/BlackWidowG.png";
+            else
+                filename = "src/Icons/BlackWidowB.png";
+        } else if (nombre.equals("Sentinel 1") || nombre.equals("Sentinel 2")) {
+            filename = "src/Icons/Sentinel.png";
+        }
+        else 
+            filename = "src/Icons/" + nombre.replace(" ", "") + ".png";
+        
+        try {
+            
+            Image newImg = resizeImage(ImageIO.read(new File(filename)), 52, 52);
+            icono = new ImageIcon(newImg);
+        } catch (Exception e) {
+            icono = null;
+        }
     }
     
     private Image resizeImage(Image img, int w, int h) {
@@ -42,7 +71,7 @@ public class Personaje {
         Graphics2D g2 = resizedImg.createGraphics();
         
         
-        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
         g2.drawImage(img, 0, 0, w, h, null);
         g2.dispose();
 
