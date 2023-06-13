@@ -42,7 +42,7 @@ public class Tablero extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
+        // Dibujar la imagen de fondo
         g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
     }
     
