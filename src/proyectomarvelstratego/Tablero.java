@@ -31,8 +31,23 @@ public class Tablero extends JPanel{
     
     SistemaUsuarios sistemaUsuarios;
     Usuario playerHeroes, playerVillanos;
+    private Image imagenFondo;
+    
+    public Tablero() {
+        // Cargar la imagen de fondo
+        ImageIcon imagenIcono = new ImageIcon("src/img/MenuBackground.png");
+        imagenFondo = imagenIcono.getImage();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        
+        g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
+    }
     
     public Tablero(JTextArea infoArea, JTextArea eliminadosArea, SistemaUsuarios sistemaUsuarios, Usuario playerHeroes, Usuario playerVillanos) {
+        this();
         this.sistemaUsuarios = sistemaUsuarios;
         this.playerHeroes = playerHeroes;
         this.playerVillanos = playerVillanos;
@@ -41,7 +56,9 @@ public class Tablero extends JPanel{
         setLayout(new GridLayout(10, 10));
 
         // Crear las etiquetas para representar la cuadrícula del tablero
+
         casillas = new CasillaTablero[10][10];
+
         for (int row = 0; row < 10; row++) {
             for (int column = 0; column < 10; column++) {
                 CasillaTablero casilla = new CasillaTablero(row, column, null); // RELLENAR PERSONAJES DESPUES
@@ -354,7 +371,8 @@ public class Tablero extends JPanel{
                 villanosEliminados.add(atacante);
                 heroesEliminados.add(defensor);
             }
-            
+                            JOptionPane.showMessageDialog(null, atacante+" VS "+defensor);
+
             return null;
         }
         
