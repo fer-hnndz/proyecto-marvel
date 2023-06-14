@@ -371,8 +371,6 @@ public class Tablero extends JPanel{
                 villanosEliminados.add(atacante);
                 heroesEliminados.add(defensor);
             }
-                            JOptionPane.showMessageDialog(null, atacante+" VS "+defensor);
-
             return null;
         }
         
@@ -393,8 +391,18 @@ public class Tablero extends JPanel{
         if (!turnoHeroes) mensaje = "FIN DEL TURNO DE " + playerHeroes.getUsuario() + " DEJA QUE  " + playerVillanos.getUsuario() + " JUEGUE SU TURNO.";
         else mensaje = "FIN DEL TURNO DE " + playerVillanos.getUsuario() + " DEJA QUE  " + playerHeroes.getUsuario() + " JUEGUE SU TURNO.";
         JOptionPane.showMessageDialog(null, mensaje);
+        
+        String mensaje2;
+        if (!turnoHeroes) {
+            mensaje2 = playerVillanos.getUsuario()+" jugando, bando Villanos";
+        } else {
+            mensaje2 = playerHeroes.getUsuario()+" jugando, bando Héroes";
+        }
+        Juego juego = (Juego) SwingUtilities.getWindowAncestor(this);
+        
         borrarResaltadoMovimientos();
         resaltarZonasProhibidas();
+        juego.actualizarTextoTurno(mensaje2);// Actualizar el texto en jLabel3
         setVisible(true);
         mostrarPersonajesEliminados();
         
