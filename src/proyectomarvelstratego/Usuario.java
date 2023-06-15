@@ -14,6 +14,7 @@ public class Usuario {
     private int punto = 0;
     private int partidasBuenos = 0;
     private int partidasMalos = 0;
+    boolean tutorialActivo = false; // REPRESENTA SI EL MODO TUTORIAL ESTA ACTIVADO O NO.
     
     
     public Usuario(String usuario, String contrasena) {

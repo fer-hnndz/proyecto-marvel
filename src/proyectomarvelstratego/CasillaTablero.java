@@ -80,7 +80,16 @@ public class CasillaTablero {
             else
                 label.setText(personajeActual.nombre);
         }
-    } 
+    }
+    
+    public void setSelected(boolean selected) {
+        if (selected) {
+            label.setBackground(Color.blue);
+            label.setOpaque(true);
+            label.repaint();
+        } else
+            label.setOpaque(false);
+    }
     
    
     

@@ -19,6 +19,7 @@ public class Tablero extends JPanel{
     private CasillaTablero casillaSeleccionada;
     private CasillaTablero[][] casillas;
     private boolean turnoHeroes = true;
+    boolean esTutorial;
     
     ArrayList<Personaje> heroesIniciales = Personaje.getPersonajesHeroes();
     ArrayList<Personaje> villanosIniciales = Personaje.getPersonajesVillanos();
@@ -32,12 +33,13 @@ public class Tablero extends JPanel{
     SistemaUsuarios sistemaUsuarios;
     Usuario playerHeroes, playerVillanos;
     
-    public Tablero(JTextArea infoArea, JTextArea eliminadosArea, SistemaUsuarios sistemaUsuarios, Usuario playerHeroes, Usuario playerVillanos) {
+    public Tablero(JTextArea infoArea, JTextArea eliminadosArea, SistemaUsuarios sistemaUsuarios, Usuario playerHeroes, Usuario playerVillanos, boolean esTutorial) {
         this.sistemaUsuarios = sistemaUsuarios;
         this.playerHeroes = playerHeroes;
         this.playerVillanos = playerVillanos;
         this.infoArea = infoArea;
         this.eliminadosArea = eliminadosArea;
+        this.esTutorial = esTutorial;
         setLayout(new GridLayout(10, 10));
 
         // Crear las etiquetas para representar la cuadrícula del tablero
@@ -56,9 +58,6 @@ public class Tablero extends JPanel{
             public void mouseClicked(MouseEvent e) {
                 JLabel label = (JLabel) e.getSource();
                 
-                // Tendran valores negativos en caso de que el click no fue en una label valida
-                int row = -1, column = -1;
-
                 // Todavia no se ha seleccionado una casilla
                 if (!hayCasillaSeleccionada) {
                     // Obtener la posición de la etiqueta en la cuadrícula
@@ -66,6 +65,7 @@ public class Tablero extends JPanel{
                         for (int j = 0; j < 10; j++) {
                             if (casillas[i][j].label == label) {
                                 casillaSeleccionada = casillas[i][j];
+                                casillaSeleccionada.setSelected(true);
                                 
                                 // VERIFICAR QUE SEA UNA FICHA DEL JUGADOR DEL TURNO ACTUAL Y TENGA UN PERSONAJE
                                 if (casillaSeleccionada.personajeActual != null && 
@@ -96,8 +96,10 @@ public class Tablero extends JPanel{
                                     if (casillas[i][j].personajeActual.esHeroe == turnoHeroes) {
                                         // Actualizar casillas  
                                         borrarResaltadoMovimientos();
+                                        casillaSeleccionada.setSelected(false); // Deseleccionar la casilla anterior
                                         
                                         casillaSeleccionada = casillas[i][j];
+                                        casillaSeleccionada.setSelected(true);
                                         resaltarSiEsMovimientoValido();
                                         resaltarZonasProhibidas();
                                         
@@ -111,7 +113,10 @@ public class Tablero extends JPanel{
                                 if (esMovimientoValido(i, j)) {
                                     moverPersonaje(i, j);
                                 } else{
-                                    JOptionPane.showMessageDialog(null, "MOVIMIENTO INVALIDO.\nTus movimientos validos estan coloreados de verde.");
+                                    if (esTutorial)
+                                            JOptionPane.showMessageDialog(null, "MOVIMIENTO INVALIDO.\nTus movimientos validos estan coloreados de verde.");
+                                    else
+                                        JOptionPane.showMessageDialog(null, "ERROR. MOVIMIENTO INVALIDO.");
                                 }
                             }
                             
@@ -131,7 +136,8 @@ public class Tablero extends JPanel{
         // Establecer posiciones iniciales
         posicionarTodo();
         resaltarZonasProhibidas();
-        esconderPersonajes();
+        
+        if (!esTutorial) esconderPersonajes(); // Esconder personajes en caso de que no se este jugando en modo tutorial
         setVisible(true);
         repaint();
     }
@@ -279,7 +285,7 @@ public class Tablero extends JPanel{
             }
         }
     }
-
+    
     private void moverPersonaje(int newRow, int newColumn) {
         
         // VERIFICAR QUE HAYA UN PERSONAJE EN LA NUEVA CASILLA PARA TOMAR EL COMBATE
@@ -367,7 +373,7 @@ public class Tablero extends JPanel{
         
         turnoHeroes = !turnoHeroes;
         setVisible(false);
-        esconderPersonajes();
+        if (!esTutorial) esconderPersonajes();
         infoArea.setText("");
         eliminadosArea.setText("");
         
@@ -414,7 +420,12 @@ public class Tablero extends JPanel{
             mensaje += """
                        Este personaje pierde contra todas las fichas excepto con las de rango 10.
                        """;
-        } else {
+        } else if (ficha.rango == 10) {
+            mensaje += "Rango: " + ficha.rango + "\n";
+            mensaje += """
+                       Este personaje gana con cualquier ficha que lo ataque exceptuando las fichas de rango 1.
+                       """;
+        }else {
             mensaje += "Rango: " + ficha.rango + "\n";
             mensaje += """
                        Esta ficha gana si su adversario es alguien de rango
