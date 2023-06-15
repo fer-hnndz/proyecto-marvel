@@ -17,12 +17,20 @@ public class Juego extends javax.swing.JFrame {
     /**
      * Creates new form Juego
      */
+    Tablero tablero;
     public Juego(SistemaUsuarios sistemaUsuarios, Usuario playerHeroes, Usuario playerVillanos) {
         initComponents();   
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         gamePanel.setLayout(new GridLayout(1,1));
         gamePanel.setMinimumSize(new Dimension(600, 300));
-        gamePanel.add(new Tablero(infoArea, eliminatedArea, sistemaUsuarios, playerHeroes, playerVillanos, sistemaUsuarios.usuarioIniciado.tutorialActivo, this));
+        tablero =new Tablero(infoArea, 
+                eliminatedArea, 
+                sistemaUsuarios,
+                playerHeroes, 
+                playerVillanos, 
+                sistemaUsuarios.usuarioIniciado.tutorialActivo, 
+                this);
+        gamePanel.add(tablero);
         gamePanel.repaint();
         setVisible(true);
     }
@@ -75,6 +83,11 @@ public class Juego extends javax.swing.JFrame {
         surrenderBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         surrenderBtn.setForeground(new java.awt.Color(255, 255, 255));
         surrenderBtn.setText("Rendirse");
+        surrenderBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                surrenderBtnActionPerformed(evt);
+            }
+        });
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -163,6 +176,11 @@ public class Juego extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void surrenderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surrenderBtnActionPerformed
+        // TODO add your handling code here:
+        tablero.surrender();
+    }//GEN-LAST:event_surrenderBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -202,7 +220,7 @@ public class Juego extends javax.swing.JFrame {
                 Usuario user1 = sys.getUsuario("BUENO");
                 Usuario user2 = sys.getUsuario("MALO");
                 
-                user1.tutorialActivo = true;
+                user1.tutorialActivo = false;
                 new Juego(sys, user1, user2).setVisible(true);
             }
         });

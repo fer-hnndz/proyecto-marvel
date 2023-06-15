@@ -211,8 +211,12 @@ public class Tablero extends JPanel{
             juegoTerminado = true;
         }
         
-        JOptionPane.showMessageDialog(null, mensajeLog);
-        gameWindow.dispose();
+        if (juegoTerminado)
+        {
+            JOptionPane.showMessageDialog(null, mensajeLog);
+            gameWindow.dispose();
+
+        }
         
     }
 
@@ -505,6 +509,36 @@ public class Tablero extends JPanel{
         if (!esTutorial) esconderPersonajes();
         setVisible(true);
         mostrarPersonajesEliminados();
+    }
+    
+    public void surrender() {
+        Usuario ganador, perdedor;
+        String bandoGanador, bandoPerdedor;
+        
+        if (turnoHeroes) {
+            ganador = playerVillanos;
+            perdedor = playerHeroes;
+            bandoGanador = "VILLANOS";
+            bandoPerdedor = "HEROES";
+        } else {
+            ganador = playerHeroes;
+            perdedor = playerVillanos;
+            bandoGanador = "HEROES";
+            bandoPerdedor = "VILLANOS";
+        }
+        
+        String mensaje = ganador.getUsuario() + " usando " + 
+                bandoGanador + " ha ganado ya que " + 
+                perdedor.getUsuario() + " usando " + bandoPerdedor +
+                " se ha retirado del juego. - " + new Date().toString();
+        
+        ganador.puntos += 3;
+        sistemaUsuarios.actualizarUsuario(ganador);
+        juegoTerminado = true;
+        
+        JOptionPane.showMessageDialog(null, mensaje);
+        gameWindow.dispose();
+        return;
         
     }
     public void borrarResaltadoMovimientos() {
