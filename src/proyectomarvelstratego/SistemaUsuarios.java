@@ -136,8 +136,7 @@ public class SistemaUsuarios {
             if (usuario.getUsuario().equals(usuarioActualizado.getUsuario())) {
 
                 // Actualizar los datos del usuario
-                usuario.setContrasena(usuarioActualizado.getContrasena());
-                usuariosActivos.set(i, usuario);  // Guardar el usuario actualizado en el array
+                usuariosActivos.set(i, usuarioActualizado);  // Guardar el usuario actualizado en el array
                 break;
             }
         }

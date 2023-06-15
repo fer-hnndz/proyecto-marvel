@@ -22,7 +22,7 @@ public class Juego extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         gamePanel.setLayout(new GridLayout(1,1));
         gamePanel.setMinimumSize(new Dimension(600, 300));
-        gamePanel.add(new Tablero(infoArea, eliminatedArea, sistemaUsuarios, playerHeroes, playerVillanos, sistemaUsuarios.usuarioIniciado.tutorialActivo));
+        gamePanel.add(new Tablero(infoArea, eliminatedArea, sistemaUsuarios, playerHeroes, playerVillanos, sistemaUsuarios.usuarioIniciado.tutorialActivo, this));
         gamePanel.repaint();
         setVisible(true);
     }

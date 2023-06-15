@@ -13,6 +13,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Date;
 
 public class Tablero extends JPanel{
     private boolean hayCasillaSeleccionada = false;
@@ -20,6 +21,8 @@ public class Tablero extends JPanel{
     private CasillaTablero[][] casillas;
     private boolean turnoHeroes = true;
     boolean esTutorial;
+    boolean hayRetirado = false;
+    boolean juegoTerminado = false;
     
     ArrayList<Personaje> heroesIniciales = Personaje.getPersonajesHeroes();
     ArrayList<Personaje> villanosIniciales = Personaje.getPersonajesVillanos();
@@ -32,14 +35,10 @@ public class Tablero extends JPanel{
     
     SistemaUsuarios sistemaUsuarios;
     Usuario playerHeroes, playerVillanos;
+    
+    JFrame gameWindow;
     private Image imagenFondo;
     
-    public Tablero() {
-        // Cargar la imagen de fondo
-        ImageIcon imagenIcono = new ImageIcon("src/img/MenuBackground.png");
-        imagenFondo = imagenIcono.getImage();
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -47,14 +46,18 @@ public class Tablero extends JPanel{
         g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
     }
     
-    public Tablero(JTextArea infoArea, JTextArea eliminadosArea, SistemaUsuarios sistemaUsuarios, Usuario playerHeroes, Usuario playerVillanos, boolean esTutorial) {
-
+    public Tablero(JTextArea infoArea, JTextArea eliminadosArea, SistemaUsuarios sistemaUsuarios, Usuario playerHeroes, Usuario playerVillanos, boolean esTutorial, JFrame gameWindow) {
+        // Cargar la imagen de fondo
+        ImageIcon imagenIcono = new ImageIcon("src/img/MenuBackground.png");
+        imagenFondo = imagenIcono.getImage();
+        
         this.sistemaUsuarios = sistemaUsuarios;
         this.playerHeroes = playerHeroes;
         this.playerVillanos = playerVillanos;
         this.infoArea = infoArea;
         this.eliminadosArea = eliminadosArea;
         this.esTutorial = esTutorial;
+        this.gameWindow = gameWindow;
         setLayout(new GridLayout(10, 10));
 
         // Crear las etiquetas para representar la cuadrícula del tablero
@@ -160,7 +163,56 @@ public class Tablero extends JPanel{
         repaint();
     }
     
-    private void arrojarResultado(boolean heroesGanan) {
+    private void detectarGanador() {
+        String mensajeLog = "";
+        Date fecha = new Date();
+        
+        // Verificar si ambos se quedaron sin movimientos validos
+        if (!tieneMovimientosValidos(turnoHeroes) && !tieneMovimientosValidos(!turnoHeroes)) {
+          mensajeLog = playerHeroes.getUsuario() + " usando HEROES ha empatado con " + playerVillanos.getUsuario() + " porque ambos se quedaron sin movimientos validos.";
+          playerHeroes.puntos += 1.5;
+          playerVillanos.puntos += 1.5;
+          
+          sistemaUsuarios.actualizarUsuario(playerHeroes);
+          sistemaUsuarios.actualizarUsuario(playerVillanos);
+          juegoTerminado = true;
+        } else if (!tieneMovimientosValidos(turnoHeroes)) { // Verificar si el bando contrario (perdedor) se quedo sin movimientos
+
+            
+            Usuario ganador = (!turnoHeroes) ?playerHeroes:playerVillanos;
+            Usuario perdedor = (!turnoHeroes) ?playerVillanos:playerHeroes;
+            
+            String bandoGanador = (!turnoHeroes) ?"HEROES":"VILLANOS";
+            String bandoPerdedor = (!turnoHeroes) ?"VILLANOS":"HEROES";
+            
+            mensajeLog = perdedor.getUsuario() + 
+                    " usando los " + bandoPerdedor + 
+                    " ha perdido por no tener movimientos validos disponibles ante " + 
+                    ganador.getUsuario() + " - " + fecha.toString();
+            
+            ganador.puntos += 1.5;
+            sistemaUsuarios.actualizarUsuario(ganador);
+            juegoTerminado = true;
+            
+        }  else if(!tieneMovimientosValidos(!turnoHeroes)) {
+            Usuario ganador = (turnoHeroes) ?playerHeroes:playerVillanos;
+            Usuario perdedor = (turnoHeroes) ?playerVillanos:playerHeroes;
+            
+            String bandoGanador = (turnoHeroes) ?"HEROES":"VILLANOS";
+            String bandoPerdedor = (turnoHeroes) ?"VILLANOS":"HEROES";
+            
+            mensajeLog = perdedor.getUsuario() + 
+                    " usando los " + bandoPerdedor + 
+                    " ha perdido por no tener movimientos validos disponibles ante " + 
+                    ganador.getUsuario() + " - " + fecha.toString();
+            
+            ganador.puntos += 1.5;
+            sistemaUsuarios.actualizarUsuario(ganador);
+            juegoTerminado = true;
+        }
+        
+        JOptionPane.showMessageDialog(null, mensajeLog);
+        gameWindow.dispose();
         
     }
 
@@ -333,6 +385,8 @@ public class Tablero extends JPanel{
             Personaje ganador = calcularCombate(casillaSeleccionada.personajeActual, casillas[newRow][newColumn].personajeActual);
             
             JPanel panel;
+            
+            // Mostrar mensaje del ganador/empate en pantalla
             if (ganador == casillaSeleccionada.personajeActual) {
                 System.out.println("GANO LA FICHA DEL TURNO ACTUAL");
                 panel = new VentanaCombate(ganador, casillas[newRow][newColumn].personajeActual, 1);
@@ -343,11 +397,11 @@ public class Tablero extends JPanel{
                 System.out.println("GANO LA FICHA DEL TURNO OPUESTO");
                 panel = new VentanaCombate(casillaSeleccionada.personajeActual, ganador, 0);
             }
-            // Mostrar al ganador en pantalla
+            
             JOptionPane.showMessageDialog(null, panel);
             
-            // Ambas piezas fueron eliminadas porque eran del mismo rango
-            if (ganador == null) {
+            // Eliminar pieza(s) derrotada(s).
+            if (ganador == null) { // Ambas piezas fueron eliminadas porque eran del mismo rango
                 casillaSeleccionada.setPersonaje(null);
                 casillas[newRow][newColumn].setPersonaje(null);
             } else if (casillaSeleccionada.personajeActual == ganador) {
@@ -358,6 +412,8 @@ public class Tablero extends JPanel{
                 // La pieza atacante perdio
                 casillaSeleccionada.setPersonaje(null);
             }
+            
+            detectarGanador();
             
             actualizarTurno();
             return;
@@ -420,6 +476,8 @@ public class Tablero extends JPanel{
     }
     
     public void actualizarTurno() {
+        if (juegoTerminado) return;
+        
         casillaSeleccionada = null;
         hayCasillaSeleccionada = false;
         
@@ -598,13 +656,13 @@ public class Tablero extends JPanel{
                 casillas[9][columnaAleatoria].setPersonaje(personajeActual);
                 
                 // Agregas las bombas alrededor de la tierra
-                Personaje bomba1 = new Personaje("Nova Blast", 0, true, null);
-                Personaje bomba2 = new Personaje("Nova Blast", 0, true, null);
-                Personaje bomba3 = new Personaje("Nova Blast", 0, true, null);
+               Personaje bomba1 = new Personaje("Nova Blast", 0, true, null);
+               Personaje bomba2 = new Personaje("Nova Blast", 0, true, null);
+               Personaje bomba3 = new Personaje("Nova Blast", 0, true, null);
                 
-                bomba1.posicionado = true;
-                bomba2.posicionado = true;
-                bomba3.posicionado = true;
+               bomba1.posicionado = true;
+               bomba2.posicionado = true;
+               bomba3.posicionado = true;
 
                 casillas[8][columnaAleatoria].setPersonaje(bomba1);
                 casillas[9][columnaAleatoria-1].setPersonaje(bomba2);
@@ -631,6 +689,7 @@ public class Tablero extends JPanel{
                 } while (columnaAleatoria == 0 || columnaAleatoria == 9);
                 
                 casillas[0][columnaAleatoria].setPersonaje(personajeActual);
+
                 
                 // Agregas las bombas alrededor de la tierra
                 Personaje bomba1 = new Personaje("Pumpkin Bomb", 0, false, null);

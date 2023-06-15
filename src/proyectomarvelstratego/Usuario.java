@@ -11,9 +11,9 @@ package proyectomarvelstratego;
 public class Usuario {
     private String usuario;
     private String contrasena;
-    private int punto = 0;
-    private int partidasBuenos = 0;
-    private int partidasMalos = 0;
+    double puntos = 0.0;
+    int partidasBuenos = 0;
+    int partidasMalos = 0;
     boolean tutorialActivo = false; // REPRESENTA SI EL MODO TUTORIAL ESTA ACTIVADO O NO.
     
     
