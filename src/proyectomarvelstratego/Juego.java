@@ -18,7 +18,7 @@ public class Juego extends javax.swing.JFrame {
      * Creates new form Juego
      */
     public Juego(SistemaUsuarios sistemaUsuarios, Usuario playerHeroes, Usuario playerVillanos) {
-        initComponents();
+        initComponents();   
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         gamePanel.setLayout(new GridLayout(1,1));
         gamePanel.setMinimumSize(new Dimension(600, 300));
@@ -193,7 +193,17 @@ public class Juego extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Juego(null, null, null).setVisible(true);
+                
+                SistemaUsuarios sys = new SistemaUsuarios();
+                sys.registrarUsuario("BUENO", "fella");
+                sys.registrarUsuario("MALO", "fella");
+                sys.iniciarSesion("BUENO", "fella");
+                
+                Usuario user1 = sys.getUsuario("BUENO");
+                Usuario user2 = sys.getUsuario("MALO");
+                
+                user1.tutorialActivo = true;
+                new Juego(sys, user1, user2).setVisible(true);
             }
         });
     }
