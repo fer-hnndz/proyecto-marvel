@@ -82,16 +82,17 @@ public class Tablero extends JPanel{
                         for (int j = 0; j < 10; j++) {
                             if (casillas[i][j].label == label) {
                                 casillaSeleccionada = casillas[i][j];
-                                casillaSeleccionada.setSelected(true);
+
                                 
                                 // VERIFICAR QUE SEA UNA FICHA DEL JUGADOR DEL TURNO ACTUAL Y TENGA UN PERSONAJE
                                 if (casillaSeleccionada.personajeActual != null && 
                                         casillaSeleccionada.personajeActual.esHeroe == turnoHeroes) {
                                     hayCasillaSeleccionada = true;
-                                   
+                                  
                                     mostrarInformacionPersonaje();
-                                    resaltarSiEsMovimientoValido();
+                                    if (esTutorial) resaltarSiEsMovimientoValido();
                                     resaltarZonasProhibidas();
+                                    casillaSeleccionada.setSelected(true);
                                     break;
                                 } else {
                                     //  Reiniciar el valor de la casilla seleccionada ya que no cumple
@@ -117,10 +118,10 @@ public class Tablero extends JPanel{
                                         
                                         casillaSeleccionada = casillas[i][j];
                                         casillaSeleccionada.setSelected(true);
-                                        resaltarSiEsMovimientoValido();
+                                        if (esTutorial) resaltarSiEsMovimientoValido();
                                         resaltarZonasProhibidas();
-                                        
                                         mostrarInformacionPersonaje();
+                                        casillaSeleccionada.setSelected(true);
                                         
                                         break;
                                     }
@@ -158,6 +159,10 @@ public class Tablero extends JPanel{
         setVisible(true);
         repaint();
     }
+    
+    private void arrojarResultado(boolean heroesGanan) {
+        
+    }
 
     private boolean esMovimientoValido(int row, int column) {
         int currentRow = casillaSeleccionada.row;
@@ -165,7 +170,7 @@ public class Tablero extends JPanel{
         
         
         // Son fichas que no se pueden mover
-        if (casillaSeleccionada.personajeActual.rango == 0) {
+        if (casillaSeleccionada.personajeActual.rango == 0 || casillaSeleccionada.personajeActual.rango == -1) {
             return false;
         }
         
@@ -261,6 +266,23 @@ public class Tablero extends JPanel{
         return false;
     }
     
+    /**
+     * Verifica si el jugador del turno actual tiene movimientos validos.
+     * @return 
+     */
+    private boolean tieneMovimientosValidos(boolean bandoHeroes) {
+        // Recorrer el array en busca de fichas que se pueden mover
+
+        for (int r = 0;r<10;r++){
+            for (int c = 0;c<10;c++) {
+                CasillaTablero casillaActual = casillas[r][c];
+                if (casillaActual.personajeActual == null) continue;
+                if (casillaActual.personajeActual.esHeroe == bandoHeroes && casillaActual.personajeActual.rango > 0) return true;
+            }
+        }
+        return false;
+    }
+    
     private void resaltarSiEsMovimientoValido() {
         // VER DESPUES LAS FICHAS #2
         
@@ -309,6 +331,20 @@ public class Tablero extends JPanel{
         if (casillas[newRow][newColumn].personajeActual != null) {
             // Entrar en combate ya que esta restringido que piezas del mismo rango entren en combate.
             Personaje ganador = calcularCombate(casillaSeleccionada.personajeActual, casillas[newRow][newColumn].personajeActual);
+            
+            JPanel panel;
+            if (ganador == casillaSeleccionada.personajeActual) {
+                System.out.println("GANO LA FICHA DEL TURNO ACTUAL");
+                panel = new VentanaCombate(ganador, casillas[newRow][newColumn].personajeActual, 1);
+            } else if (ganador == null) {
+                System.out.println("FUE UN EMPATE");
+                panel = new VentanaCombate(casillaSeleccionada.personajeActual, casillas[newRow][newColumn].personajeActual, -1);
+            } else {
+                System.out.println("GANO LA FICHA DEL TURNO OPUESTO");
+                panel = new VentanaCombate(casillaSeleccionada.personajeActual, ganador, 0);
+            }
+            // Mostrar al ganador en pantalla
+            JOptionPane.showMessageDialog(null, panel);
             
             // Ambas piezas fueron eliminadas porque eran del mismo rango
             if (ganador == null) {
@@ -408,6 +444,7 @@ public class Tablero extends JPanel{
         
         borrarResaltadoMovimientos();
         resaltarZonasProhibidas();
+        if (!esTutorial) esconderPersonajes();
         setVisible(true);
         mostrarPersonajesEliminados();
         
