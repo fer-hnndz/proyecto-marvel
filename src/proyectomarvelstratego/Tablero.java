@@ -32,8 +32,23 @@ public class Tablero extends JPanel{
     
     SistemaUsuarios sistemaUsuarios;
     Usuario playerHeroes, playerVillanos;
+    private Image imagenFondo;
+    
+    public Tablero() {
+        // Cargar la imagen de fondo
+        ImageIcon imagenIcono = new ImageIcon("src/img/MenuBackground.png");
+        imagenFondo = imagenIcono.getImage();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        // Dibujar la imagen de fondo
+        g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
+    }
     
     public Tablero(JTextArea infoArea, JTextArea eliminadosArea, SistemaUsuarios sistemaUsuarios, Usuario playerHeroes, Usuario playerVillanos, boolean esTutorial) {
+
         this.sistemaUsuarios = sistemaUsuarios;
         this.playerHeroes = playerHeroes;
         this.playerVillanos = playerVillanos;
@@ -43,7 +58,9 @@ public class Tablero extends JPanel{
         setLayout(new GridLayout(10, 10));
 
         // Crear las etiquetas para representar la cuadrícula del tablero
+
         casillas = new CasillaTablero[10][10];
+
         for (int row = 0; row < 10; row++) {
             for (int column = 0; column < 10; column++) {
                 CasillaTablero casilla = new CasillaTablero(row, column, null); // RELLENAR PERSONAJES DESPUES
@@ -360,7 +377,6 @@ public class Tablero extends JPanel{
                 villanosEliminados.add(atacante);
                 heroesEliminados.add(defensor);
             }
-            
             return null;
         }
         
@@ -381,6 +397,15 @@ public class Tablero extends JPanel{
         if (!turnoHeroes) mensaje = "FIN DEL TURNO DE " + playerHeroes.getUsuario() + " DEJA QUE  " + playerVillanos.getUsuario() + " JUEGUE SU TURNO.";
         else mensaje = "FIN DEL TURNO DE " + playerVillanos.getUsuario() + " DEJA QUE  " + playerHeroes.getUsuario() + " JUEGUE SU TURNO.";
         JOptionPane.showMessageDialog(null, mensaje);
+        
+        String mensaje2;
+        if (!turnoHeroes) {
+            mensaje2 = playerVillanos.getUsuario()+" jugando, bando Villanos";
+        } else {
+            mensaje2 = playerHeroes.getUsuario()+" jugando, bando Héroes";
+        }
+        Juego juego = (Juego) SwingUtilities.getWindowAncestor(this);
+        
         borrarResaltadoMovimientos();
         resaltarZonasProhibidas();
         setVisible(true);
