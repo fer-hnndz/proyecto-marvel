@@ -10,29 +10,27 @@ import javax.swing.JOptionPane;
  *
  * @author Gabby
  */
+
+import javax.swing.*;
 public class CambiarPassword extends javax.swing.JFrame {
     /**
      * Creates new form CambiarPassword
      */    
     private Usuario usuario;
     SistemaUsuarios sistemaUsuarios;
+    MiPerfil ventanaPerfil;
     
-    public CambiarPassword(SistemaUsuarios sistemaUsuarios) {
+    public CambiarPassword(SistemaUsuarios sistemaUsuarios, MiPerfil ventanaPrincipal) {
         initComponents();
         this.sistemaUsuarios = sistemaUsuarios;
+        this.ventanaPerfil = ventanaPrincipal;
     }
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-        mostrarInformacionUsuario();
     }
-        
-    private void mostrarInformacionUsuario() {
-        if (usuario != null) {
-            String contrasena = usuario.getContrasena();
-            jLabel3.setText(contrasena);
-        }
-    }
+  
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,7 +45,6 @@ public class CambiarPassword extends javax.swing.JFrame {
         txtContraseñaActual = new javax.swing.JTextField();
         txtContraseñaNueva = new javax.swing.JTextField();
         btnCambiarContra = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,8 +58,6 @@ public class CambiarPassword extends javax.swing.JFrame {
                 btnCambiarContraActionPerformed(evt);
             }
         });
-
-        jLabel3.setText("jLabel3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -84,17 +79,11 @@ public class CambiarPassword extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnCambiarContra)
                         .addGap(203, 203, 203))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(192, 192, 192))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
+                .addGap(66, 66, 66)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtContraseñaActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -119,19 +108,26 @@ public class CambiarPassword extends javax.swing.JFrame {
 
             if (contrasenaIngresada.equals(contrasenaActual)) {
                 String nuevaContrasena = txtContraseñaNueva.getText();
+                
+                if (nuevaContrasena.length() != 5) {
+                    JOptionPane.showMessageDialog(this, "ERROR. La contrasena debe ser de 5 caracteres");
+                    return;
+                }
+                
                 usuario.setContrasena(nuevaContrasena); // Actualiza contraseña en el objeto Usuario
                 sistemaUsuarios.actualizarUsuario(usuario);
-                JOptionPane.showMessageDialog(this, "Contraseña cambiada exitosamente. " + nuevaContrasena);
+                ventanaPerfil.setSistemaUsuarios(sistemaUsuarios);
+                JOptionPane.showMessageDialog(this, "Contraseña cambiada exitosamente a: " + nuevaContrasena);
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "La contraseña actual es incorrecta.");
-
-                this.dispose();
+                return;
             }
+            
         } else {
-        JOptionPane.showMessageDialog(this, "No se pudo cambiar la contraseña.");
+            JOptionPane.showMessageDialog(this, "No se pudo cambiar la contraseña.");
+            dispose();
         }
-        dispose(); 
     }//GEN-LAST:event_btnCambiarContraActionPerformed
 
     /**
@@ -142,7 +138,6 @@ public class CambiarPassword extends javax.swing.JFrame {
     private javax.swing.JButton btnCambiarContra;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField txtContraseñaActual;
     private javax.swing.JTextField txtContraseñaNueva;
     // End of variables declaration//GEN-END:variables

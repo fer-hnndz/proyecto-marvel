@@ -17,11 +17,14 @@ public class EliminarCuenta extends javax.swing.JFrame {
      */
     private Usuario usuario;
     SistemaUsuarios sistemaUsuarios;
+    MenuInicio ventanaPrincipal;
     
-    public EliminarCuenta() {
+    public EliminarCuenta(SistemaUsuarios sistemaUsuarios, MenuInicio ventanaPrincipal) {
         initComponents();
-        sistemaUsuarios = SistemaUsuarios.getInstancia();
-
+        this.sistemaUsuarios = sistemaUsuarios;
+        this.ventanaPrincipal = ventanaPrincipal;
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
     }
     
     public void setUsuario(Usuario usuario) {
@@ -114,9 +117,14 @@ public class EliminarCuenta extends javax.swing.JFrame {
             sistemaUsuarios.eliminarUsuario(usuario);
 
             JOptionPane.showMessageDialog(this, "La cuenta ha sido eliminada exitosamente.");
+            
+            // Abrir el menu prinicpal
             MenuPrincipal menuPrincipal = new MenuPrincipal();
             menuPrincipal.setSistemaUsuarios(sistemaUsuarios); 
             menuPrincipal.setVisible(true); 
+            
+            // Cerrar la ventana del menu de inicio
+            ventanaPrincipal.dispose();
             dispose();
         } else {
             JOptionPane.showMessageDialog(this, "La contraseña ingresada es incorrecta.");
@@ -125,41 +133,6 @@ public class EliminarCuenta extends javax.swing.JFrame {
     
     
     }//GEN-LAST:event_btnBorrarCuentaActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EliminarCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EliminarCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EliminarCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EliminarCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new EliminarCuenta().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBorrarCuenta;

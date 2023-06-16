@@ -32,8 +32,13 @@ public class MenuInicio extends javax.swing.JFrame {
     private void habilitarBotonPartidaNueva() {
         Usuario[] usuarios = sistemaUsuarios.getUsuariosActivos();
         boolean habilitar = usuarios.length > 1;;
-        jButton1.setEnabled(habilitar);
+        jugarBtn.setEnabled(habilitar);
     }
+
+    public void setSistemaUsuarios(SistemaUsuarios sistemaUsuarios) {
+        this.sistemaUsuarios = sistemaUsuarios;
+    }
+    
     
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
@@ -52,14 +57,14 @@ public class MenuInicio extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jugarBtn = new javax.swing.JButton();
+        configBtn = new javax.swing.JButton();
+        perfilBtn = new javax.swing.JButton();
+        rankingBtn = new javax.swing.JButton();
+        logoutBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -92,20 +97,20 @@ public class MenuInicio extends javax.swing.JFrame {
         jPanel1.setToolTipText("");
         jPanel1.setPreferredSize(new java.awt.Dimension(1280, 720));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MenuBackground.png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MenuBackground.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addComponent(jLabel5)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addComponent(jLabel5)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -115,63 +120,63 @@ public class MenuInicio extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MenuIronMan.png"))); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Nirmala UI", 1, 36)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("STRATEGO - MARVEL HEROES!");
-        jButton1.setBorderPainted(false);
-        jButton1.setContentAreaFilled(false);
-        jButton1.setEnabled(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jugarBtn.setFont(new java.awt.Font("Nirmala UI", 1, 36)); // NOI18N
+        jugarBtn.setForeground(new java.awt.Color(255, 255, 255));
+        jugarBtn.setText("STRATEGO - MARVEL HEROES!");
+        jugarBtn.setBorderPainted(false);
+        jugarBtn.setContentAreaFilled(false);
+        jugarBtn.setEnabled(false);
+        jugarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jugarBtnActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Nirmala UI", 1, 36)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("CONFIGURACION");
-        jButton2.setBorderPainted(false);
-        jButton2.setContentAreaFilled(false);
-        jButton2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        configBtn.setFont(new java.awt.Font("Nirmala UI", 1, 36)); // NOI18N
+        configBtn.setForeground(new java.awt.Color(255, 255, 255));
+        configBtn.setText("CONFIGURACION");
+        configBtn.setBorderPainted(false);
+        configBtn.setContentAreaFilled(false);
+        configBtn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        configBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                configBtnActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Nirmala UI", 1, 36)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("MI PERFIL");
-        jButton3.setBorderPainted(false);
-        jButton3.setContentAreaFilled(false);
-        jButton3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        perfilBtn.setFont(new java.awt.Font("Nirmala UI", 1, 36)); // NOI18N
+        perfilBtn.setForeground(new java.awt.Color(255, 255, 255));
+        perfilBtn.setText("MI PERFIL");
+        perfilBtn.setBorderPainted(false);
+        perfilBtn.setContentAreaFilled(false);
+        perfilBtn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        perfilBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                perfilBtnActionPerformed(evt);
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Nirmala UI", 1, 36)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("UNIVERSO MARVEL");
-        jButton4.setBorderPainted(false);
-        jButton4.setContentAreaFilled(false);
-        jButton4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        rankingBtn.setFont(new java.awt.Font("Nirmala UI", 1, 36)); // NOI18N
+        rankingBtn.setForeground(new java.awt.Color(255, 255, 255));
+        rankingBtn.setText("UNIVERSO MARVEL");
+        rankingBtn.setBorderPainted(false);
+        rankingBtn.setContentAreaFilled(false);
+        rankingBtn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        rankingBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                rankingBtnActionPerformed(evt);
             }
         });
 
-        jButton5.setFont(new java.awt.Font("Nirmala UI", 1, 36)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("CERRAR SESION");
-        jButton5.setBorderPainted(false);
-        jButton5.setContentAreaFilled(false);
-        jButton5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        logoutBtn.setFont(new java.awt.Font("Nirmala UI", 1, 36)); // NOI18N
+        logoutBtn.setForeground(new java.awt.Color(255, 255, 255));
+        logoutBtn.setText("CERRAR SESION");
+        logoutBtn.setBorderPainted(false);
+        logoutBtn.setContentAreaFilled(false);
+        logoutBtn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        logoutBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                logoutBtnActionPerformed(evt);
             }
         });
 
@@ -183,11 +188,11 @@ public class MenuInicio extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(414, 414, 414)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(rankingBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(logoutBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jugarBtn)
+                    .addComponent(configBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(perfilBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,15 +203,15 @@ public class MenuInicio extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addGap(84, 84, 84))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jugarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(configBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(perfilBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(rankingBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(logoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(131, 131, 131))))
         );
 
@@ -300,34 +305,31 @@ public class MenuInicio extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jugarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jugarBtnActionPerformed
         // TODO add your handling code here:
         System.out.println("CREANDO UNA NUEVA PARTIDA...");
         PartidaNueva partida = new PartidaNueva(sistemaUsuarios);
         partida.cargarUsuarios();
         partida.setVisible(true);              
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jugarBtnActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void perfilBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_perfilBtnActionPerformed
         // TODO add your handling code here:
-        
-        /*
-        MiPerfil perfil = new MiPerfil();
+
+        MiPerfil perfil = new MiPerfil(sistemaUsuarios, this);
         perfil.setUsuario(usuario);
         perfil.setVisible(true);
-        dispose();
-        */
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_perfilBtnActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void configBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_configBtnActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void rankingBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rankingBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_rankingBtnActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
         // TODO add your handling code here:
         int opcion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas cerrar sesión?", "Confirmación", JOptionPane.YES_NO_OPTION);
         if (opcion == JOptionPane.YES_OPTION) {
@@ -337,7 +339,7 @@ public class MenuInicio extends javax.swing.JFrame {
             menuPrincipal.setVisible(true);
             dispose();
         }
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_logoutBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -375,19 +377,19 @@ public class MenuInicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton configBtn;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JButton jugarBtn;
+    private javax.swing.JButton logoutBtn;
+    private javax.swing.JButton perfilBtn;
+    private javax.swing.JButton rankingBtn;
     // End of variables declaration//GEN-END:variables
 }

@@ -17,16 +17,24 @@ public class MiPerfil extends javax.swing.JFrame {
      */
     private SistemaUsuarios sistemaUsuarios;
     private Usuario usuario;
-
-    public MiPerfil() {
+    MenuInicio ventanaPrincipal;
+    
+    public MiPerfil(SistemaUsuarios sistemaUsuarios, MenuInicio ventanaPrincipal) {
         initComponents();
-        sistemaUsuarios = SistemaUsuarios.getInstancia();
+        this.sistemaUsuarios = sistemaUsuarios;
+        this.ventanaPrincipal = ventanaPrincipal;
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }
+
+    public void setSistemaUsuarios(SistemaUsuarios sistemaUsuarios) {
+        this.sistemaUsuarios = sistemaUsuarios;
     }
         
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
         mostrarInformacionUsuario();
     }
+    
     
     public void mostrarInformacionUsuario() {
         if (usuario != null) {
@@ -43,7 +51,7 @@ public class MiPerfil extends javax.swing.JFrame {
         btnCambiarPassword = new javax.swing.JButton();
         btnEliminarCuenta = new javax.swing.JButton();
         jLabelNombreUsuario = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        backBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -64,10 +72,10 @@ public class MiPerfil extends javax.swing.JFrame {
 
         jLabelNombreUsuario.setText("jLabel1");
 
-        jButton1.setText("REGRESAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        backBtn.setText("REGRESAR");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                backBtnActionPerformed(evt);
             }
         });
 
@@ -81,7 +89,7 @@ public class MiPerfil extends javax.swing.JFrame {
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton1)
+                        .addComponent(backBtn)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnEliminarCuenta)
                             .addComponent(btnCambiarPassword)))
@@ -104,7 +112,7 @@ public class MiPerfil extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(btnEliminarCuenta)
                 .addGap(30, 30, 30)
-                .addComponent(jButton1)
+                .addComponent(backBtn)
                 .addContainerGap(84, Short.MAX_VALUE))
         );
 
@@ -114,7 +122,7 @@ public class MiPerfil extends javax.swing.JFrame {
 
     private void btnCambiarPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarPasswordActionPerformed
         // TODO add your handling code here:
-        CambiarPassword changePassword = new CambiarPassword(sistemaUsuarios);
+        CambiarPassword changePassword = new CambiarPassword(sistemaUsuarios, this);
         changePassword.setUsuario(usuario);
         changePassword.setVisible(true);
         this.dispose();
@@ -122,19 +130,16 @@ public class MiPerfil extends javax.swing.JFrame {
 
     private void btnEliminarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarCuentaActionPerformed
         // TODO add your handling code here:
-        EliminarCuenta delete = new EliminarCuenta();
+        EliminarCuenta delete = new EliminarCuenta(sistemaUsuarios, ventanaPrincipal);
         delete.setUsuario(usuario);
         delete.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnEliminarCuentaActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
-        MenuInicio menu = new MenuInicio(sistemaUsuarios);
-        menu.setUsuario(usuario);
-        menu.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_backBtnActionPerformed
 
     public void mostrarMiPerfil(String nombre) {
         jLabelNombreUsuario.setText(nombre);
@@ -144,9 +149,9 @@ public class MiPerfil extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backBtn;
     private javax.swing.JButton btnCambiarPassword;
     private javax.swing.JButton btnEliminarCuenta;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelNombreUsuario;
     // End of variables declaration//GEN-END:variables
