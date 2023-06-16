@@ -51,6 +51,13 @@ public class Tablero extends JPanel{
         ImageIcon imagenIcono = new ImageIcon("src/img/MenuBackground.png");
         imagenFondo = imagenIcono.getImage();
         
+        // Agregar registro de partidas a los usuarios
+        playerHeroes.partidasBuenos++;
+        playerVillanos.partidasMalos++;
+        
+        sistemaUsuarios.actualizarUsuario(playerHeroes);
+        sistemaUsuarios.actualizarUsuario(playerVillanos);
+        
         this.sistemaUsuarios = sistemaUsuarios;
         this.playerHeroes = playerHeroes;
         this.playerVillanos = playerVillanos;
@@ -209,6 +216,28 @@ public class Tablero extends JPanel{
             ganador.puntos += 1.5;
             sistemaUsuarios.actualizarUsuario(ganador);
             juegoTerminado = true;
+        } else {
+            // Comprobar si la tierra de los heroes fue eliminada
+            for (int i = 0;i<heroesEliminados.toArray().length;i++) {
+                Personaje personajeActual = heroesEliminados.get(i);
+                if (personajeActual.rango == -1 && personajeActual.esHeroe) {
+                    juegoTerminado = true;
+                    mensajeLog = playerVillanos.getUsuario() + " usando los VILLANOS ha CAPTURADO la TIERRA! Venciendo a " + playerHeroes.getUsuario() + " - " + new Date().toString();
+                    playerVillanos.puntos += 3;
+                    sistemaUsuarios.actualizarUsuario(playerVillanos);
+                }
+            }
+            
+            for (int i =0;i<villanosEliminados.toArray().length;i++) {
+                Personaje personajeActual = heroesEliminados.get(i);
+                if (personajeActual.rango == -1 && !personajeActual.esHeroe) {
+                    juegoTerminado = true;
+                    mensajeLog = playerHeroes.getUsuario() + " usando los HEROES ha SALVADO la TIERRA! Venciendo a " + playerVillanos.getUsuario() + " - " + new Date().toString();
+                
+                    playerHeroes.puntos += 3;
+                    sistemaUsuarios.actualizarUsuario(playerHeroes);
+                }
+            }
         }
         
         if (juegoTerminado)
@@ -249,7 +278,7 @@ public class Tablero extends JPanel{
                                 else return false; // ESTA INTERFIRIENDO EN EL DESTINO POR ENDE MI DESTINO NO ES VALIDO
 
                             } else return false;// PIEZA DEL MISMO BANDO INTERIFIENDO POR ENDE DESTINO INVALIDO
-                        } else if ((currentRow >= 4 && currentRow <= 5) && ((i>=3 && i<=4) || (i>=6 && i<=7))) return false;
+                        } else if ((currentRow >= 4 && currentRow <= 5) && ((i>=2 && i<=3) || (i>=6 && i<=7))) return false;
                     }
                     // Se hizo el recorrido sin encontrar ningun personaje en el camino
                     return true;
