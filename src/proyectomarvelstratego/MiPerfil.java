@@ -39,8 +39,9 @@ public class MiPerfil extends javax.swing.JFrame {
     public void mostrarInformacionUsuario() {
         if (usuario != null) {
             String nombreUsuario = usuario.getUsuario();
-            String contrasena = usuario.getContrasena();
-            jLabelNombreUsuario.setText(nombreUsuario);
+            labelUsuario.setText(nombreUsuario);
+            heroesLabel.setText("" + usuario.partidasBuenos);
+            villanosLabel.setText("" + usuario.partidasMalos);
         }
     }
         
@@ -50,11 +51,18 @@ public class MiPerfil extends javax.swing.JFrame {
 
         btnCambiarPassword = new javax.swing.JButton();
         btnEliminarCuenta = new javax.swing.JButton();
-        jLabelNombreUsuario = new javax.swing.JLabel();
+        labelUsuario = new javax.swing.JLabel();
         backBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        heroesLabel = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        villanosLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1280, 720));
 
         btnCambiarPassword.setText("CAMBIAR PASSWORD");
         btnCambiarPassword.addActionListener(new java.awt.event.ActionListener() {
@@ -70,7 +78,7 @@ public class MiPerfil extends javax.swing.JFrame {
             }
         });
 
-        jLabelNombreUsuario.setText("jLabel1");
+        labelUsuario.setText("jLabel1");
 
         backBtn.setText("REGRESAR");
         backBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -81,39 +89,83 @@ public class MiPerfil extends javax.swing.JFrame {
 
         jLabel1.setText("Usuario:");
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jLabel2.setText("Partidas con Heroes:");
+
+        heroesLabel.setText("jLabel3");
+
+        jLabel3.setText("Partidas con Villanos:");
+
+        villanosLabel.setText("jLabel4");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(backBtn)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnEliminarCuenta)
-                            .addComponent(btnCambiarPassword)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabelNombreUsuario)
-                        .addGap(58, 58, 58)))
-                .addContainerGap(161, Short.MAX_VALUE))
+                        .addGap(43, 43, 43)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(heroesLabel))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(labelUsuario))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(villanosLabel))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 588, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnCambiarPassword)
+                                .addGap(85, 85, 85)
+                                .addComponent(backBtn)
+                                .addGap(86, 86, 86)
+                                .addComponent(btnEliminarCuenta)))))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelNombreUsuario)
-                    .addComponent(jLabel1))
-                .addGap(60, 60, 60)
-                .addComponent(btnCambiarPassword)
-                .addGap(30, 30, 30)
-                .addComponent(btnEliminarCuenta)
-                .addGap(30, 30, 30)
-                .addComponent(backBtn)
-                .addContainerGap(84, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addComponent(labelUsuario))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(heroesLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(villanosLabel))
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEliminarCuenta)
+                    .addComponent(backBtn)
+                    .addComponent(btnCambiarPassword))
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(203, Short.MAX_VALUE))
         );
 
         pack();
@@ -142,7 +194,7 @@ public class MiPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_backBtnActionPerformed
 
     public void mostrarMiPerfil(String nombre) {
-        jLabelNombreUsuario.setText(nombre);
+        labelUsuario.setText(nombre);
     }
     /**
      * @param args the command line arguments
@@ -152,7 +204,13 @@ public class MiPerfil extends javax.swing.JFrame {
     private javax.swing.JButton backBtn;
     private javax.swing.JButton btnCambiarPassword;
     private javax.swing.JButton btnEliminarCuenta;
+    private javax.swing.JLabel heroesLabel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabelNombreUsuario;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel labelUsuario;
+    private javax.swing.JLabel villanosLabel;
     // End of variables declaration//GEN-END:variables
 }
