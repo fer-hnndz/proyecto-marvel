@@ -24,6 +24,7 @@ public class CambiarPassword extends javax.swing.JFrame {
         initComponents();
         this.sistemaUsuarios = sistemaUsuarios;
         this.ventanaPerfil = ventanaPrincipal;
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     public void setUsuario(Usuario usuario) {

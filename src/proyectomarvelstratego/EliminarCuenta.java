@@ -25,19 +25,15 @@ public class EliminarCuenta extends javax.swing.JFrame {
         this.ventanaPrincipal = ventanaPrincipal;
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         
+        // Esconder label de prueba
+        jLabel1.setVisible(false);
+        
     }
     
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-        mostrarInformacionUsuario();
     }
-        
-    private void mostrarInformacionUsuario() {
-        if (usuario != null) {
-            String contrasena = usuario.getContrasena();
-            jLabel1.setText(contrasena);
-        }
-    }
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

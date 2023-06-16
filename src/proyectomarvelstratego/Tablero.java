@@ -229,7 +229,7 @@ public class Tablero extends JPanel{
             }
             
             for (int i =0;i<villanosEliminados.toArray().length;i++) {
-                Personaje personajeActual = heroesEliminados.get(i);
+                Personaje personajeActual = villanosEliminados.get(i);
                 if (personajeActual.rango == -1 && !personajeActual.esHeroe) {
                     juegoTerminado = true;
                     mensajeLog = playerHeroes.getUsuario() + " usando los HEROES ha SALVADO la TIERRA! Venciendo a " + playerVillanos.getUsuario() + " - " + new Date().toString();
