@@ -323,6 +323,9 @@ public class MenuInicio extends javax.swing.JFrame {
 
     private void configBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configBtnActionPerformed
         // TODO add your handling code here:
+        Configuracion config = new Configuracion(sistemaUsuarios, this);
+        config.setUsuario(usuario);
+        config.setVisible(true);
     }//GEN-LAST:event_configBtnActionPerformed
 
     private void rankingBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rankingBtnActionPerformed

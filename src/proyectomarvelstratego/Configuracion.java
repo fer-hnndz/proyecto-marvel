@@ -21,6 +21,7 @@ public class Configuracion extends javax.swing.JFrame {
         initComponents();
         this.sistemaUsuarios = sistemaUsuarios;
         this.ventanaPrincipal = ventanaPrincipal;
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
     
     public void setUsuario(Usuario usuario) {
@@ -91,15 +92,22 @@ public class Configuracion extends javax.swing.JFrame {
     private void btnModoTutorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModoTutorialActionPerformed
         // TODO add your handling code here:
         usuario.tutorialActivo = true;
+        actualizarUsuario();
+        ventanaPrincipal.setSistemaUsuarios(sistemaUsuarios);
         this.dispose(); // Cerrar la ventana de configuración
     }//GEN-LAST:event_btnModoTutorialActionPerformed
 
     private void btnModoClasicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModoClasicoActionPerformed
         // TODO add your handling code here:
         usuario.tutorialActivo = false;
+        actualizarUsuario();
+        ventanaPrincipal.setSistemaUsuarios(sistemaUsuarios);
         this.dispose();
     }//GEN-LAST:event_btnModoClasicoActionPerformed
 
+    private void actualizarUsuario() {
+        sistemaUsuarios.actualizarUsuario(usuario);
+    }
     /**
      * @param args the command line arguments
      */

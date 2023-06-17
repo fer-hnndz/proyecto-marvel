@@ -4,12 +4,16 @@
  */
 package proyectomarvelstratego;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Gabby
  */
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 public class MiPerfil extends javax.swing.JFrame {
 
     /**
@@ -23,6 +27,7 @@ public class MiPerfil extends javax.swing.JFrame {
         initComponents();
         this.sistemaUsuarios = sistemaUsuarios;
         this.ventanaPrincipal = ventanaPrincipal;
+        cargarPartidas();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
@@ -33,6 +38,23 @@ public class MiPerfil extends javax.swing.JFrame {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
         mostrarInformacionUsuario();
+    }
+    
+    public void cargarPartidas() {
+        ArrayList<Partida> partidas = sistemaUsuarios.usuarioIniciado.getPartidas();
+        DefaultTableModel model = (DefaultTableModel) matchTable.getModel();
+
+        for (int i = 0;i<partidas.toArray().length;i++){
+            Partida partida = partidas.get(i);
+            String resultado;
+           
+            if (partida.puntosGanados == 1.5) resultado = "EMPATE";
+            else resultado = (partida.victoria) ?"VICTORIA":"DERROTA";
+
+            
+            model.addRow(new Object[]{partida.contrincante.getUsuario(), partida.bandoUsado, resultado, partida.puntosGanados});
+        }
+        
     }
     
     
@@ -55,7 +77,7 @@ public class MiPerfil extends javax.swing.JFrame {
         backBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        matchTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         heroesLabel = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -89,18 +111,25 @@ public class MiPerfil extends javax.swing.JFrame {
 
         jLabel1.setText("Usuario:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        matchTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Contrincante", "Bando Jugado", "Resultado", "Puntos Ganados"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        matchTable.setShowGrid(true);
+        matchTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(matchTable);
 
         jLabel2.setText("Partidas con Heroes:");
 
@@ -209,8 +238,8 @@ public class MiPerfil extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelUsuario;
+    private javax.swing.JTable matchTable;
     private javax.swing.JLabel villanosLabel;
     // End of variables declaration//GEN-END:variables
 }

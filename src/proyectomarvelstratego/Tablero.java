@@ -176,14 +176,20 @@ public class Tablero extends JPanel{
         
         // Verificar si ambos se quedaron sin movimientos validos
         if (!tieneMovimientosValidos(turnoHeroes) && !tieneMovimientosValidos(!turnoHeroes)) {
+           // Registrar ;
+            
+            
           mensajeLog = playerHeroes.getUsuario() + " usando HEROES ha empatado con " + playerVillanos.getUsuario() + " porque ambos se quedaron sin movimientos validos.";
-          playerHeroes.puntos += 1.5;
-          playerVillanos.puntos += 1.5;
+          
+          Partida partidaHeroes = new Partida(playerVillanos, false, "HEROES", 1.5);
+          Partida partidaVillanos = new Partida(playerHeroes, false, "VILLANOS", 1.5);
+          playerHeroes.addPartida(partidaHeroes);
+          playerVillanos.addPartida(partidaVillanos);
           
           sistemaUsuarios.actualizarUsuario(playerHeroes);
           sistemaUsuarios.actualizarUsuario(playerVillanos);
           juegoTerminado = true;
-        } else if (!tieneMovimientosValidos(turnoHeroes)) { // Verificar si el bando contrario (perdedor) se quedo sin movimientos
+        } else if (!tieneMovimientosValidos(turnoHeroes)) { // Verificar si el jugador actual no se quedo sin turnos
 
             
             Usuario ganador = (!turnoHeroes) ?playerHeroes:playerVillanos;
@@ -192,29 +198,48 @@ public class Tablero extends JPanel{
             String bandoGanador = (!turnoHeroes) ?"HEROES":"VILLANOS";
             String bandoPerdedor = (!turnoHeroes) ?"VILLANOS":"HEROES";
             
+            // Registrar la partida para los usuarios
+            Partida partidaGanador = new Partida(perdedor, true, bandoGanador, 3);
+            Partida partidaPerdedor = new Partida(ganador, false, bandoPerdedor, 0);
+            
+            ganador.addPartida(partidaGanador);
+            perdedor.addPartida(partidaPerdedor);
+            
+            // Registrar puntos y actualizar usuario
+            sistemaUsuarios.actualizarUsuario(ganador);
+            sistemaUsuarios.actualizarUsuario(perdedor);
+            
             mensajeLog = perdedor.getUsuario() + 
                     " usando los " + bandoPerdedor + 
                     " ha perdido por no tener movimientos validos disponibles ante " + 
                     ganador.getUsuario() + " - " + fecha.toString();
             
-            ganador.puntos += 1.5;
-            sistemaUsuarios.actualizarUsuario(ganador);
             juegoTerminado = true;
+
             
-        }  else if(!tieneMovimientosValidos(!turnoHeroes)) {
+        }  else if(!tieneMovimientosValidos(!turnoHeroes)) { // Verificar si el bando contrario se quedo sin movimientos
             Usuario ganador = (turnoHeroes) ?playerHeroes:playerVillanos;
             Usuario perdedor = (turnoHeroes) ?playerVillanos:playerHeroes;
             
             String bandoGanador = (turnoHeroes) ?"HEROES":"VILLANOS";
             String bandoPerdedor = (turnoHeroes) ?"VILLANOS":"HEROES";
             
+            // Registrar la partida para los usuarios
+            Partida partidaGanador = new Partida(perdedor, true, bandoGanador, 3);
+            Partida partidaPerdedor = new Partida(ganador, false, bandoPerdedor, 0);
+            
+            ganador.addPartida(partidaGanador);
+            perdedor.addPartida(partidaPerdedor);
+            
+            sistemaUsuarios.actualizarUsuario(ganador);
+            sistemaUsuarios.actualizarUsuario(perdedor);
+            
             mensajeLog = perdedor.getUsuario() + 
                     " usando los " + bandoPerdedor + 
                     " ha perdido por no tener movimientos validos disponibles ante " + 
                     ganador.getUsuario() + " - " + fecha.toString();
             
-            ganador.puntos += 1.5;
-            sistemaUsuarios.actualizarUsuario(ganador);
+            
             juegoTerminado = true;
         } else {
             // Comprobar si la tierra de los heroes fue eliminada
@@ -223,7 +248,16 @@ public class Tablero extends JPanel{
                 if (personajeActual.rango == -1 && personajeActual.esHeroe) {
                     juegoTerminado = true;
                     mensajeLog = playerVillanos.getUsuario() + " usando los VILLANOS ha CAPTURADO la TIERRA! Venciendo a " + playerHeroes.getUsuario() + " - " + new Date().toString();
-                    playerVillanos.puntos += 3;
+                    
+                    // Registrar partida para los jugadores y asignar puntos
+                    
+                    Partida partidaHeroes = new Partida(playerVillanos, false, "HEROES", 0);
+                    Partida partidaVillanos = new Partida(playerHeroes, true, "VILLANOS", 3);
+                    
+                    playerHeroes.addPartida(partidaHeroes);
+                    playerVillanos.addPartida(partidaVillanos);
+                    
+                    sistemaUsuarios.actualizarUsuario(playerHeroes);
                     sistemaUsuarios.actualizarUsuario(playerVillanos);
                 }
             }
@@ -234,7 +268,6 @@ public class Tablero extends JPanel{
                     juegoTerminado = true;
                     mensajeLog = playerHeroes.getUsuario() + " usando los HEROES ha SALVADO la TIERRA! Venciendo a " + playerVillanos.getUsuario() + " - " + new Date().toString();
                 
-                    playerHeroes.puntos += 3;
                     sistemaUsuarios.actualizarUsuario(playerHeroes);
                 }
             }
@@ -561,8 +594,13 @@ public class Tablero extends JPanel{
                 perdedor.getUsuario() + " usando " + bandoPerdedor +
                 " se ha retirado del juego. - " + new Date().toString();
         
-        ganador.puntos += 3;
+        Partida partidaGanador = new Partida(perdedor, true, bandoGanador, 3);
+        Partida partidaPerdedor = new Partida(ganador, false, bandoPerdedor, 0);
+        
+        ganador.addPartida(partidaGanador);
+        perdedor.addPartida(partidaPerdedor);
         sistemaUsuarios.actualizarUsuario(ganador);
+        sistemaUsuarios.actualizarUsuario(perdedor);
         juegoTerminado = true;
         
         JOptionPane.showMessageDialog(null, mensaje);

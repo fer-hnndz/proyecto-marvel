@@ -27,7 +27,7 @@ public class PartidaNueva extends javax.swing.JFrame {
     boolean bandoHeroes;
     
     public PartidaNueva(SistemaUsuarios sistemaUsuarios) {
-        initComponents();
+        initComponents();        
         this.sistemaUsuarios = sistemaUsuarios;
         this.player = sistemaUsuarios.getUsuarioActual();
     }
