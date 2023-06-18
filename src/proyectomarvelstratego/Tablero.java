@@ -50,7 +50,7 @@ public class Tablero extends JPanel{
     
     public Tablero(JTextArea infoArea, JTextArea eliminadosArea, SistemaUsuarios sistemaUsuarios, Stats stats, Usuario playerHeroes, Usuario playerVillanos, boolean esTutorial, JFrame gameWindow, MenuInicio mainWindow) {
         // Cargar la imagen de fondo
-        ImageIcon imagenIcono = new ImageIcon("src/img/MenuBackground.png");
+        ImageIcon imagenIcono = new ImageIcon("src/img/tablero.png");
         imagenFondo = imagenIcono.getImage();
         
         // Agregar registro de partidas a los usuarios
