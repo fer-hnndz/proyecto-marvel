@@ -130,7 +130,10 @@ public class MenuInicio extends javax.swing.JFrame {
         jugarBtn.setText("STRATEGO - MARVEL HEROES!");
         jugarBtn.setBorderPainted(false);
         jugarBtn.setContentAreaFilled(false);
-        jugarBtn.setEnabled(false);
+        jugarBtn.setFocusPainted(false);
+        jugarBtn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jugarBtn.setIconTextGap(-525);
+        jugarBtn.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/buttonIcons/MenuInicioFade.png"))); // NOI18N
         jugarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jugarBtnActionPerformed(evt);
@@ -142,7 +145,10 @@ public class MenuInicio extends javax.swing.JFrame {
         configBtn.setText("CONFIGURACION");
         configBtn.setBorderPainted(false);
         configBtn.setContentAreaFilled(false);
+        configBtn.setFocusPainted(false);
         configBtn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        configBtn.setIconTextGap(-305);
+        configBtn.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/buttonIcons/MenuInicioFade.png"))); // NOI18N
         configBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 configBtnActionPerformed(evt);
@@ -154,7 +160,11 @@ public class MenuInicio extends javax.swing.JFrame {
         perfilBtn.setText("MI PERFIL");
         perfilBtn.setBorderPainted(false);
         perfilBtn.setContentAreaFilled(false);
+        perfilBtn.setFocusPainted(false);
         perfilBtn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        perfilBtn.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        perfilBtn.setIconTextGap(-175);
+        perfilBtn.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/buttonIcons/MenuInicioFade.png"))); // NOI18N
         perfilBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 perfilBtnActionPerformed(evt);
@@ -166,7 +176,10 @@ public class MenuInicio extends javax.swing.JFrame {
         rankingBtn.setText("UNIVERSO MARVEL");
         rankingBtn.setBorderPainted(false);
         rankingBtn.setContentAreaFilled(false);
+        rankingBtn.setFocusPainted(false);
         rankingBtn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        rankingBtn.setIconTextGap(-342);
+        rankingBtn.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/buttonIcons/MenuInicioFade.png"))); // NOI18N
         rankingBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rankingBtnActionPerformed(evt);
@@ -179,6 +192,8 @@ public class MenuInicio extends javax.swing.JFrame {
         logoutBtn.setBorderPainted(false);
         logoutBtn.setContentAreaFilled(false);
         logoutBtn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        logoutBtn.setIconTextGap(-280);
+        logoutBtn.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/buttonIcons/MenuInicioFade.png"))); // NOI18N
         logoutBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutBtnActionPerformed(evt);

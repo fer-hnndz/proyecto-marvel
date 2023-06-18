@@ -77,8 +77,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         loginBtn.setBackground(new java.awt.Color(201, 170, 4));
         loginBtn.setFont(new java.awt.Font("Nirmala UI", 1, 39)); // NOI18N
         loginBtn.setForeground(new java.awt.Color(255, 255, 255));
-        loginBtn.setText("Iniciar Sesión");
+        loginBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buttonIcons/LogInStd.png"))); // NOI18N
+        loginBtn.setBorderPainted(false);
+        loginBtn.setContentAreaFilled(false);
         loginBtn.setFocusable(false);
+        loginBtn.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/buttonIcons/LogInPress.png"))); // NOI18N
+        loginBtn.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/buttonIcons/LogInHover.png"))); // NOI18N
         loginBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginBtnActionPerformed(evt);
@@ -88,8 +92,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         registerBtn.setBackground(new java.awt.Color(201, 170, 4));
         registerBtn.setFont(new java.awt.Font("Nirmala UI", 1, 29)); // NOI18N
         registerBtn.setForeground(new java.awt.Color(255, 255, 255));
-        registerBtn.setText("Registrarse");
+        registerBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/buttonIcons/CrearPlStd.png"))); // NOI18N
+        registerBtn.setContentAreaFilled(false);
+        registerBtn.setFocusPainted(false);
         registerBtn.setFocusable(false);
+        registerBtn.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/buttonIcons/CrearPlPress.png"))); // NOI18N
+        registerBtn.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/buttonIcons/CrearPlHover.png"))); // NOI18N
         registerBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 registerBtnActionPerformed(evt);
