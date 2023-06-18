@@ -94,6 +94,9 @@ public class Configuracion extends javax.swing.JFrame {
         usuario.tutorialActivo = true;
         actualizarUsuario();
         ventanaPrincipal.setSistemaUsuarios(sistemaUsuarios);
+        
+        Tutorial tutorial = new Tutorial();
+        tutorial.setVisible(true);
         this.dispose(); // Cerrar la ventana de configuración
     }//GEN-LAST:event_btnModoTutorialActionPerformed
 
