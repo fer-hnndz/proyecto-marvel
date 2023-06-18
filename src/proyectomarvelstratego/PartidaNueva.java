@@ -24,10 +24,13 @@ public class PartidaNueva extends javax.swing.JFrame {
     Usuario player, contrincante; 
     JComboBox bandos;
     String bandoSeleccionado;
-    boolean bandoHeroes;
+    Stats stats;
+    MenuInicio mainWindow;
     
-    public PartidaNueva(SistemaUsuarios sistemaUsuarios) {
+    public PartidaNueva(SistemaUsuarios sistemaUsuarios, Stats stats, MenuInicio mainWindow) {
         initComponents();        
+        this.stats = stats;
+        this.mainWindow = mainWindow;
         this.sistemaUsuarios = sistemaUsuarios;
         this.player = sistemaUsuarios.getUsuarioActual();
     }
@@ -152,7 +155,7 @@ public class PartidaNueva extends javax.swing.JFrame {
         }
         
         JOptionPane.showMessageDialog(null, playerHeroes.getUsuario() + " empieza con el primer turno.");
-        new Juego(sistemaUsuarios, playerHeroes, playerVillanos);
+        new Juego(sistemaUsuarios, stats, playerHeroes, playerVillanos, mainWindow);
 
         
         

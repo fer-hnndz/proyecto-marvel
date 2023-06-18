@@ -34,9 +34,11 @@ public class Tablero extends JPanel{
     private JTextArea eliminadosArea;
     
     SistemaUsuarios sistemaUsuarios;
+    Stats stats;
     Usuario playerHeroes, playerVillanos;
     
     JFrame gameWindow;
+    MenuInicio mainWindow;
     private Image imagenFondo;
     
     @Override
@@ -46,7 +48,7 @@ public class Tablero extends JPanel{
         g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
     }
     
-    public Tablero(JTextArea infoArea, JTextArea eliminadosArea, SistemaUsuarios sistemaUsuarios, Usuario playerHeroes, Usuario playerVillanos, boolean esTutorial, JFrame gameWindow) {
+    public Tablero(JTextArea infoArea, JTextArea eliminadosArea, SistemaUsuarios sistemaUsuarios, Stats stats, Usuario playerHeroes, Usuario playerVillanos, boolean esTutorial, JFrame gameWindow, MenuInicio mainWindow) {
         // Cargar la imagen de fondo
         ImageIcon imagenIcono = new ImageIcon("src/img/MenuBackground.png");
         imagenFondo = imagenIcono.getImage();
@@ -58,6 +60,8 @@ public class Tablero extends JPanel{
         sistemaUsuarios.actualizarUsuario(playerHeroes);
         sistemaUsuarios.actualizarUsuario(playerVillanos);
         
+        this.stats = stats;
+        this.mainWindow = mainWindow;
         this.sistemaUsuarios = sistemaUsuarios;
         this.playerHeroes = playerHeroes;
         this.playerVillanos = playerVillanos;
@@ -205,6 +209,7 @@ public class Tablero extends JPanel{
             ganador.addPartida(partidaGanador);
             perdedor.addPartida(partidaPerdedor);
             
+            stats.addPartida(!turnoHeroes);
             // Registrar puntos y actualizar usuario
             sistemaUsuarios.actualizarUsuario(ganador);
             sistemaUsuarios.actualizarUsuario(perdedor);
@@ -239,7 +244,7 @@ public class Tablero extends JPanel{
                     " ha perdido por no tener movimientos validos disponibles ante " + 
                     ganador.getUsuario() + " - " + fecha.toString();
             
-            
+            stats.addPartida(turnoHeroes);
             juegoTerminado = true;
         } else {
             // Comprobar si la tierra de los heroes fue eliminada
@@ -257,6 +262,7 @@ public class Tablero extends JPanel{
                     playerHeroes.addPartida(partidaHeroes);
                     playerVillanos.addPartida(partidaVillanos);
                     
+                    stats.addPartida(false);
                     sistemaUsuarios.actualizarUsuario(playerHeroes);
                     sistemaUsuarios.actualizarUsuario(playerVillanos);
                 }
@@ -268,13 +274,22 @@ public class Tablero extends JPanel{
                     juegoTerminado = true;
                     mensajeLog = playerHeroes.getUsuario() + " usando los HEROES ha SALVADO la TIERRA! Venciendo a " + playerVillanos.getUsuario() + " - " + new Date().toString();
                 
+                    Partida partidaHeroes = new Partida(playerVillanos, true, "HEROES", 3);
+                    Partida partidaVillanos = new Partida(playerHeroes, false, "VILLANOS", 0);
+                    
+                    playerHeroes.addPartida(partidaHeroes);
+                    playerVillanos.addPartida(partidaVillanos);
+                    
+                    stats.addPartida(true);
                     sistemaUsuarios.actualizarUsuario(playerHeroes);
+                    sistemaUsuarios.actualizarUsuario(playerVillanos);
                 }
             }
         }
         
         if (juegoTerminado)
         {
+            mainWindow.setStats(stats);
             JOptionPane.showMessageDialog(null, mensajeLog);
             gameWindow.dispose();
 
@@ -597,8 +612,11 @@ public class Tablero extends JPanel{
         Partida partidaGanador = new Partida(perdedor, true, bandoGanador, 3);
         Partida partidaPerdedor = new Partida(ganador, false, bandoPerdedor, 0);
         
+        // El bando opuesto gana la partida.
+        stats.addPartida(!turnoHeroes);
         ganador.addPartida(partidaGanador);
         perdedor.addPartida(partidaPerdedor);
+        
         sistemaUsuarios.actualizarUsuario(ganador);
         sistemaUsuarios.actualizarUsuario(perdedor);
         juegoTerminado = true;

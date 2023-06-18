@@ -19,6 +19,7 @@ public class MenuInicio extends javax.swing.JFrame {
      */
     private Usuario usuario;
     SistemaUsuarios sistemaUsuarios;
+    Stats stats = new Stats();
     
     public MenuInicio(SistemaUsuarios sistemaUsuarios) {
         initComponents();
@@ -28,7 +29,11 @@ public class MenuInicio extends javax.swing.JFrame {
         setResizable(false);
         habilitarBotonPartidaNueva();        
     }
-    
+
+    public void setStats(Stats stats) {
+        this.stats = stats;
+    }
+        
     private void habilitarBotonPartidaNueva() {
         Usuario[] usuarios = sistemaUsuarios.getUsuariosActivos();
         boolean habilitar = usuarios.length > 1;;
@@ -308,7 +313,7 @@ public class MenuInicio extends javax.swing.JFrame {
     private void jugarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jugarBtnActionPerformed
         // TODO add your handling code here:
         System.out.println("CREANDO UNA NUEVA PARTIDA...");
-        PartidaNueva partida = new PartidaNueva(sistemaUsuarios);
+        PartidaNueva partida = new PartidaNueva(sistemaUsuarios, stats, this);
         partida.cargarUsuarios();
         partida.setVisible(true);              
     }//GEN-LAST:event_jugarBtnActionPerformed
@@ -330,6 +335,8 @@ public class MenuInicio extends javax.swing.JFrame {
 
     private void rankingBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rankingBtnActionPerformed
         // TODO add your handling code here:
+        UniversoMarvel ranks = new UniversoMarvel(sistemaUsuarios, stats);
+        ranks.setVisible(true);
     }//GEN-LAST:event_rankingBtnActionPerformed
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed

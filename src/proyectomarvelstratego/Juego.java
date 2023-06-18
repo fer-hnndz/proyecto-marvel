@@ -18,7 +18,7 @@ public class Juego extends javax.swing.JFrame {
      * Creates new form Juego
      */
     Tablero tablero;
-    public Juego(SistemaUsuarios sistemaUsuarios, Usuario playerHeroes, Usuario playerVillanos) {
+    public Juego(SistemaUsuarios sistemaUsuarios, Stats stats, Usuario playerHeroes, Usuario playerVillanos, MenuInicio mainWindow) {
         initComponents();   
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         gamePanel.setLayout(new GridLayout(1,1));
@@ -26,13 +26,15 @@ public class Juego extends javax.swing.JFrame {
         tablero =new Tablero(infoArea, 
                 eliminatedArea, 
                 sistemaUsuarios,
+                stats,
                 playerHeroes, 
                 playerVillanos, 
                 sistemaUsuarios.usuarioIniciado.tutorialActivo, 
-                this);
+                this, mainWindow);
         gamePanel.add(tablero);
         gamePanel.repaint();
         setVisible(true);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
 
     /**
@@ -221,7 +223,7 @@ public class Juego extends javax.swing.JFrame {
                 Usuario user2 = sys.getUsuario("MALO");
                 
                 user1.tutorialActivo = false;
-                new Juego(sys, user1, user2).setVisible(true);
+                new Juego(sys, new Stats(), user1, user2, null).setVisible(true);
             }
         });
     }
