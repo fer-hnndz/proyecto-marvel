@@ -92,7 +92,7 @@ public class MiPerfil extends javax.swing.JFrame {
 
         btnCambiarPassword.setBackground(new java.awt.Color(0, 255, 255));
         btnCambiarPassword.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        btnCambiarPassword.setForeground(new java.awt.Color(255, 255, 255));
+        btnCambiarPassword.setForeground(new java.awt.Color(0, 102, 102));
         btnCambiarPassword.setText("CAMBIAR PASSWORD");
         btnCambiarPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,7 +102,7 @@ public class MiPerfil extends javax.swing.JFrame {
 
         btnEliminarCuenta.setBackground(new java.awt.Color(0, 255, 255));
         btnEliminarCuenta.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        btnEliminarCuenta.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarCuenta.setForeground(new java.awt.Color(0, 102, 102));
         btnEliminarCuenta.setText("ELIMINAR MI CUENTA");
         btnEliminarCuenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,7 +130,7 @@ public class MiPerfil extends javax.swing.JFrame {
 
         jScrollPane1.setBackground(new java.awt.Color(25, 25, 25));
 
-        matchTable.setBackground(new java.awt.Color(25, 25, 25));
+        matchTable.setBackground(new java.awt.Color(153, 153, 153));
         matchTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -177,40 +177,46 @@ public class MiPerfil extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(558, 558, 558))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(heroesLabel))
+                        .addGap(340, 340, 340)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(heroesLabel))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(labelUsuario))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(villanosLabel))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(labelUsuario))
-                    .addComponent(jLabel4)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 588, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(villanosLabel)))
-                .addContainerGap(33, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(28, 28, 28)
-                    .addComponent(btnCambiarPassword)
-                    .addGap(85, 85, 85)
-                    .addComponent(backBtn)
-                    .addGap(86, 86, 86)
-                    .addComponent(btnEliminarCuenta)
-                    .addContainerGap(54, Short.MAX_VALUE)))
+                        .addGap(329, 329, 329)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 588, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(btnCambiarPassword)
+                                .addGap(85, 85, 85)
+                                .addComponent(backBtn)
+                                .addGap(86, 86, 86)
+                                .addComponent(btnEliminarCuenta)))))
+                .addContainerGap(345, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(55, 55, 55)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(labelUsuario))
@@ -222,17 +228,14 @@ public class MiPerfil extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(villanosLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addGap(34, 34, 34)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEliminarCuenta)
+                    .addComponent(backBtn)
+                    .addComponent(btnCambiarPassword))
+                .addGap(31, 31, 31)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(117, 117, 117))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(219, 219, 219)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnEliminarCuenta)
-                        .addComponent(backBtn)
-                        .addComponent(btnCambiarPassword))
-                    .addContainerGap(368, Short.MAX_VALUE)))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

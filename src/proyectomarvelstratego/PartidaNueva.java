@@ -4,6 +4,7 @@
  */
 package proyectomarvelstratego;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -33,6 +34,9 @@ public class PartidaNueva extends javax.swing.JFrame {
         this.mainWindow = mainWindow;
         this.sistemaUsuarios = sistemaUsuarios;
         this.player = sistemaUsuarios.getUsuarioActual();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        Color backgroundColor = new Color(50, 94, 94);
+        getContentPane().setBackground(backgroundColor);
     }
     
     public void cargarUsuarios() {
@@ -54,7 +58,7 @@ public class PartidaNueva extends javax.swing.JFrame {
         System.out.println("Cargando bandos...");
 
         JLabel text = new JLabel("Escoge tu bando:");
-        text.setFont(new Font("Arial", Font.BOLD, 16));
+        text.setFont(new Font("Times New Roman", Font.BOLD, 16));
         
         bandos = new JComboBox();
         bandos.addItem("Heroes");
@@ -84,15 +88,18 @@ public class PartidaNueva extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Jugar");
+        jButton1.setBackground(new java.awt.Color(0, 153, 153));
+        jButton1.setForeground(new java.awt.Color(204, 255, 255));
+        jButton1.setText("jugar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(204, 255, 255));
         jLabel1.setText("ESCOGE TU CONTRINCANTE");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -163,7 +170,7 @@ public class PartidaNueva extends javax.swing.JFrame {
            
     }
         
-    //GEN-LAST:event_jButton1ActionPerformed
+//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
