@@ -602,6 +602,9 @@ public class Tablero extends JPanel{
     }
     
     public void surrender() {
+    int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de rendirte?", "Confirmar rendición", JOptionPane.YES_NO_OPTION);
+    
+    if (confirm == JOptionPane.YES_OPTION) {
         Usuario ganador, perdedor;
         String bandoGanador, bandoPerdedor;
         
@@ -636,7 +639,7 @@ public class Tablero extends JPanel{
         
         JOptionPane.showMessageDialog(null, mensaje);
         gameWindow.dispose();
-        return;
+    }
         
     }
     public void borrarResaltadoMovimientos() {
