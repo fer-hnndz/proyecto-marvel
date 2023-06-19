@@ -576,19 +576,30 @@ public class Tablero extends JPanel{
         else mensaje = "FIN DEL TURNO DE " + playerVillanos.getUsuario() + " DEJA QUE  " + playerHeroes.getUsuario() + " JUEGUE SU TURNO.";
         JOptionPane.showMessageDialog(null, mensaje);
         
-        String mensaje2;
-        if (!turnoHeroes) {
-            mensaje2 = playerVillanos.getUsuario()+" jugando, bando Villanos";
-        } else {
-            mensaje2 = playerHeroes.getUsuario()+" jugando, bando Héroes";
-        }
+        String mensaje2 = MensajeTurnosJugador();
+        
         Juego juego = (Juego) SwingUtilities.getWindowAncestor(this);
         
         borrarResaltadoMovimientos();
         resaltarZonasProhibidas();
+        juego.actualizarTextoMensaje(mensaje2);// Actualizar el texto en jLabel3
         if (!esTutorial) esconderPersonajes();
         setVisible(true);
         mostrarPersonajesEliminados();
+    }
+    
+    public void mostrarMensajeInicial() {
+        String mensaje2 = MensajeTurnosJugador();
+        Juego juego = (Juego) SwingUtilities.getWindowAncestor(this);
+        juego.actualizarTextoMensaje(mensaje2);
+    }
+        
+    private String MensajeTurnosJugador() {
+        if (!turnoHeroes) {
+            return playerVillanos.getUsuario() + " jugando, bando Villanos";
+        } else {
+            return playerHeroes.getUsuario() + " jugando, bando Héroes";
+        }
     }
     
     public void surrender() {
