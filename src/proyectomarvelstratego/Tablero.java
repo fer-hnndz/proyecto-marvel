@@ -189,8 +189,8 @@ public class Tablero extends JPanel{
             
           mensajeLog = playerHeroes.getUsuario() + " usando HEROES ha empatado con " + playerVillanos.getUsuario() + " porque ambos se quedaron sin movimientos validos.";
           
-          Partida partidaHeroes = new Partida(playerVillanos, false, "HEROES", 1.5);
-          Partida partidaVillanos = new Partida(playerHeroes, false, "VILLANOS", 1.5);
+          Partida partidaHeroes = new Partida(playerVillanos, false, "HEROES", 1.5, fecha);
+          Partida partidaVillanos = new Partida(playerHeroes, false, "VILLANOS", 1.5, fecha);
           playerHeroes.addPartida(partidaHeroes);
           playerVillanos.addPartida(partidaVillanos);
           
@@ -207,8 +207,8 @@ public class Tablero extends JPanel{
             String bandoPerdedor = (!turnoHeroes) ?"VILLANOS":"HEROES";
             
             // Registrar la partida para los usuarios
-            Partida partidaGanador = new Partida(perdedor, true, bandoGanador, 3);
-            Partida partidaPerdedor = new Partida(ganador, false, bandoPerdedor, 0);
+            Partida partidaGanador = new Partida(perdedor, true, bandoGanador, 3, fecha);
+            Partida partidaPerdedor = new Partida(ganador, false, bandoPerdedor, 0, fecha);
             
             ganador.addPartida(partidaGanador);
             perdedor.addPartida(partidaPerdedor);
@@ -221,7 +221,7 @@ public class Tablero extends JPanel{
             mensajeLog = perdedor.getUsuario() + 
                     " usando los " + bandoPerdedor + 
                     " ha perdido por no tener movimientos validos disponibles ante " + 
-                    ganador.getUsuario() + " - " + fecha.toString();
+                    ganador.getUsuario() + " - " + fecha;
             
             juegoTerminado = true;
 
@@ -234,8 +234,8 @@ public class Tablero extends JPanel{
             String bandoPerdedor = (turnoHeroes) ?"VILLANOS":"HEROES";
             
             // Registrar la partida para los usuarios
-            Partida partidaGanador = new Partida(perdedor, true, bandoGanador, 3);
-            Partida partidaPerdedor = new Partida(ganador, false, bandoPerdedor, 0);
+            Partida partidaGanador = new Partida(perdedor, true, bandoGanador, 3, fecha);
+            Partida partidaPerdedor = new Partida(ganador, false, bandoPerdedor, 0, fecha);
             
             ganador.addPartida(partidaGanador);
             perdedor.addPartida(partidaPerdedor);
@@ -246,7 +246,7 @@ public class Tablero extends JPanel{
             mensajeLog = perdedor.getUsuario() + 
                     " usando los " + bandoPerdedor + 
                     " ha perdido por no tener movimientos validos disponibles ante " + 
-                    ganador.getUsuario() + " - " + fecha.toString();
+                    ganador.getUsuario() + " - " + fecha;
             
             stats.addPartida(turnoHeroes);
             juegoTerminado = true;
@@ -256,12 +256,12 @@ public class Tablero extends JPanel{
                 Personaje personajeActual = heroesEliminados.get(i);
                 if (personajeActual.rango == -1 && personajeActual.esHeroe) {
                     juegoTerminado = true;
-                    mensajeLog = playerVillanos.getUsuario() + " usando los VILLANOS ha CAPTURADO la TIERRA! Venciendo a " + playerHeroes.getUsuario() + " - " + new Date().toString();
+                    mensajeLog = playerVillanos.getUsuario() + " usando los VILLANOS ha CAPTURADO la TIERRA! Venciendo a " + playerHeroes.getUsuario() + " - " + fecha;
                     
                     // Registrar partida para los jugadores y asignar puntos
                     
-                    Partida partidaHeroes = new Partida(playerVillanos, false, "HEROES", 0);
-                    Partida partidaVillanos = new Partida(playerHeroes, true, "VILLANOS", 3);
+                    Partida partidaHeroes = new Partida(playerVillanos, false, "HEROES", 0, fecha);
+                    Partida partidaVillanos = new Partida(playerHeroes, true, "VILLANOS", 3, fecha);
                     
                     playerHeroes.addPartida(partidaHeroes);
                     playerVillanos.addPartida(partidaVillanos);
@@ -278,8 +278,8 @@ public class Tablero extends JPanel{
                     juegoTerminado = true;
                     mensajeLog = playerHeroes.getUsuario() + " usando los HEROES ha SALVADO la TIERRA! Venciendo a " + playerVillanos.getUsuario() + " - " + new Date().toString();
                 
-                    Partida partidaHeroes = new Partida(playerVillanos, true, "HEROES", 3);
-                    Partida partidaVillanos = new Partida(playerHeroes, false, "VILLANOS", 0);
+                    Partida partidaHeroes = new Partida(playerVillanos, true, "HEROES", 3, fecha);
+                    Partida partidaVillanos = new Partida(playerHeroes, false, "VILLANOS", 0, fecha);
                     
                     playerHeroes.addPartida(partidaHeroes);
                     playerVillanos.addPartida(partidaVillanos);
@@ -604,6 +604,8 @@ public class Tablero extends JPanel{
     public void surrender() {
     int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de rendirte?", "Confirmar rendición", JOptionPane.YES_NO_OPTION);
     
+    Date fecha = new Date();
+    
     if (confirm == JOptionPane.YES_OPTION) {
         Usuario ganador, perdedor;
         String bandoGanador, bandoPerdedor;
@@ -623,10 +625,10 @@ public class Tablero extends JPanel{
         String mensaje = ganador.getUsuario() + " usando " + 
                 bandoGanador + " ha ganado ya que " + 
                 perdedor.getUsuario() + " usando " + bandoPerdedor +
-                " se ha retirado del juego. - " + new Date().toString();
+                " se ha retirado del juego. - " + fecha;
         
-        Partida partidaGanador = new Partida(perdedor, true, bandoGanador, 3);
-        Partida partidaPerdedor = new Partida(ganador, false, bandoPerdedor, 0);
+        Partida partidaGanador = new Partida(perdedor, true, bandoGanador, 3, fecha);
+        Partida partidaPerdedor = new Partida(ganador, false, bandoPerdedor, 0, fecha);
         
         // El bando opuesto gana la partida.
         stats.addPartida(!turnoHeroes);

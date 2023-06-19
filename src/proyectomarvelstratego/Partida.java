@@ -4,6 +4,9 @@
  */
 package proyectomarvelstratego;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author Jorge Hernandez
@@ -13,13 +16,16 @@ public class Partida {
     boolean victoria;
     String bandoUsado;
     double puntosGanados;
-
-    public Partida(Usuario contrincante, boolean victoria, String bandoUsado, double puntosGanados) {
+    String fecha;
+    
+    public Partida(Usuario contrincante, boolean victoria, String bandoUsado, double puntosGanados, Date fechaObj) {
         this.contrincante = contrincante;
         this.victoria = victoria;
         this.bandoUsado = bandoUsado;
         this.puntosGanados = puntosGanados;
-    }
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yy HH:mm");
+        this.fecha = formato.format(fechaObj);
     
+    }
     
 }

@@ -52,7 +52,7 @@ public class MiPerfil extends javax.swing.JFrame {
             else resultado = (partida.victoria) ?"VICTORIA":"DERROTA";
 
             
-            model.addRow(new Object[]{partida.contrincante.getUsuario(), partida.bandoUsado, resultado, partida.puntosGanados});
+            model.addRow(new Object[]{partida.contrincante.getUsuario(), partida.bandoUsado, resultado, partida.fecha, partida.puntosGanados});
         }
         
     }
@@ -136,11 +136,11 @@ public class MiPerfil extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Contrincante", "Bando Jugado", "Resultado", "Puntos Ganados"
+                "Contrincante", "Bando Jugado", "Resultado", "Fecha", "Puntos Ganados"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
