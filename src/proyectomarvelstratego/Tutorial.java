@@ -31,14 +31,40 @@ public class Tutorial extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         // Rutas de los gifs para cada slide
-        String gif1Path = "src/img/tutorial.gif";//intro
-        String gif2Path = "src/img/marvel2.gif";//nomas de ejemplos por mientras
-        String gif3Path = "src/img/marvel3.gif";
-        
+        String gif1Path = "src/img/tutorial1.gif";//intro
+        String gif2Path = "src/img/zonasProhibidas.gif";//nomas de ejemplos por mientras
+        String gif3Path = "src/img/tableroTutorial.gif";
+        String gif4Path = "src/img/considerar.gif";
+        String gif5Path = "src/img/tuto.gif";
+        String gif6Path = "src/img/tutorialMovimientos.gif";
+        String gif7Path = "src/img/Movimiento1.gif";
+        String gif8Path = "src/img/Movimiento2.gif";
+        String gif9Path = "src/img/Movimiento3.gif";
+        String gif10Path = "src/img/Movimiento4.gif";
+        String gif11Path = "src/img/Movimiento5.gif";
+        String gif12Path = "src/img/Movimiento6.gif";
+        String gif13Path = "src/img/Movimiento7.gif";
+        String gif14Path = "src/img/Movimiento8.gif";
+        String gif15Path = "src/img/Movimiento9.gif";
+        String gif16Path = "src/img/TutorialEnd.gif";
+
         tutorialSlidePanel.init(
             new tutorialPanel("Intro", new Color(0, 0, 0), gif1Path),
-            new tutorialPanel("Movimientos", new Color(0, 0, 0), gif2Path),
-            new tutorialPanel("Reglas", new Color(0, 0, 0), gif3Path)
+            new tutorialPanel("zonasProhibidas", new Color(0, 0, 0), gif2Path),
+            new tutorialPanel("tableroTutorial", new Color(0, 0, 0), gif3Path),
+            new tutorialPanel("considerar", new Color(0, 0, 0), gif4Path),
+            new tutorialPanel("tuto", new Color(0, 0, 0), gif5Path),
+            new tutorialPanel("tutorialMovimientos", new Color(0, 0, 0), gif6Path),
+            new tutorialPanel("Movimiento1", new Color(0, 0, 0), gif7Path),
+            new tutorialPanel("Movimiento2", new Color(0, 0, 0), gif8Path),
+            new tutorialPanel("Movimiento3", new Color(0, 0, 0), gif9Path),
+            new tutorialPanel("Movimiento4", new Color(0, 0, 0), gif10Path),
+            new tutorialPanel("Movimiento5", new Color(0, 0, 0), gif11Path),
+            new tutorialPanel("Movimiento6", new Color(0, 0, 0), gif12Path),
+            new tutorialPanel("Movimiento7", new Color(0, 0, 0), gif13Path),
+            new tutorialPanel("Movimiento8", new Color(0, 0, 0), gif14Path),
+            new tutorialPanel("Movimiento9", new Color(0, 0, 0), gif15Path),
+            new tutorialPanel("TutorialEnd", new Color(0, 0, 0), gif16Path)
         );
         tutorialSlidePanel.setSpeed(20);
         
@@ -92,6 +118,8 @@ public class Tutorial extends javax.swing.JFrame {
             .addGap(0, 637, Short.MAX_VALUE)
         );
 
+        btnRetroceder.setBackground(new java.awt.Color(0, 51, 51));
+        btnRetroceder.setForeground(new java.awt.Color(0, 255, 204));
         btnRetroceder.setText("<");
         btnRetroceder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,6 +127,8 @@ public class Tutorial extends javax.swing.JFrame {
             }
         });
 
+        btnAvanzar.setBackground(new java.awt.Color(0, 51, 51));
+        btnAvanzar.setForeground(new java.awt.Color(0, 255, 204));
         btnAvanzar.setText(">");
         btnAvanzar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
