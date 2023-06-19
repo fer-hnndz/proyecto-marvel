@@ -44,7 +44,7 @@ public class MiPerfil extends javax.swing.JFrame {
         ArrayList<Partida> partidas = sistemaUsuarios.usuarioIniciado.getPartidas();
         DefaultTableModel model = (DefaultTableModel) matchTable.getModel();
 
-        for (int i = 0;i<partidas.toArray().length;i++){
+        for (int i = (partidas.toArray().length - 1);i>=0;i--){
             Partida partida = partidas.get(i);
             String resultado;
            
