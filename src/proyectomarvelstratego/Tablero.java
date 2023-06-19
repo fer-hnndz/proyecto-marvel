@@ -39,7 +39,7 @@ public class Tablero extends JPanel{
     Stats stats;
     Usuario playerHeroes, playerVillanos;
     
-    JFrame gameWindow;
+    Juego gameWindow;
     MenuInicio mainWindow;
     private Image imagenFondo;
     
@@ -50,7 +50,7 @@ public class Tablero extends JPanel{
         g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
     }
     
-    public Tablero(JTextArea infoArea, JTextArea heroesEliminadosArea, JTextArea villanosEliminadosArea, SistemaUsuarios sistemaUsuarios, Stats stats, Usuario playerHeroes, Usuario playerVillanos, boolean esTutorial, JFrame gameWindow, MenuInicio mainWindow) {
+    public Tablero(JTextArea infoArea, JTextArea heroesEliminadosArea, JTextArea villanosEliminadosArea, SistemaUsuarios sistemaUsuarios, Stats stats, Usuario playerHeroes, Usuario playerVillanos, boolean esTutorial, Juego gameWindow, MenuInicio mainWindow) {
         // Cargar la imagen de fondo
         ImageIcon imagenIcono = new ImageIcon("src/img/tablero.png");
         imagenFondo = imagenIcono.getImage();
@@ -171,6 +171,7 @@ public class Tablero extends JPanel{
         // Establecer posiciones iniciales
         posicionarTodo();
         resaltarZonasProhibidas();
+        mostrarMensajeInicial(); // mostrar el turno inicial del jugador
         
         if (!esTutorial) esconderPersonajes(); // Esconder personajes en caso de que no se este jugando en modo tutorial
         setVisible(true);
@@ -576,13 +577,12 @@ public class Tablero extends JPanel{
         else mensaje = "FIN DEL TURNO DE " + playerVillanos.getUsuario() + " DEJA QUE  " + playerHeroes.getUsuario() + " JUEGUE SU TURNO.";
         JOptionPane.showMessageDialog(null, mensaje);
         
-        String mensaje2 = MensajeTurnosJugador();
+        String mensajeTurno = MensajeTurnosJugador();
         
-        Juego juego = (Juego) SwingUtilities.getWindowAncestor(this);
         
         borrarResaltadoMovimientos();
         resaltarZonasProhibidas();
-        juego.actualizarTextoMensaje(mensaje2);// Actualizar el texto en jLabel3
+        gameWindow.setTurnoLabel(mensajeTurno);
         if (!esTutorial) esconderPersonajes();
         setVisible(true);
         mostrarPersonajesEliminados();
@@ -590,8 +590,7 @@ public class Tablero extends JPanel{
     
     public void mostrarMensajeInicial() {
         String mensaje2 = MensajeTurnosJugador();
-        Juego juego = (Juego) SwingUtilities.getWindowAncestor(this);
-        juego.actualizarTextoMensaje(mensaje2);
+        gameWindow.setTurnoLabel(mensaje2);
     }
         
     private String MensajeTurnosJugador() {
