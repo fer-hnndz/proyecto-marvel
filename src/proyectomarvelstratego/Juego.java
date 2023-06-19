@@ -24,7 +24,8 @@ public class Juego extends javax.swing.JFrame {
         gamePanel.setLayout(new GridLayout(1,1));
         gamePanel.setMinimumSize(new Dimension(600, 300));
         tablero =new Tablero(infoArea, 
-                eliminatedArea, 
+                heroesEliminated,
+                villanosEliminated,
                 sistemaUsuarios,
                 stats,
                 playerHeroes, 
@@ -56,10 +57,10 @@ public class Juego extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        eliminatedArea = new javax.swing.JTextArea();
+        heroesEliminated = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        eliminatedArea1 = new javax.swing.JTextArea();
+        villanosEliminated = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -127,17 +128,17 @@ public class Juego extends javax.swing.JFrame {
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        eliminatedArea.setEditable(false);
-        eliminatedArea.setBackground(new java.awt.Color(204, 255, 255));
-        eliminatedArea.setColumns(20);
-        eliminatedArea.setForeground(new java.awt.Color(25, 25, 25));
-        eliminatedArea.setLineWrap(true);
-        eliminatedArea.setRows(5);
-        eliminatedArea.setWrapStyleWord(true);
-        eliminatedArea.setAutoscrolls(false);
-        eliminatedArea.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(25, 242, 242), 3));
-        eliminatedArea.setFocusable(false);
-        jScrollPane2.setViewportView(eliminatedArea);
+        heroesEliminated.setEditable(false);
+        heroesEliminated.setBackground(new java.awt.Color(204, 255, 255));
+        heroesEliminated.setColumns(20);
+        heroesEliminated.setForeground(new java.awt.Color(25, 25, 25));
+        heroesEliminated.setLineWrap(true);
+        heroesEliminated.setRows(5);
+        heroesEliminated.setWrapStyleWord(true);
+        heroesEliminated.setAutoscrolls(false);
+        heroesEliminated.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(25, 242, 242), 3));
+        heroesEliminated.setFocusable(false);
+        jScrollPane2.setViewportView(heroesEliminated);
 
         jLabel4.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(153, 0, 51));
@@ -147,17 +148,17 @@ public class Juego extends javax.swing.JFrame {
         jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        eliminatedArea1.setEditable(false);
-        eliminatedArea1.setBackground(new java.awt.Color(25, 0, 0));
-        eliminatedArea1.setColumns(20);
-        eliminatedArea1.setForeground(new java.awt.Color(255, 0, 51));
-        eliminatedArea1.setLineWrap(true);
-        eliminatedArea1.setRows(5);
-        eliminatedArea1.setWrapStyleWord(true);
-        eliminatedArea1.setAutoscrolls(false);
-        eliminatedArea1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 0, 0), 3));
-        eliminatedArea1.setFocusable(false);
-        jScrollPane3.setViewportView(eliminatedArea1);
+        villanosEliminated.setEditable(false);
+        villanosEliminated.setBackground(new java.awt.Color(25, 0, 0));
+        villanosEliminated.setColumns(20);
+        villanosEliminated.setForeground(new java.awt.Color(255, 0, 51));
+        villanosEliminated.setLineWrap(true);
+        villanosEliminated.setRows(5);
+        villanosEliminated.setWrapStyleWord(true);
+        villanosEliminated.setAutoscrolls(false);
+        villanosEliminated.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 0, 0), 3));
+        villanosEliminated.setFocusable(false);
+        jScrollPane3.setViewportView(villanosEliminated);
 
         javax.swing.GroupLayout infoPanelLayout = new javax.swing.GroupLayout(infoPanel);
         infoPanel.setLayout(infoPanelLayout);
@@ -303,9 +304,8 @@ public class Juego extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea eliminatedArea;
-    private javax.swing.JTextArea eliminatedArea1;
     private javax.swing.JPanel gamePanel;
+    private javax.swing.JTextArea heroesEliminated;
     private javax.swing.JTextArea infoArea;
     private javax.swing.JPanel infoPanel;
     private javax.swing.JLabel jLabel1;
@@ -319,5 +319,6 @@ public class Juego extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton surrenderBtn;
+    private javax.swing.JTextArea villanosEliminated;
     // End of variables declaration//GEN-END:variables
 }

@@ -30,8 +30,10 @@ public class Tablero extends JPanel{
     
     private ArrayList<Personaje> heroesEliminados = new ArrayList<Personaje>();
     private ArrayList<Personaje> villanosEliminados = new ArrayList<Personaje>();
+    
     private JTextArea infoArea;
-    private JTextArea eliminadosArea;
+    private JTextArea heroesEliminatedArea;
+    private JTextArea villanosEliminatedArea;
     
     SistemaUsuarios sistemaUsuarios;
     Stats stats;
@@ -48,7 +50,7 @@ public class Tablero extends JPanel{
         g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
     }
     
-    public Tablero(JTextArea infoArea, JTextArea eliminadosArea, SistemaUsuarios sistemaUsuarios, Stats stats, Usuario playerHeroes, Usuario playerVillanos, boolean esTutorial, JFrame gameWindow, MenuInicio mainWindow) {
+    public Tablero(JTextArea infoArea, JTextArea heroesEliminadosArea, JTextArea villanosEliminadosArea, SistemaUsuarios sistemaUsuarios, Stats stats, Usuario playerHeroes, Usuario playerVillanos, boolean esTutorial, JFrame gameWindow, MenuInicio mainWindow) {
         // Cargar la imagen de fondo
         ImageIcon imagenIcono = new ImageIcon("src/img/tablero.png");
         imagenFondo = imagenIcono.getImage();
@@ -66,7 +68,8 @@ public class Tablero extends JPanel{
         this.playerHeroes = playerHeroes;
         this.playerVillanos = playerVillanos;
         this.infoArea = infoArea;
-        this.eliminadosArea = eliminadosArea;
+        this.heroesEliminatedArea = heroesEliminadosArea;
+        this.villanosEliminatedArea = villanosEliminadosArea;
         this.esTutorial = esTutorial;
         this.gameWindow = gameWindow;
         setLayout(new GridLayout(10, 10));
@@ -566,7 +569,7 @@ public class Tablero extends JPanel{
         setVisible(false);
         if (!esTutorial) esconderPersonajes();
         infoArea.setText("");
-        eliminadosArea.setText("");
+        heroesEliminatedArea.setText("");
         
         String mensaje;
         if (!turnoHeroes) mensaje = "FIN DEL TURNO DE " + playerHeroes.getUsuario() + " DEJA QUE  " + playerVillanos.getUsuario() + " JUEGUE SU TURNO.";
@@ -678,26 +681,26 @@ public class Tablero extends JPanel{
     public void mostrarPersonajesEliminados() {
         String mensaje = "";
         
-        if (turnoHeroes) {
             
-            for (int i = 0; i<heroesEliminados.toArray().length;i++) {
-                Personaje personaje = heroesEliminados.get(i);
-                if (personaje.rango != 0 || personaje.rango != -1) 
-                    mensaje += personaje.nombre + " (Rango " + personaje.rango + ")\n";
-                else
-                    mensaje += personaje.nombre + "\n";
-            }
-        } else {
-            for (int i = 0; i<villanosEliminados.toArray().length;i++) {
-                Personaje personaje = villanosEliminados.get(i);
-                if (personaje.rango != 0 || personaje.rango != -1) 
-                    mensaje += personaje.nombre + " (Rango " + personaje.rango + ")\n";
-                else
-                    mensaje += personaje.nombre + "\n";
-            }
+        for (int i = 0; i<heroesEliminados.toArray().length;i++) {
+            Personaje personaje = heroesEliminados.get(i);
+            if (personaje.rango != 0 || personaje.rango != -1) 
+                mensaje += personaje.nombre + " (Rango " + personaje.rango + ")\n";
+            else
+                mensaje += personaje.nombre + "\n";
         }
+        heroesEliminatedArea.setText(mensaje);
+        mensaje = "";
+
+        for (int i = 0; i<villanosEliminados.toArray().length;i++) {
+            Personaje personaje = villanosEliminados.get(i);
+            if (personaje.rango != 0 || personaje.rango != -1) 
+                mensaje += personaje.nombre + " (Rango " + personaje.rango + ")\n";
+            else
+                mensaje += personaje.nombre + "\n";
+        }
+        villanosEliminatedArea.setText(mensaje);
         
-        eliminadosArea.setText(mensaje);
     }
 
     public void posicionarPersonajesRango2() {
