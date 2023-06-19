@@ -28,9 +28,9 @@ public class UniversoMarvel extends javax.swing.JFrame {
         
         activeLabel.setText("Usuarios Activos: " + sistemaUsuarios.usuariosActivos.toArray().length);
         historicLabel.setText("Usuarios Historicos: " + sistemaUsuarios.usuariosHistoricos);
-        matchesLabel.setText("Partidas Jugadas: " + stats.partidasJugadas);
-        heroesLabel.setText("Victorias Heroes: " +  stats.victoriasHeroes);
-        villainLabel.setText("Victorias Villanos: " + stats.victoriasVillanos);
+        matchesLabel.setText("Partidas Jugadas: " + Stats.getPartidasJugadas());
+        heroesLabel.setText("Victorias Heroes: " + Stats.getVictoriasHeroes());
+        villainLabel.setText("Victorias Villanos: " + Stats.getVictoriasVillanos());
     }
 
     /**

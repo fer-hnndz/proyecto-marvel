@@ -9,9 +9,21 @@ package proyectomarvelstratego;
  * @author Jorge Hernandez
  */
 public class Stats {
-    int partidasJugadas = 0;
-    int victoriasHeroes = 0;
-    int victoriasVillanos = 0;
+    private static int partidasJugadas = 0;
+    private static int victoriasHeroes = 0;
+    private static int victoriasVillanos = 0;
+    
+    public static int getPartidasJugadas() {
+        return partidasJugadas;
+    }
+    
+    public static int getVictoriasHeroes() {
+        return victoriasHeroes;
+    }
+    
+    public static int getVictoriasVillanos() {
+        return victoriasVillanos;
+    }
     
     void addPartida(boolean gananHeroes) {
         partidasJugadas++;
